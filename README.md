@@ -13,5 +13,4 @@ Tin đăng được lưu vào trình duyệt bằng `localStorage` để bạn x
 
 ## Ghi chú
 
-Khi bạn muốn làm bản thật, có thể thay phần `localStorage` bằng API/Backend (Node/Python/Go...).
 
