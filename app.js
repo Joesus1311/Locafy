@@ -7,7 +7,8 @@ const UNIVERSITY_SEEDS = [
   "Đại học Bách Khoa TP.HCM",
   "Đại học Kinh tế - Luật",
   "Đại học Công nghệ Thông tin (UIT)",
-  "Đại học Ngoại ngữ - Tin học"
+  "Đại học Ngoại ngữ - Tin học",
+  "Đại học FPT"
 ];
 
 const seedListings = [
@@ -65,6 +66,17 @@ const seedListings = [
     status: "Đã hết",
     description:
       "Phòng có ban công, nhiều ánh sáng, gần cửa hàng tiện lợi. Tin đã hết phòng nhưng vẫn hiển thị để demo."
+  },
+  {
+    id: cryptoRandomId(),
+    title: "Phòng mới, gần ĐH FPT, an ninh",
+    price: 2800000,
+    university: "Đại học FPT",
+    district: "Thủ Đức",
+    contact: "0912 345 678",
+    status: "Còn phòng",
+    description:
+      "Phòng mới sơn sửa, khu yên tĩnh, có chỗ để xe. Phù hợp sinh viên cần di chuyển nhanh đến trường."
   }
 ];
 

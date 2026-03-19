@@ -1,6 +1,6 @@
 # Locafy (demo web)
 
-Trang web demo cho app "tìm trọ quanh trường đại học".
+Trang web demo cho website "tìm và đăng trọ uy tín" cho sinh viên và chủ trọ.
 
 ## Cách chạy
 
@@ -13,4 +13,5 @@ Tin đăng được lưu vào trình duyệt bằng `localStorage` để bạn x
 
 ## Ghi chú
 
+Khi bạn muốn làm bản thật, có thể thay phần `localStorage` bằng API/Backend (Node/Python/Go...).
 
