@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Đăng phòng - Locafy</title>
+    <meta
+      name="description"
+      content="Đăng tải phòng trọ cho sinh viên: giá, khu vực, gần trường và mô tả."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Bỏ qua đến nội dung</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand" aria-label="Locafy">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Locafy</div>
+            <div class="brand-tagline">Đăng phòng trọ nhanh</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="nav-link" href="./index.html">Trang chủ</a>
+          <a class="nav-cta" href="./list-room.html" aria-current="page">Đăng phòng</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="section">
+        <div class="container">
+          <div class="page-head">
+            <h1>Đăng phòng</h1>
+            <p class="muted">
+              Mẫu UI này lưu tin vào trình duyệt để bạn xem trước. Bạn có thể thay bằng backend/API sau.
+            </p>
+          </div>
+
+          <form id="roomForm" class="form-card" novalidate>
+            <div class="form-two">
+              <label class="field">
+                <span class="label">Tên phòng</span>
+                <input id="title" name="title" type="text" placeholder="VD: Phòng trọ gác lửng gần ĐH..." required />
+              </label>
+
+              <label class="field">
+                <span class="label">Giá thuê (VND)</span>
+                <input
+                  id="price"
+                  name="price"
+                  type="number"
+                  min="0"
+                  step="100000"
+                  placeholder="VD: 2500000"
+                  required
+                />
+              </label>
+            </div>
+
+            <div class="form-two">
+              <label class="field">
+                <span class="label">Gần trường</span>
+                <select id="uni" name="uni" required>
+                  <option value="" selected disabled>Chọn trường</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span class="label">Khu vực / Quận</span>
+                <input id="area" name="area" type="text" placeholder="VD: Thủ Đức, Cầu Giấy..." required />
+              </label>
+            </div>
+
+            <div class="form-two">
+              <label class="field">
+                <span class="label">Liên hệ (SĐT hoặc Email)</span>
+                <input
+                  id="contact"
+                  name="contact"
+                  type="text"
+                  placeholder="VD: 0909 123 456 hoặc mail@..."
+                  required
+                />
+              </label>
+
+              <label class="field">
+                <span class="label">Trạng thái</span>
+                <select id="status" name="status">
+                  <option value="Còn phòng" selected>Còn phòng</option>
+                  <option value="Đang chờ" >Đang chờ</option>
+                  <option value="Đã hết" >Đã hết</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field">
+              <span class="label">Mô tả</span>
+              <textarea
+                id="description"
+                name="description"
+                rows="5"
+                placeholder="Mô tả chi tiết: tiện ích, giờ tự do, điện nước, an ninh..."
+                required
+              ></textarea>
+            </label>
+
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">Lưu tin</button>
+              <a class="btn btn-ghost" href="./index.html">Quay lại</a>
+            </div>
+
+            <div class="notice" id="formNotice" role="status" aria-live="polite"></div>
+          </form>
+
+          <section class="section section-soft" aria-label="Xem tin mẫu">
+            <div class="section-head">
+              <h2>Gợi ý</h2>
+              <p class="muted">Thêm vài tin để trải nghiệm bộ lọc trên trang chủ.</p>
+            </div>
+            <div class="hint-cards">
+              <div class="hint-card">
+                <div class="hint-title">Viết mô tả rõ</div>
+                <div class="muted">Giúp sinh viên ra quyết định nhanh.</div>
+              </div>
+              <div class="hint-card">
+                <div class="hint-title">Đúng khu vực</div>
+                <div class="muted">Điền quận/huyện để lọc chính xác.</div>
+              </div>
+              <div class="hint-card">
+                <div class="hint-title">Chọn đúng trường</div>
+                <div class="muted">Tăng khả năng được nhìn thấy.</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="brand-name">Locafy</div>
+          <div class="muted">Tìm trọ - đăng tin - lọc theo trường.</div>
+        </div>
+        <div class="footer-links">
+          <a class="nav-link" href="./index.html">Trang chủ</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
+

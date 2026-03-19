@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Locafy - Tìm trọ quanh trường đại học</title>
+    <meta
+      name="description"
+      content="Locafy giúp bạn tìm phòng trọ gần các trường đại học tại Việt Nam. Có thể đăng tải phòng trọ nhanh chóng."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Bỏ qua đến nội dung</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand" aria-label="Locafy">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Locafy</div>
+            <div class="brand-tagline">Tìm trọ - Gần trường - Dễ đăng tin</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="nav-link" href="#featured">Phòng nổi bật</a>
+          <a class="nav-link" href="#university">Trường đại học</a>
+          <a class="nav-cta" href="./list-room.html">Đăng phòng</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <h1>Tìm phòng trọ quanh các trường đại học</h1>
+            <p>
+              Locafy tập trung vào nhu cầu tìm trọ tại Việt Nam: gần trường, giá hợp lý, thông tin rõ ràng.
+              Dùng thử ngay bên dưới để tìm các tin mẫu hoặc đăng tin của bạn.
+            </p>
+            <div class="hero-badges" aria-label="Điểm nổi bật">
+              <span class="pill">Trắng - Xanh dương</span>
+              <span class="pill">Gần trường đại học</span>
+              <span class="pill">Tìm nhanh</span>
+            </div>
+          </div>
+
+          <div class="hero-card" role="region" aria-label="Tìm kiếm phòng trọ">
+            <h2 class="card-title">Tìm trọ</h2>
+            <form id="searchForm" class="form-grid">
+              <label class="field">
+                <span class="label">Từ khóa</span>
+                <input id="q" type="text" placeholder="VD: trọ sinh viên, ban công, gác..." />
+              </label>
+
+              <label class="field">
+                <span class="label">Khu vực</span>
+                <input id="district" type="text" placeholder="VD: Thủ Đức, Cầu Giấy..." />
+              </label>
+
+              <label class="field">
+                <span class="label">Gần trường</span>
+                <select id="university">
+                  <option value="">Tất cả</option>
+                </select>
+              </label>
+
+              <div class="field field-row">
+                <label class="field">
+                  <span class="label">Giá tối đa (VND)</span>
+                  <input id="maxPrice" type="number" min="0" step="100000" placeholder="VD: 3000000" />
+                </label>
+              </div>
+
+              <div class="actions">
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                <button type="button" id="resetBtn" class="btn btn-ghost">Làm mới</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="featured" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Phòng nổi bật</h2>
+            <p class="muted" id="resultsMeta" aria-live="polite"></p>
+          </div>
+
+          <div id="results" class="grid" aria-live="polite"></div>
+
+          <div class="empty-state" id="emptyState" hidden>
+            <div class="empty-icon" aria-hidden="true">🔎</div>
+            <div class="empty-title">Không tìm thấy tin phù hợp</div>
+            <div class="empty-sub">
+              Thử đổi từ khóa/khu vực hoặc đăng phòng mới để xuất hiện ở đây.
+            </div>
+            <div class="empty-actions">
+              <a class="btn btn-primary" href="./list-room.html">Đăng phòng</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="university" class="section section-soft">
+        <div class="container">
+          <div class="section-head">
+            <h2>Gợi ý theo trường</h2>
+            <p class="muted">Chọn một trường để tự động lọc danh sách phòng.</p>
+          </div>
+
+          <div id="uniChips" class="chip-row" role="list"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container cta-band">
+          <div class="cta-copy">
+            <h2>Đăng phòng nhanh, rõ ràng</h2>
+            <p>
+              Tin đăng mẫu sẽ được lưu trực tiếp trong trình duyệt (localStorage) để bạn xem trước. Khi bạn sẵn sàng,
+              có thể nối API/Backend thật sau.
+            </p>
+          </div>
+          <a class="btn btn-primary" href="./list-room.html">Đăng phòng ngay</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="brand-name">Locafy</div>
+          <div class="muted">App tìm trọ quanh các trường đại học tại Việt Nam.</div>
+        </div>
+        <div class="footer-links">
+          <a class="nav-link" href="#featured">Phòng nổi bật</a>
+          <a class="nav-link" href="./list-room.html">Đăng phòng</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
+
