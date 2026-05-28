@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locafy - Kênh Tìm Kiếm Phòng Trọ Cực Nhanh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center space-x-2">
+                <div class="bg-blue-600 text-white p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-lg"></i>
+                </div>
+                <span class="text-xl font-extrabold text-blue-900 hidden sm:block">Locafy</span>
+            </a>
+
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="Mainpage.html" class="text-blue-600 hover:text-blue-700">Trang Chủ</a>
+                <a href="phong-tro.html" class="text-gray-600 hover:text-blue-600">Phòng Trọ</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Tìm Ở Ghép</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Tin Tức</a>
+            </nav>
+
+            <div id="auth-actions" class="flex items-center space-x-2">
+                <a href="login.html" class="hidden sm:inline-flex items-center rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">Đăng nhập</a>
+                <a href="register.html" class="hidden sm:inline-flex items-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition">Đăng ký</a>
+                <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-md transition duration-200 flex items-center space-x-1">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Đăng Tin Miễn Phí</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-r from-blue-700 to-indigo-800 py-12 md:py-20 px-4 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-4 leading-tight">
+                Tìm Phòng Trọ Hoàn Hảo Cùng <span class="text-yellow-400">Locafy</span>
+            </h1>
+            <p class="text-blue-100 text-base md:text-lg mb-8 max-w-2xl mx-auto">
+                Kênh thông tin phòng trọ, nhà thuê nguyên căn, căn hộ dịch vụ uy tín và cập nhật liên tục mỗi ngày.
+            </p>
+
+            <div class="bg-white p-4 md:p-6 rounded-2xl shadow-2xl text-left">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Tìm kiếm</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3.5 text-gray-400"></i>
+                            <input id="search-input" type="text" placeholder="Nhập từ khóa để tìm nhà..." class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Khoảng giá</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-tags absolute left-3 top-3.5 text-gray-400"></i>
+                            <select id="price-filter" class="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none">
+                                <option value="all">Tất cả mức giá</option>
+                                <option value="under-2">Dưới 2 triệu</option>
+                                <option value="2-4">2 triệu - 4 triệu</option>
+                                <option value="4-7">4 triệu - 7 triệu</option>
+                                <option value="over-7">Trên 7 triệu</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex items-end">
+                        <button id="search-button" type="button" class="w-full bg-yellow-500 hover:bg-yellow-600 text-blue-950 font-bold py-3 px-6 rounded-xl transition duration-150 flex items-center justify-center space-x-2 shadow-md">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>Tìm Kiếm Ngay</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mb-16">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Khu vực nổi bật</p>
+                <h2 class="text-2xl font-bold text-gray-900 mt-2">Hòa Lạc, Thạch Thất, Hà Nội</h2>
+                <p id="result-summary" class="text-sm text-gray-500 mt-1">Hiển thị 6 kết quả • Danh sách nhà trọ, căn hộ và chung cư mini gần khu vực</p>
+            </div>
+            <a href="#" class="inline-flex items-center justify-center rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition">
+                <i class="fa-solid fa-arrow-left-long mr-2"></i>
+                Quay lại
+            </a>
+        </div>
+
+        <div id="search-empty" class="hidden rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-10 text-center text-gray-600">
+            <i class="fa-solid fa-magnifying-glass text-2xl text-blue-500 mb-3"></i>
+            <p class="text-lg font-semibold text-gray-900">Không tìm thấy kết quả phù hợp</p>
+            <p class="mt-1 text-sm text-gray-500">Hãy thử từ khóa khác hoặc đổi khoảng giá để tìm phòng phù hợp hơn.</p>
+        </div>
+
+        <div id="house-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="duong-linh-1" data-house-name="Nhà trọ Dương Linh 1" data-house-type="Nhà trọ" data-house-location="Hòa Lạc, Thạch Thất, Hà Nội" data-house-price="Từ 3.5 triệu/tháng" data-house-room-count="1 phòng" data-house-rating="5.0" data-house-image="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" data-house-description="Nhà trọ Dương Linh 1 nằm tại khu dân cư yên tĩnh, gần trường học, tiện ích đầy đủ, phù hợp cho sinh viên và người đi làm." data-house-layout="1 phòng ngủ, 1 WC, nhà vệ sinh khép kín, Wi-Fi, máy lạnh, nước nóng." data-house-amenities="Wi-Fi, máy lạnh, nước nóng, camera, chỗ để xe" data-house-contact="1900 123 456">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="Nhà trọ Dương Linh 1" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700 flex items-center">
+                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>
+                        5.0
+                    </div>
+                    <div class="absolute top-3 right-3 bg-blue-600 text-white px-2.5 py-1 rounded-full text-[10px] font-bold uppercase">Hot</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Nhà trọ Dương Linh 1</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">1 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Hòa Lạc, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-house-user mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 3.5 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=duong-linh-1" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="duong-linh-2" data-house-name="Nhà trọ Dương Linh 2" data-house-type="Nhà trọ" data-house-location="Thôn 4, Hòa Lạc, Thạch Thất, Hà Nội" data-house-price="Từ 3.2 triệu/tháng" data-house-room-count="1 phòng" data-house-rating="5.0" data-house-image="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80" data-house-description="Phòng trọ sạch sẽ, đầy đủ tiện nghi, thuận tiện cho sinh viên và người làm việc tại khu vực Hòa Lạc." data-house-layout="1 phòng ngủ, 1 WC, kệ bếp, máy giặt, Wi-Fi." data-house-amenities="Wi-Fi, máy giặt, chỗ để xe, camera" data-house-contact="1900 123 456">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80" alt="Nhà trọ Dương Linh 2" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700 flex items-center">
+                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>
+                        5.0
+                    </div>
+                    <div class="absolute top-3 right-3 bg-green-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold uppercase">Mới</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Nhà trọ Dương Linh 2</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">1 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Thôn 4, Hòa Lạc, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-house-user mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 3.2 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=duong-linh-2" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="hoa-lac-apartment" data-house-name="Hoa Lac Apartment" data-house-type="Chung cư mini" data-house-location="Hòa Lạc, Thạch Thất, Hà Nội" data-house-price="Từ 4.8 triệu/tháng" data-house-room-count="11 phòng" data-house-rating="5.0" data-house-image="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80" data-house-description="Chung cư mini Hoa Lac Apartment với vị trí thuận tiện, nhiều tiện ích hiện đại, thích hợp cho gia đình hoặc người thuê dài hạn." data-house-layout="2 phòng ngủ, 1 WC, ban công, bếp đầy đủ, máy lạnh." data-house-amenities="Hầm để xe, an ninh, Wi-Fi, thang máy" data-house-contact="1900 123 456">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80" alt="Hoa Lac Apartment" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700 flex items-center">
+                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>
+                        5.0
+                    </div>
+                    <div class="absolute top-3 right-3 bg-amber-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold uppercase">Ưu tiên</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Hoa Lac Apartment</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">11 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Hòa Lạc, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-city mr-2 text-blue-500"></i>Chung cư mini</span>
+                        <span class="font-semibold text-red-500">Từ 4.8 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=hoa-lac-apartment" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="an-nguyen" data-house-name="Nhà trọ An Nguyên" data-house-type="Nhà trọ" data-house-location="Cạnh cổng chính ĐH QGHN, Hòa Lạc" data-house-price="Từ 2.8 triệu/tháng" data-house-room-count="3 phòng" data-house-rating="5.0" data-house-image="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=800&q=80" data-house-description="Nhà trọ An Nguyên mang phong cách sinh viên, gần đại học chính, thuận tiện đi lại và đầy đủ tiện ích cơ bản." data-house-layout="3 phòng, nhà vệ sinh tiện nghi, bếp chung, tủ lạnh, Wi-Fi." data-house-amenities="Wi-Fi, bếp chung, camera, chỗ để xe" data-house-contact="1900 123 456">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=800&q=80" alt="Nhà trọ An Nguyên" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700 flex items-center">
+                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>
+                        5.0
+                    </div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Nhà trọ An Nguyên</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">3 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Cạnh cổng chính ĐH QGHN, Hòa Lạc
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-house-user mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 2.8 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=an-nguyen" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="hoa-lac-xanh" data-house-name="Nhà trọ Hòa Lạc Xanh" data-house-type="Nhà trọ" data-house-location="Thạch Hòa, Thạch Thất, Hà Nội" data-house-price="Từ 2.9 triệu/tháng" data-house-room-count="5 phòng" data-house-rating="5.0" data-house-image="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80" data-house-description="Nhà trọ Hòa Lạc Xanh có không gian thoáng mát, sân vườn, đáp ứng nhu cầu ở lâu dài và tiện nghi cơ bản." data-house-layout="5 phòng, bếp riêng, WC trong phòng, máy lạnh, tủ quần áo." data-house-amenities="Wi-Fi, máy lạnh, nước nóng, chỗ để xe" data-house-contact="1900 123 456">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80" alt="Nhà trọ Hòa Lạc Xanh" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700 flex items-center">
+                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>
+                        5.0
+                    </div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Nhà trọ Hòa Lạc Xanh</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">5 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Thạch Hòa, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-building mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 2.9 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=hoa-lac-xanh" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="tro-my-home" data-house-name="Trọ My Home" data-house-type="Nhà trọ" data-house-location="Ngõ 188, Thạch Hoà, Thạch Thất, Hà Nội" data-house-price="Từ 2.6 triệu/tháng" data-house-room-count="1 phòng" data-house-rating="5.0" data-house-image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" data-house-description="Trọ My Home là lựa chọn tiết kiệm, gần khu dân cư, thuận tiện cho sinh viên và nhân viên văn phòng." data-house-layout="1 phòng ngủ, 1 WC, bếp tiện nghi, máy nóng nước." data-house-amenities="Wi-Fi, nước nóng, camera, chỗ để xe" data-house-contact="1900 123 456">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="Trọ My Home" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700 flex items-center">
+                        <i class="fa-solid fa-star text-yellow-500 mr-1"></i>
+                        5.0
+                    </div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Trọ My Home</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">1 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Ngõ 188, Thạch Hoà, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-house-user mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 2.6 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=tro-my-home" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div class="space-y-4">
+                <div class="bg-blue-600 text-white px-3 py-1.5 rounded-lg font-bold text-lg tracking-wider inline-block">
+                    Locafy
+                </div>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Locafy - Mạng lưới kết nối người thuê và cho thuê bất động sản, phòng trọ, căn hộ mini hàng đầu Việt Nam.
+                </p>
+                <div class="flex space-x-4 pt-2">
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Về chúng tôi</h4>
+                <ul class="space-y-2.5 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 transition">Giới thiệu dịch vụ</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Quy chế hoạt động</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Chính sách bảo mật</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Giải quyết khiếu nại</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Hỗ trợ khách hàng</h4>
+                <ul class="space-y-2.5 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 transition">Bảng giá dịch vụ</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Hướng dẫn đăng tin</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Quy định đăng tin</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Liên hệ trợ giúp</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Liên hệ</h4>
+                <ul class="space-y-3 text-sm text-slate-400">
+                    <li class="flex items-start space-x-2">
+                        <i class="fa-solid fa-envelope mt-1 text-blue-400"></i>
+                        <span>hotro@locafy.vn</span>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <i class="fa-solid fa-phone mt-1 text-blue-400"></i>
+                        <span>1900 123 456 (8:00 - 21:00)</span>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <i class="fa-solid fa-location-dot mt-1 text-blue-400"></i>
+                        <span>Tòa nhà Locafy, Cầu Giấy, Hà Nội</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+            <p>© 2026 Locafy.vn. Toàn bộ bản quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script>
+        const currentUserKey = 'locafyCurrentUser';
+        const authActions = document.getElementById('auth-actions');
+        let activeDropdown = null;
+
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem(currentUserKey));
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function closeActiveDropdown() {
+            if (activeDropdown) {
+                activeDropdown.classList.add('hidden');
+            }
+        }
+
+        document.addEventListener('click', (event) => {
+            if (event.target.closest('#user-menu-button')) {
+                return;
+            }
+            if (activeDropdown && activeDropdown.contains(event.target)) {
+                return;
+            }
+            closeActiveDropdown();
+        });
+
+        function renderAuthActions() {
+            const currentUser = getCurrentUser();
+
+            if (currentUser) {
+                authActions.innerHTML = `
+                    <div class="relative">
+                        <button id="user-menu-button" type="button" class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-50 transition">
+                            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-white">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <span class="hidden sm:block">${currentUser.name}</span>
+                            <i class="fa-solid fa-chevron-down text-xs text-gray-500"></i>
+                        </button>
+                        <div id="user-menu-dropdown" class="absolute right-0 top-full mt-2 hidden w-52 rounded-2xl border border-gray-200 bg-white p-2 shadow-lg">
+                            <div class="px-3 py-2 text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Tài khoản</div>
+                            <div class="px-3 pb-2 text-sm text-gray-700">${currentUser.email}</div>
+                            <button id="logout-button" type="button" class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span>Đăng xuất</span>
+                            </button>
+                        </div>
+                    </div>
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-md transition duration-200 flex items-center space-x-1">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <span>Đăng Tin Miễn Phí</span>
+                    </a>
+                `;
+
+                activeDropdown = document.getElementById('user-menu-dropdown');
+
+                const userMenuButton = document.getElementById('user-menu-button');
+                const logoutButton = document.getElementById('logout-button');
+
+                userMenuButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    activeDropdown.classList.toggle('hidden');
+                });
+
+                logoutButton.addEventListener('click', () => {
+                    localStorage.removeItem(currentUserKey);
+                    renderAuthActions();
+                });
+            } else {
+                authActions.innerHTML = `
+                    <a href="login.html" class="hidden sm:inline-flex items-center rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">Đăng nhập</a>
+                    <a href="register.html" class="hidden sm:inline-flex items-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition">Đăng ký</a>
+                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-md transition duration-200 flex items-center space-x-1">
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <span>Đăng Tin Miễn Phí</span>
+                    </a>
+                `;
+                activeDropdown = null;
+            }
+        }
+
+        const searchInput = document.getElementById('search-input');
+        const priceFilter = document.getElementById('price-filter');
+        const searchButton = document.getElementById('search-button');
+        const houseCards = Array.from(document.querySelectorAll('.house-card'));
+        const houseList = document.getElementById('house-list');
+        const emptyState = document.getElementById('search-empty');
+        const resultSummary = document.getElementById('result-summary');
+
+        function parsePriceToNumber(priceText) {
+            const match = priceText.match(/([0-9]+(?:\.[0-9]+)?)/);
+            return match ? Number(match[1]) : 0;
+        }
+
+        function matchesPriceFilter(card, selectedRange) {
+            if (selectedRange === 'all') {
+                return true;
+            }
+
+            const price = parsePriceToNumber(card.dataset.housePrice);
+
+            switch (selectedRange) {
+                case 'under-2':
+                    return price < 2;
+                case '2-4':
+                    return price >= 2 && price <= 4;
+                case '4-7':
+                    return price > 4 && price <= 7;
+                case 'over-7':
+                    return price > 7;
+                default:
+                    return true;
+            }
+        }
+
+        function applySearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            const selectedRange = priceFilter.value;
+            let visibleCount = 0;
+
+            houseCards.forEach((card) => {
+                const searchableText = [
+                    card.dataset.houseName,
+                    card.dataset.houseType,
+                    card.dataset.houseLocation,
+                    card.dataset.housePrice,
+                    card.dataset.houseRoomCount,
+                    card.dataset.houseDescription,
+                ].join(' ').toLowerCase();
+
+                const matchesQuery = !query || searchableText.includes(query);
+                const matchesPrice = matchesPriceFilter(card, selectedRange);
+
+                if (matchesQuery && matchesPrice) {
+                    card.classList.remove('hidden');
+                    visibleCount += 1;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            houseList.classList.toggle('hidden', visibleCount === 0);
+            emptyState.classList.toggle('hidden', visibleCount !== 0);
+            resultSummary.textContent = `Hiển thị ${visibleCount} kết quả • Danh sách nhà trọ, căn hộ và chung cư mini gần khu vực`;
+        }
+
+        searchInput.addEventListener('input', applySearch);
+        priceFilter.addEventListener('change', applySearch);
+        searchButton.addEventListener('click', applySearch);
+
+        renderAuthActions();
+        applySearch();
+    </script>
+
+</body>
+</html>

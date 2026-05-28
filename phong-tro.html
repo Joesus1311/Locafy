@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phòng trọ Hòa Lạc - Thạch Thất - Locafy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="Mainpage.html" class="flex items-center space-x-2">
+                <div class="bg-blue-600 text-white p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-lg"></i>
+                </div>
+                <span class="text-xl font-extrabold text-blue-900 hidden sm:block">Locafy</span>
+            </a>
+
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="Mainpage.html" class="text-gray-600 hover:text-blue-600">Trang Chủ</a>
+                <a href="phong-tro.html" class="text-blue-600 hover:text-blue-700">Phòng Trọ</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Tìm Ở Ghép</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Tin Tức</a>
+            </nav>
+
+            <div class="flex items-center space-x-2">
+                <a href="login.html" class="hidden sm:inline-flex items-center rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">Đăng nhập</a>
+                <a href="register.html" class="hidden sm:inline-flex items-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition">Đăng ký</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-r from-blue-700 to-indigo-800 py-12 px-4">
+        <div class="max-w-5xl mx-auto text-center text-white">
+            <p class="text-xs font-bold uppercase tracking-[0.25em] text-blue-100">Danh sách phòng trọ</p>
+            <h1 class="mt-3 text-3xl md:text-5xl font-extrabold">Phòng trọ tại Hòa Lạc, Thạch Thất</h1>
+            <p class="mt-4 text-blue-100 max-w-2xl mx-auto">Tổng hợp các phòng trọ, nhà trọ và căn hộ mini gần khu vực Hòa Lạc - Thạch Thất.</p>
+            <div class="mt-6 flex justify-center">
+                <a href="Mainpage.html" class="rounded-full bg-white px-4 py-2 text-sm font-bold text-blue-800">← Quay lại trang chủ</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="mb-6">
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Khu vực nổi bật</p>
+            <h2 class="mt-2 text-2xl font-bold text-gray-900">Hòa Lạc, Thạch Thất, Hà Nội</h2>
+            <p class="mt-1 text-sm text-gray-500">Danh sách phòng trọ nổi bật trong khu vực.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <article class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="Nhà trọ Dương Linh 1" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">5.0 ★</div>
+                    <div class="absolute top-3 right-3 bg-blue-600 text-white px-2.5 py-1 rounded-full text-[10px] font-bold uppercase">Hot</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Nhà trọ Dương Linh 1</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">1 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Hòa Lạc, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-house-user mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 3.5 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=duong-linh-1" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80" alt="Nhà trọ Dương Linh 2" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">5.0 ★</div>
+                    <div class="absolute top-3 right-3 bg-green-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold uppercase">Mới</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Nhà trọ Dương Linh 2</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">1 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Thôn 4, Hòa Lạc, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-house-user mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 3.2 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=duong-linh-2" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80" alt="Hoa Lac Apartment" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">5.0 ★</div>
+                    <div class="absolute top-3 right-3 bg-amber-500 text-white px-2.5 py-1 rounded-full text-[10px] font-bold uppercase">Ưu tiên</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Hoa Lac Apartment</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">11 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Hòa Lạc, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-city mr-2 text-blue-500"></i>Chung cư mini</span>
+                        <span class="font-semibold text-red-500">Từ 4.8 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=hoa-lac-apartment" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=800&q=80" alt="Nhà trọ An Nguyên" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">5.0 ★</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Nhà trọ An Nguyên</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">3 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Cạnh cổng chính ĐH QGHN, Hòa Lạc
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-house-user mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 2.8 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=an-nguyen" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80" alt="Nhà trọ Hòa Lạc Xanh" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">5.0 ★</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Nhà trọ Hòa Lạc Xanh</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">5 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Thạch Hòa, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-building mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 2.9 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=hoa-lac-xanh" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+
+            <article class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200">
+                <div class="relative h-48">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="Trọ My Home" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">5.0 ★</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900">Trọ My Home</h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">1 phòng</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center">
+                        <i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>
+                        Ngõ 188, Thạch Hoà, Thạch Thất, Hà Nội
+                    </p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="flex items-center"><i class="fa-solid fa-house-user mr-2 text-blue-500"></i>Nhà trọ</span>
+                        <span class="font-semibold text-red-500">Từ 2.6 triệu/tháng</span>
+                    </div>
+                    <a href="house-detail.html?house=tro-my-home" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin nhà trọ</a>
+                </div>
+            </article>
+        </div>
+    </section>
+</body>
+</html>

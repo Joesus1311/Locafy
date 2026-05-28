@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Locafy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+    <div class="max-w-3xl mx-auto px-4 py-10">
+        <div class="mb-6 flex items-center justify-between">
+            <a href="Mainpage.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-700">
+                <i class="fa-solid fa-arrow-left"></i>
+                Về trang chủ
+            </a>
+            <div class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">Locafy</div>
+        </div>
+
+        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-6 items-start">
+            <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
+                <p class="text-xs font-bold uppercase tracking-[0.25em] text-blue-600">Đăng nhập</p>
+                <h1 class="mt-3 text-3xl font-bold text-gray-900">Chào mừng quay lại</h1>
+                <p class="mt-3 text-sm text-gray-600 leading-relaxed">Đăng nhập để tiếp tục tìm phòng trọ, xem thông tin và lưu trạng thái trên thiết bị này.</p>
+                <div class="mt-5 rounded-2xl bg-slate-100 p-4 text-sm text-slate-700">
+                    <p class="font-semibold">Tài khoản lưu cục bộ</p>
+                    <p class="mt-1">Nếu bạn đã đăng ký trước đó, thông tin sẽ được kiểm tra từ <span class="font-bold">localStorage</span>.</p>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
+                <form id="login-form" class="space-y-3">
+                    <div>
+                        <label for="email" class="block text-sm font-semibold text-gray-700">Email</label>
+                        <input id="email" name="email" type="email" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="example@email.com">
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm font-semibold text-gray-700">Mật khẩu</label>
+                        <input id="password" name="password" type="password" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                    </div>
+
+                    <button type="submit" class="w-full rounded-xl bg-gray-900 px-3 py-2.5 text-sm font-bold text-white hover:bg-black transition">Đăng nhập</button>
+                </form>
+
+                <div id="login-message" class="mt-4 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
+                    Vui lòng nhập email và mật khẩu đã đăng ký.
+                </div>
+
+                <p class="mt-4 text-sm text-gray-600">
+                    Chưa có tài khoản?
+                    <a href="register.html" class="font-semibold text-blue-700">Đăng ký ngay</a>
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const accountsKey = 'locafyAccounts';
+        const currentUserKey = 'locafyCurrentUser';
+        const loginForm = document.getElementById('login-form');
+        const loginMessage = document.getElementById('login-message');
+
+        function loadAccounts() {
+            try {
+                return JSON.parse(localStorage.getItem(accountsKey)) || [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function showMessage(text, tone = 'info') {
+            loginMessage.textContent = text;
+            loginMessage.className = 'mt-4 rounded-2xl px-4 py-3 text-sm border';
+            loginMessage.classList.remove('bg-green-50', 'border-green-200', 'text-green-800', 'bg-red-50', 'border-red-200', 'text-red-700', 'bg-gray-50', 'border-gray-200', 'text-gray-700');
+            if (tone === 'success') {
+                loginMessage.classList.add('bg-green-50', 'border-green-200', 'text-green-800');
+            } else if (tone === 'error') {
+                loginMessage.classList.add('bg-red-50', 'border-red-200', 'text-red-700');
+            } else {
+                loginMessage.classList.add('bg-gray-50', 'border-gray-200', 'text-gray-700');
+            }
+        }
+
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(loginForm);
+            const email = formData.get('email').trim().toLowerCase();
+            const password = formData.get('password');
+
+            const accounts = loadAccounts();
+            const matchedUser = accounts.find((account) => account.email.toLowerCase() === email && account.password === password);
+
+            if (!matchedUser) {
+                showMessage('Email hoặc mật khẩu không đúng. Vui lòng thử lại.', 'error');
+                return;
+            }
+
+            localStorage.setItem(currentUserKey, JSON.stringify({ name: matchedUser.name, email: matchedUser.email, phone: matchedUser.phone }));
+            loginForm.reset();
+            showMessage(`Đăng nhập thành công! Chào mừng ${matchedUser.name}.`, 'success');
+            setTimeout(() => {
+                window.location.href = 'Mainpage.html';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
