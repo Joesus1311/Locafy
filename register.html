@@ -35,6 +35,10 @@
                         <input id="name" name="name" type="text" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Nguyễn Văn A">
                     </div>
                     <div>
+                        <label for="username" class="block text-sm font-semibold text-gray-700">Tên đăng nhập</label>
+                        <input id="username" name="username" type="text" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="nguyenvana123">
+                    </div>
+                    <div>
                         <label for="email" class="block text-sm font-semibold text-gray-700">Email</label>
                         <input id="email" name="email" type="email" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="example@email.com">
                     </div>
@@ -45,6 +49,20 @@
                     <div>
                         <label for="password" class="block text-sm font-semibold text-gray-700">Mật khẩu</label>
                         <input id="password" name="password" type="password" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700">Vai trò</label>
+                        <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                            <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-3 py-2.5 text-sm text-gray-700">
+                                <input type="radio" name="role" value="buyer" checked>
+                                <span>Người mua / thuê</span>
+                            </label>
+                            <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-3 py-2.5 text-sm text-gray-700">
+                                <input type="radio" name="role" value="seller">
+                                <span>Người bán / chủ nhà</span>
+                            </label>
+                        </div>
                     </div>
 
                     <button type="submit" class="w-full rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Đăng ký</button>
@@ -97,11 +115,13 @@
             event.preventDefault();
             const formData = new FormData(registerForm);
             const name = formData.get('name').trim();
+            const username = formData.get('username').trim().toLowerCase();
             const email = formData.get('email').trim().toLowerCase();
             const phone = formData.get('phone').trim();
             const password = formData.get('password');
+            const role = formData.get('role') === 'seller' ? 'seller' : 'buyer';
 
-            if (!name || !email || !phone || !password) {
+            if (!name || !username || !email || !phone || !password) {
                 showMessage('Vui lòng điền đầy đủ thông tin.', 'error');
                 return;
             }
@@ -111,13 +131,17 @@
                 showMessage('Email đã tồn tại. Vui lòng đăng nhập hoặc dùng email khác.', 'error');
                 return;
             }
+            if (accounts.some((account) => account.username && account.username.toLowerCase() === username)) {
+                showMessage('Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.', 'error');
+                return;
+            }
 
-            const newUser = { name, email, phone, password, createdAt: new Date().toISOString() };
+            const newUser = { name, username, email, phone, password, role, createdAt: new Date().toISOString() };
             accounts.push(newUser);
             saveAccounts(accounts);
-            localStorage.setItem(currentUserKey, JSON.stringify({ name, email, phone }));
+            localStorage.setItem(currentUserKey, JSON.stringify({ name, username, email, phone, role }));
             registerForm.reset();
-            showMessage(`Đăng ký thành công! Xin chào ${name}. Bạn đã được đăng nhập và sẽ quay về trang chủ.`, 'success');
+            showMessage(`Đăng ký thành công! Xin chào ${name}. Bạn đã được đăng nhập với vai trò ${role === 'seller' ? 'người bán/chủ nhà' : 'người mua/thuê'}.`, 'success');
             setTimeout(() => {
                 window.location.href = 'Mainpage.html';
             }, 1200);
