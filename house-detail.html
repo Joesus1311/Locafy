@@ -6,7 +6,6 @@
     <title>Chi tiết nhà trọ - Locafy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-900">
     <div class="max-w-6xl mx-auto px-4 py-8">
@@ -54,16 +53,18 @@
                         </div>
                     </div>
 
+                    <!-- KHU VỰC BẢN ĐỒ GOOGLE MAPS -->
                     <section class="mt-6 rounded-3xl border border-gray-100 bg-white p-6">
                         <div class="flex items-center justify-between gap-3">
                             <div>
                                 <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">Bản đồ</p>
                                 <h2 class="mt-1 text-xl font-bold text-gray-900">Vị trí trên bản đồ</h2>
                             </div>
-                            <a id="map-link" href="#" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-blue-600 hover:text-blue-700">Xem trên OpenStreetMap</a>
+                            <!-- Thẻ link điều hướng khi click xem trực tiếp -->
+                            <a id="map-link" href="#" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-blue-600 hover:text-blue-700">Xem trên Google Maps</a>
                         </div>
                         <div id="map-container" class="mt-4 h-72 overflow-hidden rounded-2xl border border-gray-100 bg-slate-100"></div>
-                        <p id="map-status" class="mt-2 text-sm text-gray-500">Đang tải bản đồ...</p>
+                        <p id="map-status" class="mt-2 text-sm text-gray-500">Đang tải vị trí chính xác...</p>
                     </section>
                 </div>
             </section>
@@ -92,112 +93,35 @@
                     <h2 class="mt-2 text-xl font-bold">Liên hệ để đặt lịch xem</h2>
                     <p class="mt-2 text-sm text-blue-100">Gọi tổng đài để trao đổi chi tiết về căn nhà này.</p>
                     <div class="mt-4">
-                        <a href="tel:1900123456" class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-blue-700">Gọi ngay</a>
+                        <a id="detail-call" href="tel:0869161118" class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-blue-700">Gọi ngay</a>
                     </div>
                 </section>
             </aside>
         </div>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         const houseDatabase = {
-            'duong-linh-1': {
-                type: 'Nhà trọ',
-                name: 'Nhà trọ Dương Linh 1',
-                rating: '5.0',
-                location: 'Hòa Lạc, Thạch Thất, Hà Nội',
-                description: 'Nhà trọ Dương Linh 1 nằm tại khu dân cư yên tĩnh, gần trường học, tiện ích đầy đủ, phù hợp cho sinh viên và người đi làm.',
-                roomCount: '1 phòng',
-                price: 'Từ 3.5 triệu/tháng',
-                layout: '1 phòng ngủ, 1 WC, nhà vệ sinh khép kín, Wi-Fi, máy lạnh, nước nóng.',
-                amenities: ['Wi-Fi', 'Máy lạnh', 'Nước nóng', 'Camera', 'Chỗ để xe'],
-                contact: '1900 123 456',
-                image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80'
-            },
-            'duong-linh-2': {
-                type: 'Nhà trọ',
-                name: 'Nhà trọ Dương Linh 2',
-                rating: '5.0',
-                location: 'Thôn 4, Hòa Lạc, Thạch Thất, Hà Nội',
-                description: 'Phòng trọ sạch sẽ, đầy đủ tiện nghi, thuận tiện cho sinh viên và người làm việc tại khu vực Hòa Lạc.',
-                roomCount: '1 phòng',
-                price: 'Từ 3.2 triệu/tháng',
-                layout: '1 phòng ngủ, 1 WC, kệ bếp, máy giặt, Wi-Fi.',
-                amenities: ['Wi-Fi', 'Máy giặt', 'Chỗ để xe', 'Camera'],
-                contact: '1900 123 456',
-                image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80'
-            },
-            'hoa-lac-apartment': {
-                type: 'Chung cư mini',
-                name: 'Hoa Lac Apartment',
-                rating: '5.0',
-                location: 'Hòa Lạc, Thạch Thất, Hà Nội',
-                description: 'Chung cư mini Hoa Lac Apartment với vị trí thuận tiện, nhiều tiện ích hiện đại, thích hợp cho gia đình hoặc người thuê dài hạn.',
-                roomCount: '2 phòng',
-                price: 'Từ 4.8 triệu/tháng',
-                layout: '2 phòng ngủ, 1 WC, ban công, bếp đầy đủ, máy lạnh.',
-                amenities: ['Hầm để xe', 'An ninh', 'Wi-Fi', 'Thang máy'],
-                contact: '1900 123 456',
-                image: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80'
-            },
-            'an-nguyen': {
-                type: 'Nhà trọ',
-                name: 'Nhà trọ An Nguyên',
-                rating: '5.0',
-                location: 'Cạnh cổng chính ĐH QGHN, Hòa Lạc',
-                description: 'Nhà trọ An Nguyên mang phong cách sinh viên, gần đại học chính, thuận tiện đi lại và đầy đủ tiện ích cơ bản.',
-                roomCount: '3 phòng',
-                price: 'Từ 2.8 triệu/tháng',
-                layout: '3 phòng, nhà vệ sinh tiện nghi, bếp chung, tủ lạnh, Wi-Fi.',
-                amenities: ['Wi-Fi', 'Bếp chung', 'Camera', 'Chỗ để xe'],
-                contact: '1900 123 456',
-                image: 'https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=1200&q=80'
-            },
-            'hoa-lac-xanh': {
-                type: 'Nhà trọ',
-                name: 'Nhà trọ Hòa Lạc Xanh',
-                rating: '5.0',
-                location: 'Thạch Hòa, Thạch Thất, Hà Nội',
-                description: 'Nhà trọ Hòa Lạc Xanh có không gian thoáng mát, sân vườn, đáp ứng nhu cầu ở lâu dài và tiện nghi cơ bản.',
-                roomCount: '5 phòng',
-                price: 'Từ 2.9 triệu/tháng',
-                layout: '5 phòng, bếp riêng, WC trong phòng, máy lạnh, tủ quần áo.',
-                amenities: ['Wi-Fi', 'Máy lạnh', 'Nước nóng', 'Chỗ để xe'],
-                contact: '1900 123 456',
-                image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80'
-            },
-            'tro-my-home': {
-                type: 'Nhà trọ',
-                name: 'Trọ My Home',
-                rating: '5.0',
-                location: 'Ngõ 188, Thạch Hoà, Thạch Thất, Hà Nội',
-                description: 'Trọ My Home là lựa chọn tiết kiệm, gần khu dân cư, thuận tiện cho sinh viên và nhân viên văn phòng.',
-                roomCount: '1 phòng',
-                price: 'Từ 2.6 triệu/tháng',
-                layout: '1 phòng ngủ, 1 WC, bếp tiện nghi, máy nóng nước.',
-                amenities: ['Wi-Fi', 'Nước nóng', 'Camera', 'Chỗ để xe'],
-                contact: '1900 123 456',
-                image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80'
-            },
             'gia-hung-apartment': {
                 type: 'Nhà trọ',
                 name: 'Gia Hưng Apartment',
                 rating: '5.0',
                 location: 'Gia Hưng Apartment, Tổ 1, cụm 1, Hòa Lạc, Hà Nội',
-                description: 'Căn hộ mini tại Gia Hưng Apartment với giá từ 3.3 - 3.8 triệu, phù hợp cho người thuê lâu dài và đi làm gần khu vực.',
+                description: 'Căn hộ mini tại Gia Hưng Apartment, giá 3.3 - 3.8 triệu, có sẵn phòng trống.',
                 roomCount: 'Căn hộ mini',
                 price: '3.3 - 3.8 triệu',
-                layout: 'Phòng ngủ riêng, bếp, WC riêng, máy lạnh, nước nóng.',
+                layout: 'Phòng ngủ riêng, bếp, WC riêng, nội thất cơ bản.',
                 amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'Camera'],
                 contact: '096 5767777',
-                images: ['images/docx/image10.jpg', 'images/docx/image24.jpg', 'images/docx/image22.jpg']
+                images: ['images/docx/image10.jpg', 'images/docx/image3.jpg', 'images/docx/image24.jpg', 'images/docx/image22.jpg']
             },
             'hoang-nhu': {
                 type: 'Nhà trọ',
                 name: 'CCMN Hoàng Như',
                 rating: '4.9',
                 location: '43 ngõ 1 đường cây xăng 39, Hòa Lạc, Hà Nội',
+                coords: '21.018902,105.536346',
+                mapPlaceUrl: 'https://www.google.com/maps/place/43+Ng%C3%B4+1+C%C3%A2y+X%C4%83ng+39/@21.018902,105.536346,17z/data=!3m1!4b1!4m5!3m4!1s0x31345b467e41b9e9:0xbc26d5757753bd68!8m2!3d21.018902!4d105.536346',
                 description: 'Phòng trọ tại 43 ngõ 1 đường cây xăng 39, giá 2.8 - 3.5 triệu, thuận tiện cho sinh viên và người làm việc.',
                 roomCount: 'Phòng trọ',
                 price: '2.8 - 3.5 triệu',
@@ -211,7 +135,8 @@
                 name: 'Trọ Thuận Hoài',
                 rating: '4.8',
                 location: '294 thôn 4, Hòa Lạc, Hà Nội',
-                description: 'Trọ Thuận Hoài ở 294 thôn 4, giá 1.8 - 2.0 triệu, phù hợp người thuê tiết kiệm và đi lại thuận tiện.',
+                coords: '21.0043572,105.5186649',
+                description: 'Trọ Thuận Hoài ở 294 thôn 4, giá 1.8 - 2.0 triệu, phù hợp người thuê tiết kiệm.',
                 roomCount: 'Phòng trọ',
                 price: '1.8 - 2.0 triệu',
                 layout: 'Phòng riêng, bếp chung, WC riêng, máy giặt chung.',
@@ -224,7 +149,7 @@
                 name: 'Hòa Lạc Apartment',
                 rating: '5.0',
                 location: 'Hoà Lạc Apartment 206 cụm 1, Thôn 2, Thạch Thất, Hà Nội',
-                description: 'Hòa Lạc Apartment có nội thất cơ bản và mức giá 3.5 - 4.0 triệu, phù hợp thuê lâu dài.',
+                description: 'Hòa Lạc Apartment có nội thất cơ bản, giá 3.5 - 4.0 triệu.',
                 roomCount: 'Căn hộ mini',
                 price: '3.5 - 4.0 triệu',
                 layout: 'Phòng ngủ riêng, bếp, WC riêng, ban công.',
@@ -237,20 +162,20 @@
                 name: 'Trọ Tạp hóa ông Thi',
                 rating: '4.7',
                 location: 'Hòa Lạc, Hà Nội',
-                description: 'Có tạp hóa ở cửa, chỗ để xe, 2 phòng trống, giá 1.5 triệu, điện 3.5k, dịch vụ 70k, wifi và máy giặt.',
+                description: 'Có tạp hóa ở cửa, chỗ để xe, 2 phòng trống. Giá 1.5 triệu, điện 3.5k, dịch vụ 70k (bao gồm nước, máy giặt, wifi).',
                 roomCount: '2 phòng trống',
                 price: '1.5 triệu',
-                layout: 'Phòng riêng, bếp chung, WC riêng, tiện nghi cơ bản.',
-                amenities: ['Wi-Fi', 'Máy giặt', 'Tạp hóa', 'Chỗ để xe'],
-                contact: 'Không có sđt trong tài liệu',
-                images: ['images/docx/image36.jpg', 'images/docx/image30.jpg', 'images/docx/image23.jpg', 'images/docx/image25.jpg', 'images/docx/image33.jpg', 'images/docx/image17.jpg']
+                layout: 'Phòng tầng 1 số 3, phòng tầng 2 số 8. Có tạp hóa ở cửa, chỗ để xe.',
+                amenities: ['Wi-Fi', 'Máy giặt', 'Tạp hóa', 'Chỗ để xe', 'Nước'],
+                contact: 'Liên hệ tại chỗ',
+                images: ['images/docx/image36.jpg', 'images/docx/image30.jpg', 'images/docx/image23.jpg', 'images/docx/image25.jpg', 'images/docx/image33.jpg', 'images/docx/image17.jpg', 'images/docx/image32.jpg', 'images/docx/image28.jpg', 'images/docx/image11.jpg']
             },
             'minh-chau': {
                 type: 'Nhà trọ',
                 name: 'Nhà trọ Minh Châu',
                 rating: '4.8',
                 location: 'Ngõ 157, Thôn 4, Thạch Hòa, Hòa Lạc, Hà Nội',
-                description: 'Nhà trọ Minh Châu có giá 1.5 triệu + 50k wifi + 50k giặt, phù hợp người thuê tiết kiệm.',
+                description: 'Nhà trọ Minh Châu tại ngõ 157, giá 1.5 triệu + 50k wifi + 50k giặt.',
                 roomCount: 'Phòng trọ',
                 price: '1.5 triệu + wifi/giặt',
                 layout: 'Phòng riêng, bếp chung, WC riêng, wifi và giặt chung.',
@@ -263,7 +188,7 @@
                 name: 'Tòa BT23 Khu sinh thái Minh Châu',
                 rating: '4.9',
                 location: 'Khu sinh thái Minh Châu, Đoài Phương, Hòa Lạc, Hà Nội',
-                description: 'Tòa BT23 tại khu sinh thái Minh Châu với giá 3 triệu/phòng, điện 3.5k, nước 50k, dịch vụ 250k.',
+                description: 'Tòa BT23 tại khu sinh thái Minh Châu, giá 3 triệu/phòng, điện 3.5k, nước 50k, dịch vụ 250k.',
                 roomCount: 'Phòng trọ',
                 price: '3.0 triệu/phòng',
                 layout: 'Phòng riêng, điện nước riêng, dịch vụ đầy đủ.',
@@ -275,16 +200,162 @@
                 type: 'Nhà trọ',
                 name: 'Nhà trọ Hải Đăng',
                 rating: '4.8',
-                location: 'Hòa Lạc, Hà Nội, Việt Nam',
-                description: 'Nhà trọ Hải Đăng có giá 1.6 triệu/người, phòng đôi 3.2 triệu, free dịch vụ, điện 3.6k.',
+                location: 'Nhà trọ Hải Đăng, Hòa Lạc, Hà Nội, Việt Nam',
+                description: 'Nhà trọ Hải Đăng, giá 1.6 triệu/người, phòng đôi 3.2 triệu, free dịch vụ, điện 3.6k.',
                 roomCount: 'Phòng đôi',
                 price: '1.6 triệu/người',
-                layout: 'Phòng đôi, dịch vụ miễn phí, điện nước tính riêng.',
+                layout: 'Phòng đôi 3.2 triệu, dịch vụ miễn phí, điện nước tính riêng.',
                 amenities: ['Wi-Fi', 'Dịch vụ miễn phí', 'Điện nước', 'Chỗ để xe'],
                 contact: '0973092247',
                 images: ['images/docx/image6.png', 'images/docx/image26.jpg', 'images/docx/image29.jpg', 'images/docx/image27.jpg', 'images/docx/image31.jpg']
+            },
+            'duong-linh-1': {
+                type: 'Nhà trọ',
+                name: 'Nhà trọ Dương Linh 1',
+                rating: '5.0',
+                location: 'Hòa Lạc, Thạch Thất, Hà Nội',
+                coords: '21.0135,105.5268',
+                description: 'Nhà trọ Dương Linh 1 nằm tại khu dân cư yên tĩnh, gần trường học, tiện ích đầy đủ.',
+                roomCount: '1 phòng',
+                price: 'Từ 3.5 triệu/tháng',
+                layout: '1 phòng ngủ, 1 WC, Wi-Fi, máy lạnh, nước nóng.',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Nước nóng', 'Camera', 'Chỗ để xe'],
+                contact: '1900 123 456',
+                image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80'
+            },
+            'duong-linh-2': {
+                type: 'Nhà trọ',
+                name: 'Nhà trọ Dương Linh 2',
+                rating: '5.0',
+                location: 'Thôn 4, Hòa Lạc, Thạch Thất, Hà Nội',
+                coords: '21.0150,105.5312',
+                description: 'Phòng trọ sạch sẽ, đầy đủ tiện nghi, thuận tiện cho sinh viên.',
+                roomCount: '1 phòng',
+                price: 'Từ 3.2 triệu/tháng',
+                layout: '1 phòng ngủ, 1 WC, kệ bếp, máy giặt, Wi-Fi.',
+                amenities: ['Wi-Fi', 'Máy giặt', 'Chỗ để xe', 'Camera'],
+                contact: '1900 123 456',
+                image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80'
             }
         };
+
+        function parseCoords(coords) {
+            if (!coords) return null;
+            const parts = coords.split(',').map((value) => parseFloat(value.trim()));
+            if (parts.length === 2 && parts.every((value) => !Number.isNaN(value))) {
+                return { lat: parts[0], lng: parts[1] };
+            }
+            return null;
+        }
+
+        function getMapQuery(selectedHouse) {
+            if (!selectedHouse) return '';
+            const coords = parseCoords(selectedHouse.coords);
+            if (coords) {
+                return `${coords.lat},${coords.lng}`;
+            }
+            return selectedHouse.location || '';
+        }
+
+        function buildMapEmbedUrl(selectedHouse) {
+            const query = encodeURIComponent(getMapQuery(selectedHouse));
+            return `https://maps.google.com/maps?q=${query}&hl=vi&z=17&ie=UTF8&iwloc=near&output=embed`;
+        }
+
+        function getResolvedCoords(selectedHouse) {
+            const coords = parseCoords(selectedHouse?.coords);
+            if (coords) return coords;
+
+            const location = selectedHouse?.location;
+            if (!location) return null;
+
+            const cache = getGeocodeCache();
+            return cache[location] || null;
+        }
+
+        function buildExactMapLinkUrl(selectedHouse, coords) {
+            if (!selectedHouse) return '#';
+
+            if (selectedHouse.mapPlaceUrl) {
+                return selectedHouse.mapPlaceUrl;
+            }
+
+            const location = selectedHouse.location || selectedHouse.name || '';
+            const resolved = coords || getResolvedCoords(selectedHouse);
+
+            if (resolved) {
+                const lat = resolved.lat.toFixed(6);
+                const lng = resolved.lng.toFixed(6);
+                return `https://www.google.com/maps/place/${encodeURIComponent(location)}/@${lat},${lng},17z`;
+            }
+
+            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+        }
+
+        function updateMapLink(selectedHouse, coords) {
+            const mapLink = document.getElementById('map-link');
+            if (!mapLink) return;
+            mapLink.href = buildExactMapLinkUrl(selectedHouse, coords);
+        }
+
+        function getGeocodeCache() {
+            try {
+                return JSON.parse(localStorage.getItem('locafyGeocodeCache')) || {};
+            } catch (error) {
+                return {};
+            }
+        }
+
+        function saveGeocodeCache(cache) {
+            localStorage.setItem('locafyGeocodeCache', JSON.stringify(cache));
+        }
+
+        async function geocodeLocation(location) {
+            if (!location) return null;
+
+            const cache = getGeocodeCache();
+            if (cache[location]) {
+                return cache[location];
+            }
+
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=vn&q=${encodeURIComponent(location)}`, {
+                    headers: { Accept: 'application/json' }
+                });
+                const data = await response.json();
+                if (data && data[0]) {
+                    const result = {
+                        lat: parseFloat(data[0].lat),
+                        lng: parseFloat(data[0].lon)
+                    };
+                    cache[location] = result;
+                    saveGeocodeCache(cache);
+                    return result;
+                }
+            } catch (error) {
+                console.warn('Geocoding failed', error);
+            }
+
+            return null;
+        }
+
+        function mountMapFrame(selectedHouse, coordsOverride) {
+            const mapContainer = document.getElementById('map-container');
+            if (!mapContainer) return;
+
+            const houseForMap = coordsOverride
+                ? { ...selectedHouse, coords: `${coordsOverride.lat},${coordsOverride.lng}` }
+                : selectedHouse;
+
+            const iframe = document.createElement('iframe');
+            iframe.src = buildMapEmbedUrl(houseForMap);
+            iframe.title = selectedHouse ? selectedHouse.name : 'Bản đồ vị trí Google Maps';
+            iframe.loading = 'lazy';
+            iframe.referrerPolicy = 'no-referrer-when-downgrade';
+            iframe.className = 'h-full w-full border-0 rounded-2xl';
+            mapContainer.innerHTML = '';
+            mapContainer.appendChild(iframe);
+        }
 
         function getSellerListings() {
             try {
@@ -294,103 +365,86 @@
             }
         }
 
-        function deleteSellerListing(listingId) {
-            const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser') || 'null');
-            if (!currentUser || currentUser.role !== 'seller') {
-                return;
-            }
-            const listings = getSellerListings().filter((listing) => listing.id !== listingId);
-            localStorage.setItem('locafySellerListings', JSON.stringify(listings));
-            window.location.href = 'Mainpage.html';
+        let mapRenderId = 0;
+        let activeMapHouse = null;
+
+        function applyMapView(selectedHouse, coords) {
+            mountMapFrame(selectedHouse, coords);
+            updateMapLink(selectedHouse, coords);
         }
 
-        async function geocodeLocation(location) {
-            const query = encodeURIComponent(location || 'Hòa Lạc, Thạch Thất, Hà Nội');
-            try {
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${query}`, {
-                    headers: { Accept: 'application/json' }
-                });
-                const data = await response.json();
-                if (data && data[0]) {
-                    return {
-                        lat: parseFloat(data[0].lat),
-                        lng: parseFloat(data[0].lon)
-                    };
-                }
-            } catch (error) {
-                console.warn('Geocoding failed', error);
-            }
-
-            return { lat: 21.0285, lng: 105.8542 };
-        }
-
-        function renderMap(location, title) {
+        function renderMap(selectedHouse, fallbackLocation) {
+            const renderId = ++mapRenderId;
+            activeMapHouse = selectedHouse;
             const mapContainer = document.getElementById('map-container');
             const mapStatus = document.getElementById('map-status');
-            const mapLink = document.getElementById('map-link');
             if (!mapContainer) return;
 
-            mapContainer.innerHTML = '';
-            mapStatus.textContent = `Đang hiển thị vị trí: ${location}`;
-            mapLink.href = `https://www.openstreetmap.org/search?query=${encodeURIComponent(location)}`;
+            const displayLocation = selectedHouse ? selectedHouse.location : fallbackLocation;
+            const initialCoords = getResolvedCoords(selectedHouse);
+            mapStatus.textContent = `Vị trí: ${displayLocation}`;
+            applyMapView(selectedHouse, initialCoords);
 
-            const mapDiv = document.createElement('div');
-            mapDiv.id = 'leaflet-map';
-            mapDiv.className = 'h-full w-full bg-slate-100';
-            mapContainer.appendChild(mapDiv);
-
-            if (typeof L === 'undefined') {
-                mapStatus.textContent = 'Không thể tải bản đồ lúc này.';
-                return;
+            const needsGeocode = !parseCoords(selectedHouse?.coords) && !selectedHouse?.mapPlaceUrl && selectedHouse?.location && !initialCoords;
+            if (needsGeocode) {
+                mapStatus.textContent = `Đang xác định vị trí: ${displayLocation}`;
+                geocodeLocation(selectedHouse.location).then((coords) => {
+                    if (renderId !== mapRenderId) return;
+                    if (coords) {
+                        applyMapView(selectedHouse, coords);
+                    }
+                    mapStatus.textContent = `Vị trí: ${displayLocation}`;
+                });
             }
-
-            const map = L.map('leaflet-map', {
-                zoomControl: true,
-                scrollWheelZoom: false,
-                attributionControl: true
-            }).setView([21.0285, 105.8542], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors',
-                subdomains: ['a', 'b', 'c']
-            }).addTo(map);
-            map.whenReady(() => {
-                setTimeout(() => map.invalidateSize(), 100);
-            });
-
-            geocodeLocation(location).then((coords) => {
-                map.setView([coords.lat, coords.lng], 15);
-                L.marker([coords.lat, coords.lng]).addTo(map).bindPopup(title).openPopup();
-                mapStatus.textContent = `Đang hiển thị vị trí: ${location}`;
-            });
         }
 
-        function getSelectedHouse() {
-            const params = new URLSearchParams(window.location.search);
-            const houseId = params.get('house');
+        async function openExactGoogleMaps(event) {
+            event.preventDefault();
+            if (!activeMapHouse) return;
+
+            const mapLink = event.currentTarget;
+            const originalText = mapLink.textContent;
+            let coords = getResolvedCoords(activeMapHouse);
+
+            if (!coords && activeMapHouse.location) {
+                mapLink.textContent = 'Đang mở bản đồ...';
+                coords = await geocodeLocation(activeMapHouse.location);
+                mapLink.textContent = originalText;
+                if (coords) {
+                    applyMapView(activeMapHouse, coords);
+                }
+            }
+
+            window.open(buildExactMapLinkUrl(activeMapHouse, coords), '_blank', 'noopener,noreferrer');
+        }
+
+        function getSelectedHouse(houseId) {
             const sellerListings = getSellerListings();
             const sellerHouse = sellerListings.find((listing) => listing.id === houseId);
 
             if (sellerHouse) {
                 return {
+                    id: sellerHouse.id || houseId,
                     type: 'Nhà bán',
                     name: sellerHouse.title,
                     rating: '5.0',
                     location: sellerHouse.location,
+                    coords: sellerHouse.coords || '',
                     description: sellerHouse.description,
                     roomCount: sellerHouse.roomCount || '1 phòng',
                     price: sellerHouse.price,
-                    layout: sellerHouse.layout || '2 phòng ngủ, 1 WC, bếp riêng',
-                    amenities: (sellerHouse.amenities || 'Wi-Fi, chỗ để xe').split(',').map((item) => item.trim()).filter(Boolean),
-                    contact: sellerHouse.contact || '1900 123 456',
-                    image: sellerHouse.image || 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80'
+                    layout: sellerHouse.layout || 'Phòng khép kín',
+                    amenities: (sellerHouse.amenities || 'Wi-Fi').split(',').map((item) => item.trim()).filter(Boolean),
+                    contact: sellerHouse.contact || '0869 161 118',
+                    image: sellerHouse.image || ''
                 };
             }
 
             if (houseDatabase[houseId]) {
-                return houseDatabase[houseId];
+                return { id: houseId, ...houseDatabase[houseId] };
             }
 
-            return null;
+            return houseDatabase['hoang-nhu'];
         }
 
         let currentImageIndex = 0;
@@ -398,40 +452,20 @@
 
         function showHouseImage(index) {
             const imageEl = document.getElementById('detail-image');
-            if (!imageEl || !currentImages.length) {
-                return;
-            }
+            if (!imageEl || !currentImages.length) return;
             currentImageIndex = (index + currentImages.length) % currentImages.length;
             imageEl.src = currentImages[currentImageIndex];
-            imageEl.alt = currentImages[currentImageIndex];
         }
 
         function renderHouseDetail() {
-            const selectedHouse = getSelectedHouse();
-
-            if (!selectedHouse) {
-                document.getElementById('detail-image').src = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80';
-                document.getElementById('detail-image').alt = 'Chưa có tin đăng';
-                document.getElementById('detail-type').textContent = 'Thông tin';
-                document.getElementById('detail-name').textContent = 'Chưa có tin đăng';
-                document.getElementById('detail-address').innerHTML = '<i class="fa-solid fa-location-dot mr-2 text-blue-500"></i>Chưa có địa chỉ';
-                document.getElementById('detail-description').textContent = 'Chưa có thông tin chi tiết cho căn nhà này.';
-                document.getElementById('detail-room-count').textContent = '—';
-                document.getElementById('detail-price').textContent = '—';
-                document.getElementById('detail-info-list').innerHTML = `
-                    <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Loại hình:</strong> Chưa có tin đăng</span></li>
-                    <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Vị trí:</strong> Chưa có địa chỉ</span></li>
-                    <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Bố trí:</strong> Chưa có thông tin</span></li>
-                    <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Liên hệ:</strong> Chưa có thông tin</span></li>
-                `;
-                document.getElementById('detail-amenities').innerHTML = '<span class="rounded-full bg-blue-50 px-3 py-1.5 text-blue-700">Chưa có tiện ích</span>';
-                document.getElementById('map-status').textContent = 'Chưa có dữ liệu vị trí để hiển thị.';
-                return;
-            }
+            const params = new URLSearchParams(window.location.search);
+            const houseId = params.get('house') || 'hoang-nhu';
+            const selectedHouse = getSelectedHouse(houseId);
 
             currentImages = selectedHouse.images || [selectedHouse.image || ''];
             currentImageIndex = 0;
             showHouseImage(0);
+
             document.getElementById('detail-type').textContent = selectedHouse.type;
             document.getElementById('detail-name').textContent = selectedHouse.name;
             document.getElementById('detail-address').innerHTML = `<i class="fa-solid fa-location-dot mr-2 text-blue-500"></i>${selectedHouse.location}`;
@@ -455,12 +489,21 @@
                 amenitiesContainer.appendChild(chip);
             });
 
-            renderMap(selectedHouse.location, selectedHouse.name);
+            renderMap(selectedHouse, selectedHouse.location);
+
+            const callLink = document.getElementById('detail-call');
+            if (callLink) {
+                const phoneDigits = (selectedHouse.contact || '').replace(/\D/g, '');
+                callLink.href = phoneDigits ? `tel:${phoneDigits}` : '#';
+                callLink.classList.toggle('pointer-events-none', !phoneDigits);
+                callLink.classList.toggle('opacity-60', !phoneDigits);
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('prev-image')?.addEventListener('click', () => showHouseImage(currentImageIndex - 1));
             document.getElementById('next-image')?.addEventListener('click', () => showHouseImage(currentImageIndex + 1));
+            document.getElementById('map-link')?.addEventListener('click', openExactGoogleMaps);
             renderHouseDetail();
         });
     </script>
