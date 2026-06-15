@@ -20,7 +20,15 @@
 
         <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6">
             <section class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-                <img id="detail-image" class="w-full h-80 object-cover" src="" alt="Hình nhà trọ">
+                <div class="relative">
+                    <img id="detail-image" class="w-full h-80 object-cover" src="" alt="Hình nhà trọ">
+                    <button id="prev-image" type="button" class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button id="next-image" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
                 <div class="p-6">
                     <div class="flex items-start justify-between gap-4">
                         <div>
@@ -171,6 +179,110 @@
                 amenities: ['Wi-Fi', 'Nước nóng', 'Camera', 'Chỗ để xe'],
                 contact: '1900 123 456',
                 image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80'
+            },
+            'gia-hung-apartment': {
+                type: 'Nhà trọ',
+                name: 'Gia Hưng Apartment',
+                rating: '5.0',
+                location: 'Gia Hưng Apartment, Tổ 1, cụm 1, Hòa Lạc, Hà Nội',
+                description: 'Căn hộ mini tại Gia Hưng Apartment với giá từ 3.3 - 3.8 triệu, phù hợp cho người thuê lâu dài và đi làm gần khu vực.',
+                roomCount: 'Căn hộ mini',
+                price: '3.3 - 3.8 triệu',
+                layout: 'Phòng ngủ riêng, bếp, WC riêng, máy lạnh, nước nóng.',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'Camera'],
+                contact: '096 5767777',
+                images: ['images/docx/image10.jpg', 'images/docx/image24.jpg', 'images/docx/image22.jpg']
+            },
+            'hoang-nhu': {
+                type: 'Nhà trọ',
+                name: 'CCMN Hoàng Như',
+                rating: '4.9',
+                location: '43 ngõ 1 đường cây xăng 39, Hòa Lạc, Hà Nội',
+                description: 'Phòng trọ tại 43 ngõ 1 đường cây xăng 39, giá 2.8 - 3.5 triệu, thuận tiện cho sinh viên và người làm việc.',
+                roomCount: 'Phòng trọ',
+                price: '2.8 - 3.5 triệu',
+                layout: 'Phòng riêng, bếp chung, WC riêng, nội thất cơ bản.',
+                amenities: ['Wi-Fi', 'Bếp chung', 'Chỗ để xe', 'Camera'],
+                contact: '0869 161 118',
+                images: ['images/docx/image5.png', 'images/docx/image21.png', 'images/docx/image37.png', 'images/docx/image19.png']
+            },
+            'tro-thuan-hoai': {
+                type: 'Nhà trọ',
+                name: 'Trọ Thuận Hoài',
+                rating: '4.8',
+                location: '294 thôn 4, Hòa Lạc, Hà Nội',
+                description: 'Trọ Thuận Hoài ở 294 thôn 4, giá 1.8 - 2.0 triệu, phù hợp người thuê tiết kiệm và đi lại thuận tiện.',
+                roomCount: 'Phòng trọ',
+                price: '1.8 - 2.0 triệu',
+                layout: 'Phòng riêng, bếp chung, WC riêng, máy giặt chung.',
+                amenities: ['Wi-Fi', 'Máy giặt', 'Chỗ để xe', 'Camera'],
+                contact: '0398701893',
+                images: ['images/docx/image15.jpg', 'images/docx/image35.jpg', 'images/docx/image12.jpg', 'images/docx/image1.jpg']
+            },
+            'hoa-lac-apartment-docx': {
+                type: 'Nhà trọ',
+                name: 'Hòa Lạc Apartment',
+                rating: '5.0',
+                location: 'Hoà Lạc Apartment 206 cụm 1, Thôn 2, Thạch Thất, Hà Nội',
+                description: 'Hòa Lạc Apartment có nội thất cơ bản và mức giá 3.5 - 4.0 triệu, phù hợp thuê lâu dài.',
+                roomCount: 'Căn hộ mini',
+                price: '3.5 - 4.0 triệu',
+                layout: 'Phòng ngủ riêng, bếp, WC riêng, ban công.',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'An ninh', 'Chỗ để xe'],
+                contact: '0896899996',
+                images: ['images/docx/image14.jpg', 'images/docx/image2.jpg', 'images/docx/image16.jpg', 'images/docx/image13.jpg']
+            },
+            'otro-thi': {
+                type: 'Nhà trọ',
+                name: 'Trọ Tạp hóa ông Thi',
+                rating: '4.7',
+                location: 'Hòa Lạc, Hà Nội',
+                description: 'Có tạp hóa ở cửa, chỗ để xe, 2 phòng trống, giá 1.5 triệu, điện 3.5k, dịch vụ 70k, wifi và máy giặt.',
+                roomCount: '2 phòng trống',
+                price: '1.5 triệu',
+                layout: 'Phòng riêng, bếp chung, WC riêng, tiện nghi cơ bản.',
+                amenities: ['Wi-Fi', 'Máy giặt', 'Tạp hóa', 'Chỗ để xe'],
+                contact: 'Không có sđt trong tài liệu',
+                images: ['images/docx/image36.jpg', 'images/docx/image30.jpg', 'images/docx/image23.jpg', 'images/docx/image25.jpg', 'images/docx/image33.jpg', 'images/docx/image17.jpg']
+            },
+            'minh-chau': {
+                type: 'Nhà trọ',
+                name: 'Nhà trọ Minh Châu',
+                rating: '4.8',
+                location: 'Ngõ 157, Thôn 4, Thạch Hòa, Hòa Lạc, Hà Nội',
+                description: 'Nhà trọ Minh Châu có giá 1.5 triệu + 50k wifi + 50k giặt, phù hợp người thuê tiết kiệm.',
+                roomCount: 'Phòng trọ',
+                price: '1.5 triệu + wifi/giặt',
+                layout: 'Phòng riêng, bếp chung, WC riêng, wifi và giặt chung.',
+                amenities: ['Wi-Fi', 'Máy giặt', 'Chỗ để xe', 'Camera'],
+                contact: '0984658666',
+                images: ['images/docx/image20.png', 'images/docx/image9.png', 'images/docx/image38.png', 'images/docx/image7.png']
+            },
+            'bt23-minh-chau': {
+                type: 'Nhà trọ',
+                name: 'Tòa BT23 Khu sinh thái Minh Châu',
+                rating: '4.9',
+                location: 'Khu sinh thái Minh Châu, Đoài Phương, Hòa Lạc, Hà Nội',
+                description: 'Tòa BT23 tại khu sinh thái Minh Châu với giá 3 triệu/phòng, điện 3.5k, nước 50k, dịch vụ 250k.',
+                roomCount: 'Phòng trọ',
+                price: '3.0 triệu/phòng',
+                layout: 'Phòng riêng, điện nước riêng, dịch vụ đầy đủ.',
+                amenities: ['Wi-Fi', 'Điện nước', 'Dịch vụ', 'An ninh'],
+                contact: '0912010306',
+                images: ['images/docx/image4.png', 'images/docx/image34.png', 'images/docx/image8.png', 'images/docx/image18.png']
+            },
+            'hai-dang': {
+                type: 'Nhà trọ',
+                name: 'Nhà trọ Hải Đăng',
+                rating: '4.8',
+                location: 'Hòa Lạc, Hà Nội, Việt Nam',
+                description: 'Nhà trọ Hải Đăng có giá 1.6 triệu/người, phòng đôi 3.2 triệu, free dịch vụ, điện 3.6k.',
+                roomCount: 'Phòng đôi',
+                price: '1.6 triệu/người',
+                layout: 'Phòng đôi, dịch vụ miễn phí, điện nước tính riêng.',
+                amenities: ['Wi-Fi', 'Dịch vụ miễn phí', 'Điện nước', 'Chỗ để xe'],
+                contact: '0973092247',
+                images: ['images/docx/image6.png', 'images/docx/image26.jpg', 'images/docx/image29.jpg', 'images/docx/image27.jpg', 'images/docx/image31.jpg']
             }
         };
 
@@ -281,6 +393,19 @@
             return null;
         }
 
+        let currentImageIndex = 0;
+        let currentImages = [];
+
+        function showHouseImage(index) {
+            const imageEl = document.getElementById('detail-image');
+            if (!imageEl || !currentImages.length) {
+                return;
+            }
+            currentImageIndex = (index + currentImages.length) % currentImages.length;
+            imageEl.src = currentImages[currentImageIndex];
+            imageEl.alt = currentImages[currentImageIndex];
+        }
+
         function renderHouseDetail() {
             const selectedHouse = getSelectedHouse();
 
@@ -304,8 +429,9 @@
                 return;
             }
 
-            document.getElementById('detail-image').src = selectedHouse.image;
-            document.getElementById('detail-image').alt = selectedHouse.name;
+            currentImages = selectedHouse.images || [selectedHouse.image || ''];
+            currentImageIndex = 0;
+            showHouseImage(0);
             document.getElementById('detail-type').textContent = selectedHouse.type;
             document.getElementById('detail-name').textContent = selectedHouse.name;
             document.getElementById('detail-address').innerHTML = `<i class="fa-solid fa-location-dot mr-2 text-blue-500"></i>${selectedHouse.location}`;
@@ -332,7 +458,11 @@
             renderMap(selectedHouse.location, selectedHouse.name);
         }
 
-        document.addEventListener('DOMContentLoaded', renderHouseDetail);
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('prev-image')?.addEventListener('click', () => showHouseImage(currentImageIndex - 1));
+            document.getElementById('next-image')?.addEventListener('click', () => showHouseImage(currentImageIndex + 1));
+            renderHouseDetail();
+        });
     </script>
 </body>
 </html>
