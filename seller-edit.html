@@ -10,7 +10,7 @@
 <body class="min-h-screen bg-slate-50 text-slate-900">
     <div class="max-w-5xl mx-auto px-4 py-10">
         <div class="mb-6 flex items-center justify-between">
-            <a href="Mainpage.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-700">
+            <a href="index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-700">
                 <i class="fa-solid fa-arrow-left"></i>
                 Về trang chủ
             </a>
@@ -115,7 +115,7 @@
         if (!currentUser || currentUser.role !== 'seller') {
             showMessage('Bạn cần đăng nhập bằng tài khoản chủ nhà để chỉnh sửa tin.', 'error');
             setTimeout(() => {
-                window.location.href = 'Mainpage.html';
+                window.location.href = 'index.html';
             }, 1200);
         }
 
@@ -124,7 +124,7 @@
         if (!listing) {
             showMessage('Không tìm thấy tin đăng để chỉnh sửa.', 'error');
             setTimeout(() => {
-                window.location.href = 'Mainpage.html';
+                window.location.href = 'index.html';
             }, 1200);
         }
 
@@ -208,7 +208,7 @@
             saveListings(updatedListings);
             showMessage('Cập nhật tin thành công!', 'success');
             setTimeout(() => {
-                window.location.href = 'Mainpage.html';
+                window.location.href = 'index.html';
             }, 800);
         });
     </script>
