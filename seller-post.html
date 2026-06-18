@@ -10,7 +10,7 @@
 <body class="min-h-screen bg-slate-50 text-slate-900">
     <div class="max-w-5xl mx-auto px-4 py-10">
         <div class="mb-6 flex items-center justify-between">
-            <a href="Mainpage.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-700">
+            <a href="index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-700">
                 <i class="fa-solid fa-arrow-left"></i>
                 Về trang chủ
             </a>
@@ -114,7 +114,7 @@
         if (!currentUser || currentUser.role !== 'seller') {
             showMessage('Bạn cần đăng nhập bằng tài khoản chủ nhà để sử dụng trang này.', 'error');
             setTimeout(() => {
-                window.location.href = 'Mainpage.html';
+                window.location.href = 'index.html';
             }, 1200);
         }
 
@@ -193,7 +193,7 @@
             renderAmenities();
             showMessage('Đăng tin thành công! Tin của bạn đã được lưu và sẽ xuất hiện trên trang chủ.', 'success');
             setTimeout(() => {
-                window.location.href = 'Mainpage.html';
+                window.location.href = 'index.html';
             }, 1000);
         });
     </script>
