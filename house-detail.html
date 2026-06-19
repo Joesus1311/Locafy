@@ -14,7 +14,10 @@
                 <i class="fa-solid fa-arrow-left"></i>
                 Quay lại danh sách
             </a>
-            <div class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">Locafy</div>
+            <div class="flex items-center gap-4">
+                <div id="auth-actions" class="flex items-center gap-2"></div>
+                <div class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">Locafy</div>
+            </div>
         </div>
 
         <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-6">
@@ -33,6 +36,14 @@
                         <div>
                             <p id="detail-type" class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Nhà trọ</p>
                             <h1 id="detail-name" class="mt-2 text-3xl font-bold text-gray-900">Tên nhà</h1>
+                        </div>
+                        <div id="seller-actions" class="flex gap-2 hidden">
+                            <a id="btn-edit-listing" href="#" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white rounded-xl transition">
+                                <i class="fa-solid fa-pen-to-square"></i> Sửa
+                            </a>
+                            <button id="btn-delete-listing" onclick="deleteCurrentListing()" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-red-600 hover:bg-red-700 text-white rounded-xl transition">
+                                <i class="fa-solid fa-trash"></i> Xóa
+                            </button>
                         </div>
                     </div>
                     <p id="detail-address" class="mt-3 flex items-center text-sm text-gray-500">
@@ -113,7 +124,7 @@
                 layout: 'Phòng ngủ riêng, bếp, WC riêng, nội thất cơ bản.',
                 amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'Camera'],
                 contact: '096 5767777',
-                images: ['images/docx/image10.jpg', 'images/docx/image3.jpg', 'images/docx/image24.jpg', 'images/docx/image22.jpg']
+                images: ['images/docx/image24.jpg', 'images/docx/image10.jpg', 'images/docx/image3.jpg', 'images/docx/image22.jpg']
             },
             'hoang-nhu': {
                 type: 'Nhà trọ',
@@ -142,7 +153,7 @@
                 layout: 'Phòng riêng, bếp chung, WC riêng, máy giặt chung.',
                 amenities: ['Wi-Fi', 'Máy giặt', 'Chỗ để xe', 'Camera'],
                 contact: '0398701893',
-                images: ['images/docx/image15.jpg', 'images/docx/image35.jpg', 'images/docx/image12.jpg', 'images/docx/image1.jpg']
+                images: ['images/docx/image1.jpg', 'images/docx/image15.jpg', 'images/docx/image35.jpg', 'images/docx/image12.jpg']
             },
             'hoa-lac-apartment-docx': {
                 type: 'Nhà trọ',
@@ -155,7 +166,7 @@
                 layout: 'Phòng ngủ riêng, bếp, WC riêng, ban công.',
                 amenities: ['Wi-Fi', 'Máy lạnh', 'An ninh', 'Chỗ để xe'],
                 contact: '0896899996',
-                images: ['images/docx/image14.jpg', 'images/docx/image2.jpg', 'images/docx/image16.jpg', 'images/docx/image13.jpg']
+                images: ['images/docx/image13.jpg', 'images/docx/image14.jpg', 'images/docx/image2.jpg', 'images/docx/image16.jpg']
             },
             'otro-thi': {
                 type: 'Nhà trọ',
@@ -168,7 +179,7 @@
                 layout: 'Phòng tầng 1 số 3, phòng tầng 2 số 8. Có tạp hóa ở cửa, chỗ để xe.',
                 amenities: ['Wi-Fi', 'Máy giặt', 'Tạp hóa', 'Chỗ để xe', 'Nước'],
                 contact: 'Liên hệ tại chỗ',
-                images: ['images/docx/image36.jpg', 'images/docx/image30.jpg', 'images/docx/image23.jpg', 'images/docx/image25.jpg', 'images/docx/image33.jpg', 'images/docx/image17.jpg', 'images/docx/image32.jpg', 'images/docx/image28.jpg', 'images/docx/image11.jpg']
+                images: ['images/docx/image25.jpg', 'images/docx/image36.jpg', 'images/docx/image30.jpg', 'images/docx/image23.jpg', 'images/docx/image33.jpg', 'images/docx/image17.jpg', 'images/docx/image32.jpg', 'images/docx/image28.jpg', 'images/docx/image11.jpg']
             },
             'minh-chau': {
                 type: 'Nhà trọ',
@@ -181,7 +192,7 @@
                 layout: 'Phòng riêng, bếp chung, WC riêng, wifi và giặt chung.',
                 amenities: ['Wi-Fi', 'Máy giặt', 'Chỗ để xe', 'Camera'],
                 contact: '0984658666',
-                images: ['images/docx/image20.png', 'images/docx/image9.png', 'images/docx/image38.png', 'images/docx/image7.png']
+                images: ['images/docx/image38.png', 'images/docx/image20.png', 'images/docx/image9.png', 'images/docx/image7.png']
             },
             'bt23-minh-chau': {
                 type: 'Nhà trọ',
@@ -473,11 +484,24 @@
             document.getElementById('detail-room-count').textContent = selectedHouse.roomCount;
             document.getElementById('detail-price').textContent = selectedHouse.price;
 
+            const user = getCurrentUser();
+            let contactDisplay = selectedHouse.contact;
+            let isMasked = false;
+
+            if (!user) {
+                contactDisplay = '******* (Đăng nhập để xem)';
+                isMasked = true;
+            }
+
+            const contactItemHtml = isMasked
+                ? `<li class="flex items-start cursor-pointer hover:underline text-blue-600 font-semibold" onclick="showAuthModal()"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Liên hệ:</strong> ${contactDisplay}</span></li>`
+                : `<li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Liên hệ:</strong> ${contactDisplay}</span></li>`;
+
             document.getElementById('detail-info-list').innerHTML = `
                 <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Loại hình:</strong> ${selectedHouse.type}</span></li>
                 <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Vị trí:</strong> ${selectedHouse.location}</span></li>
                 <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Bố trí:</strong> ${selectedHouse.layout}</span></li>
-                <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Liên hệ:</strong> ${selectedHouse.contact}</span></li>
+                ${contactItemHtml}
             `;
 
             const amenitiesContainer = document.getElementById('detail-amenities');
@@ -493,17 +517,177 @@
 
             const callLink = document.getElementById('detail-call');
             if (callLink) {
-                const phoneDigits = (selectedHouse.contact || '').replace(/\D/g, '');
-                callLink.href = phoneDigits ? `tel:${phoneDigits}` : '#';
-                callLink.classList.toggle('pointer-events-none', !phoneDigits);
-                callLink.classList.toggle('opacity-60', !phoneDigits);
+                if (isMasked) {
+                    callLink.textContent = '******* (Đăng nhập để gọi)';
+                    callLink.href = '#';
+                    callLink.onclick = (e) => {
+                        e.preventDefault();
+                        showAuthModal();
+                    };
+                } else {
+                    callLink.textContent = 'Gọi ngay';
+                    const phoneDigits = (selectedHouse.contact || '').replace(/\D/g, '');
+                    callLink.href = phoneDigits ? `tel:${phoneDigits}` : '#';
+                    callLink.classList.toggle('pointer-events-none', !phoneDigits);
+                    callLink.classList.toggle('opacity-60', !phoneDigits);
+                    callLink.onclick = null;
+                }
             }
+
+            const sellerActions = document.getElementById('seller-actions');
+            if (sellerActions) {
+                if (user && user.role === 'seller' && houseId.startsWith('seller-')) {
+                    sellerActions.classList.remove('hidden');
+                    const editBtn = document.getElementById('btn-edit-listing');
+                    if (editBtn) {
+                        editBtn.href = `seller-edit.html?id=${houseId}`;
+                    }
+                } else {
+                    sellerActions.classList.add('hidden');
+                }
+            }
+        }
+    </script>
+
+    <!-- Auth Pop-up Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full mx-4 shadow-2xl relative transform scale-95 transition-all duration-300">
+            <!-- Close Button -->
+            <button id="close-auth-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition" aria-label="Đóng">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <div class="bg-blue-50 text-blue-600 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
+                    <i class="fa-solid fa-lock text-lg"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900">Yêu cầu Đăng nhập</h3>
+                <p class="text-sm text-gray-500 mt-2">Vui lòng đăng nhập hoặc tạo tài khoản để có thể xem thông tin liên hệ của chủ nhà trọ.</p>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="space-y-3">
+                <a href="login.html" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition duration-200">
+                    Đăng nhập
+                </a>
+                <a href="register.html" class="block w-full text-center bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 font-semibold py-3 px-4 rounded-xl transition duration-200">
+                    Đăng ký tài khoản
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const currentUserKey = 'locafyCurrentUser';
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem(currentUserKey));
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function updateAuthUI() {
+            const user = getCurrentUser();
+            const authActions = document.getElementById('auth-actions');
+            if (!authActions) return;
+
+            if (user) {
+                let postListingHtml = '';
+                if (user.role === 'seller') {
+                    postListingHtml = `<a href="seller-post.html" class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-700 transition">Đăng Tin Miễn Phí</a>`;
+                }
+                authActions.innerHTML = `
+                    <span class="text-xs font-semibold text-gray-700">Xin chào, ${user.username || 'Thành viên'}</span>
+                    <button onclick="logout()" class="inline-flex items-center justify-center rounded-lg border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 hover:bg-red-50 transition">Đăng xuất</button>
+                    ${postListingHtml}
+                `;
+            } else {
+                const currentUrl = encodeURIComponent(window.location.href);
+                authActions.innerHTML = `
+                    <a href="login.html?redirect=${currentUrl}" class="inline-flex items-center justify-center rounded-lg border border-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-700 bg-white hover:bg-gray-50 transition">Đăng nhập</a>
+                    <a href="register.html?redirect=${currentUrl}" class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-blue-700 transition">Đăng ký</a>
+                `;
+            }
+        }
+
+        window.logout = function() {
+            localStorage.removeItem(currentUserKey);
+            window.location.reload();
+        };
+
+        const authModal = document.getElementById('auth-modal');
+        const closeAuthModalBtn = document.getElementById('close-auth-modal');
+
+        window.showAuthModal = function() {
+            if (!authModal) return;
+
+            const loginBtn = authModal.querySelector('a[href^="login.html"]');
+            const registerBtn = authModal.querySelector('a[href^="register.html"]');
+            const currentUrl = encodeURIComponent(window.location.href);
+            if (loginBtn) {
+                loginBtn.href = `login.html?redirect=${currentUrl}`;
+            }
+            if (registerBtn) {
+                registerBtn.href = `register.html?redirect=${currentUrl}`;
+            }
+
+            authModal.classList.remove('hidden');
+            authModal.classList.add('flex');
+            setTimeout(() => {
+                authModal.classList.remove('opacity-0');
+                authModal.classList.add('opacity-100');
+                const card = authModal.querySelector('.transform');
+                if (card) {
+                    card.classList.remove('scale-95');
+                    card.classList.add('scale-100');
+                }
+            }, 10);
+        };
+
+        window.hideAuthModal = function() {
+            if (!authModal) return;
+            authModal.classList.remove('opacity-100');
+            authModal.classList.add('opacity-0');
+            const card = authModal.querySelector('.transform');
+            if (card) {
+                card.classList.remove('scale-100');
+                card.classList.add('scale-95');
+            }
+            setTimeout(() => {
+                authModal.classList.add('hidden');
+                authModal.classList.remove('flex');
+            }, 300);
+        };
+
+        window.deleteCurrentListing = function() {
+            const params = new URLSearchParams(window.location.search);
+            const houseId = params.get('house');
+            if (houseId && confirm("Bạn có chắc chắn muốn xóa tin đăng này không?")) {
+                const listings = getSellerListings();
+                const filtered = listings.filter(item => item.id !== houseId);
+                localStorage.setItem('locafySellerListings', JSON.stringify(filtered));
+                window.location.href = 'index.html';
+            }
+        };
+
+        if (closeAuthModalBtn) {
+            closeAuthModalBtn.addEventListener('click', hideAuthModal);
+        }
+        if (authModal) {
+            authModal.addEventListener('click', (e) => {
+                if (e.target === authModal) {
+                    hideAuthModal();
+                }
+            });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('prev-image')?.addEventListener('click', () => showHouseImage(currentImageIndex - 1));
             document.getElementById('next-image')?.addEventListener('click', () => showHouseImage(currentImageIndex + 1));
             document.getElementById('map-link')?.addEventListener('click', openExactGoogleMaps);
+            updateAuthUI();
             renderHouseDetail();
         });
     </script>

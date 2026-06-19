@@ -103,7 +103,9 @@
             loginForm.reset();
             showMessage(`Đăng nhập thành công! Chào mừng ${matchedUser.name}.`, 'success');
             setTimeout(() => {
-                window.location.href = 'index.html';
+                const params = new URLSearchParams(window.location.search);
+                const redirectUrl = params.get('redirect');
+                window.location.href = redirectUrl ? decodeURIComponent(redirectUrl) : 'index.html';
             }, 1000);
         });
     </script>
