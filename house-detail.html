@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD0G0J8NC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RVD0G0J8NC');
+    </script>
     <title>Chi tiết nhà trọ - Locafy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
+
 <body class="min-h-screen bg-slate-50 text-slate-900">
     <div class="max-w-6xl mx-auto px-4 py-8">
         <div class="mb-6 flex items-center justify-between gap-3">
@@ -16,7 +27,9 @@
             </a>
             <div class="flex items-center gap-4">
                 <div id="auth-actions" class="flex items-center gap-2"></div>
-                <div class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">Locafy</div>
+                <div
+                    class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">
+                    Locafy</div>
             </div>
         </div>
 
@@ -24,24 +37,29 @@
             <section class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
                 <div class="relative">
                     <img id="detail-image" class="w-full h-80 object-cover" src="" alt="Hình nhà trọ">
-                    <button id="prev-image" type="button" class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+                    <button id="prev-image" type="button"
+                        class="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
                         <i class="fa-solid fa-chevron-left"></i>
                     </button>
-                    <button id="next-image" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+                    <button id="next-image" type="button"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
                         <i class="fa-solid fa-chevron-right"></i>
                     </button>
                 </div>
                 <div class="p-6">
                     <div class="flex items-start justify-between gap-4">
                         <div>
-                            <p id="detail-type" class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Nhà trọ</p>
+                            <p id="detail-type" class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Nhà
+                                trọ</p>
                             <h1 id="detail-name" class="mt-2 text-3xl font-bold text-gray-900">Tên nhà</h1>
                         </div>
                         <div id="seller-actions" class="flex gap-2 hidden">
-                            <a id="btn-edit-listing" href="#" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white rounded-xl transition">
+                            <a id="btn-edit-listing" href="#"
+                                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white rounded-xl transition">
                                 <i class="fa-solid fa-pen-to-square"></i> Sửa
                             </a>
-                            <button id="btn-delete-listing" onclick="deleteCurrentListing()" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-red-600 hover:bg-red-700 text-white rounded-xl transition">
+                            <button id="btn-delete-listing" onclick="deleteCurrentListing()"
+                                class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold bg-red-600 hover:bg-red-700 text-white rounded-xl transition">
                                 <i class="fa-solid fa-trash"></i> Xóa
                             </button>
                         </div>
@@ -72,9 +90,11 @@
                                 <h2 class="mt-1 text-xl font-bold text-gray-900">Vị trí trên bản đồ</h2>
                             </div>
                             <!-- Thẻ link điều hướng khi click xem trực tiếp -->
-                            <a id="map-link" href="#" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-blue-600 hover:text-blue-700">Xem trên Google Maps</a>
+                            <a id="map-link" href="#" target="_blank" rel="noopener noreferrer"
+                                class="text-sm font-semibold text-blue-600 hover:text-blue-700">Xem trên Google Maps</a>
                         </div>
-                        <div id="map-container" class="mt-4 h-72 overflow-hidden rounded-2xl border border-gray-100 bg-slate-100"></div>
+                        <div id="map-container"
+                            class="mt-4 h-72 overflow-hidden rounded-2xl border border-gray-100 bg-slate-100"></div>
                         <p id="map-status" class="mt-2 text-sm text-gray-500">Đang tải vị trí chính xác...</p>
                     </section>
                 </div>
@@ -85,10 +105,18 @@
                     <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Thông tin nhanh</p>
                     <h2 class="mt-2 text-xl font-bold text-gray-900">Bảng thông tin</h2>
                     <ul id="detail-info-list" class="mt-4 space-y-2 text-sm text-gray-600">
-                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Loại hình:</strong> Nhà trọ</span></li>
-                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Vị trí:</strong> Khu vực</span></li>
-                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Bố trí:</strong> Bố trí</span></li>
-                        <li class="flex items-start"><i class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong class="text-gray-900">Liên hệ:</strong> 1900 123 456</span></li>
+                        <li class="flex items-start"><i
+                                class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong
+                                    class="text-gray-900">Loại hình:</strong> Nhà trọ</span></li>
+                        <li class="flex items-start"><i
+                                class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong
+                                    class="text-gray-900">Vị trí:</strong> Khu vực</span></li>
+                        <li class="flex items-start"><i
+                                class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong
+                                    class="text-gray-900">Bố trí:</strong> Bố trí</span></li>
+                        <li class="flex items-start"><i
+                                class="fa-solid fa-circle-check text-green-500 mt-1 mr-2"></i><span><strong
+                                    class="text-gray-900">Liên hệ:</strong> 1900 123 456</span></li>
                     </ul>
                 </section>
 
@@ -104,7 +132,9 @@
                     <h2 class="mt-2 text-xl font-bold">Liên hệ để đặt lịch xem</h2>
                     <p class="mt-2 text-sm text-blue-100">Gọi tổng đài để trao đổi chi tiết về căn nhà này.</p>
                     <div class="mt-4">
-                        <a id="detail-call" href="tel:0869161118" class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-blue-700">Gọi ngay</a>
+                        <a id="detail-call" href="tel:0869161118"
+                            class="inline-flex rounded-xl bg-white px-4 py-2 text-sm font-bold text-blue-700">Gọi
+                            ngay</a>
                     </div>
                 </section>
             </aside>
@@ -550,28 +580,35 @@
     </script>
 
     <!-- Auth Pop-up Modal -->
-    <div id="auth-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
-        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full mx-4 shadow-2xl relative transform scale-95 transition-all duration-300">
+    <div id="auth-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div
+            class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full mx-4 shadow-2xl relative transform scale-95 transition-all duration-300">
             <!-- Close Button -->
-            <button id="close-auth-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition" aria-label="Đóng">
+            <button id="close-auth-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+                aria-label="Đóng">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            
+
             <!-- Header -->
             <div class="text-center mb-6">
-                <div class="bg-blue-50 text-blue-600 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
+                <div
+                    class="bg-blue-50 text-blue-600 w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
                     <i class="fa-solid fa-lock text-lg"></i>
                 </div>
                 <h3 class="text-xl font-bold text-gray-900">Yêu cầu Đăng nhập</h3>
-                <p class="text-sm text-gray-500 mt-2">Vui lòng đăng nhập hoặc tạo tài khoản để có thể xem thông tin liên hệ của chủ nhà trọ.</p>
+                <p class="text-sm text-gray-500 mt-2">Vui lòng đăng nhập hoặc tạo tài khoản để có thể xem thông tin liên
+                    hệ của chủ nhà trọ.</p>
             </div>
-            
+
             <!-- Action Buttons -->
             <div class="space-y-3">
-                <a href="login.html" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition duration-200">
+                <a href="login.html"
+                    class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition duration-200">
                     Đăng nhập
                 </a>
-                <a href="register.html" class="block w-full text-center bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 font-semibold py-3 px-4 rounded-xl transition duration-200">
+                <a href="register.html"
+                    class="block w-full text-center bg-gray-50 hover:bg-gray-100 text-gray-700 border border-gray-200 font-semibold py-3 px-4 rounded-xl transition duration-200">
                     Đăng ký tài khoản
                 </a>
             </div>
@@ -612,7 +649,7 @@
             }
         }
 
-        window.logout = function() {
+        window.logout = function () {
             localStorage.removeItem(currentUserKey);
             window.location.reload();
         };
@@ -620,7 +657,7 @@
         const authModal = document.getElementById('auth-modal');
         const closeAuthModalBtn = document.getElementById('close-auth-modal');
 
-        window.showAuthModal = function() {
+        window.showAuthModal = function () {
             if (!authModal) return;
 
             const loginBtn = authModal.querySelector('a[href^="login.html"]');
@@ -646,7 +683,7 @@
             }, 10);
         };
 
-        window.hideAuthModal = function() {
+        window.hideAuthModal = function () {
             if (!authModal) return;
             authModal.classList.remove('opacity-100');
             authModal.classList.add('opacity-0');
@@ -661,7 +698,7 @@
             }, 300);
         };
 
-        window.deleteCurrentListing = function() {
+        window.deleteCurrentListing = function () {
             const params = new URLSearchParams(window.location.search);
             const houseId = params.get('house');
             if (houseId && confirm("Bạn có chắc chắn muốn xóa tin đăng này không?")) {
@@ -692,4 +729,5 @@
         });
     </script>
 </body>
+
 </html>

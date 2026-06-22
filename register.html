@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD0G0J8NC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RVD0G0J8NC');
+    </script>
     <title>Đăng ký - Locafy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -72,6 +81,11 @@
                     Tài khoản sẽ được lưu trên thiết bị này.
                 </div>
 
+                <div class="mt-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 text-sm text-blue-900 shadow-sm">
+                    <p class="font-bold flex items-center gap-1.5 text-blue-800"><i class="fa-solid fa-circle-info text-blue-600"></i> Bản thử nghiệm cục bộ</p>
+                    <p class="mt-1 text-xs text-blue-850 leading-relaxed">Tài khoản được đăng ký sẽ lưu trữ trong <strong>localStorage</strong> của trình duyệt trên thiết bị này.</p>
+                </div>
+
                 <p class="mt-4 text-sm text-gray-600">
                     Đã có tài khoản?
                     <a href="login.html" class="font-semibold text-blue-700">Đăng nhập ngay</a>
@@ -111,6 +125,16 @@
             }
         }
 
+        // Preserve redirect param on navigation to login
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        if (redirect) {
+            const loginLink = document.querySelector('a[href="login.html"]');
+            if (loginLink) {
+                loginLink.href = `login.html?redirect=${encodeURIComponent(redirect)}`;
+            }
+        }
+
         registerForm.addEventListener('submit', (event) => {
             event.preventDefault();
             const formData = new FormData(registerForm);
@@ -123,6 +147,35 @@
 
             if (!name || !username || !email || !phone || !password) {
                 showMessage('Vui lòng điền đầy đủ thông tin.', 'error');
+                return;
+            }
+
+            // Validations
+            if (name.length < 3) {
+                showMessage('Họ và tên phải có ít nhất 3 ký tự.', 'error');
+                return;
+            }
+
+            const usernameRegex = /^[a-zA-Z0-9_]{4,}$/;
+            if (!usernameRegex.test(username)) {
+                showMessage('Tên đăng nhập phải chứa ít nhất 4 ký tự và chỉ gồm chữ cái, số, hoặc dấu gạch dưới.', 'error');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Email không hợp lệ. Vui lòng nhập đúng định dạng (ví dụ: email@domain.com).', 'error');
+                return;
+            }
+
+            const phoneRegex = /^(03|05|07|08|09)\d{8}$/;
+            if (!phoneRegex.test(phone)) {
+                showMessage('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam gồm 10 chữ số (bắt đầu bằng 03, 05, 07, 08, hoặc 09).', 'error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('Mật khẩu phải có ít nhất 6 ký tự.', 'error');
                 return;
             }
 
@@ -143,7 +196,6 @@
             registerForm.reset();
             showMessage(`Đăng ký thành công! Xin chào ${name}. Bạn đã được đăng nhập với vai trò ${role === 'seller' ? 'người bán/chủ nhà' : 'người mua/thuê'}.`, 'success');
             setTimeout(() => {
-                const params = new URLSearchParams(window.location.search);
                 const redirectUrl = params.get('redirect');
                 window.location.href = redirectUrl ? decodeURIComponent(redirectUrl) : 'index.html';
             }, 1200);

@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD0G0J8NC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RVD0G0J8NC');
+    </script>
     <title>Đăng nhập - Locafy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -25,6 +34,31 @@
                 <div class="mt-5 rounded-2xl bg-slate-100 p-4 text-sm text-slate-700">
                     <p class="font-semibold">Tài khoản lưu cục bộ</p>
                     <p class="mt-1">Nếu bạn đã đăng ký trước đó, thông tin sẽ được kiểm tra từ <span class="font-bold">localStorage</span>.</p>
+                </div>
+
+                <div class="mt-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 text-sm text-blue-900 shadow-sm">
+                    <p class="font-bold flex items-center gap-1.5 text-blue-800"><i class="fa-solid fa-circle-info text-blue-600"></i> Bản thử nghiệm cục bộ</p>
+                    <p class="mt-1 text-xs text-blue-850 leading-relaxed">Ứng dụng hoạt động không cần máy chủ (frontend prototype). Tài khoản của bạn được mô phỏng hoàn toàn qua <strong>localStorage</strong>.</p>
+                    
+                    <div class="mt-4 border-t border-blue-100 pt-3">
+                        <p class="font-bold text-xs uppercase tracking-wider text-blue-700 mb-2">Đăng nhập nhanh với tài khoản Demo:</p>
+                        <div class="space-y-2">
+                            <button type="button" onclick="autofill('buyer@locafy.com', '123456')" class="w-full text-left bg-white hover:bg-blue-50 border border-blue-200 rounded-xl p-2.5 transition flex items-center justify-between text-xs group">
+                                <div>
+                                    <span class="font-semibold block text-blue-900 group-hover:text-blue-600">Người thuê nhà (Buyer Demo)</span>
+                                    <span class="text-gray-500 font-mono">buyer@locafy.com / 123456</span>
+                                </div>
+                                <i class="fa-solid fa-right-to-bracket text-blue-400 group-hover:text-blue-600 transition"></i>
+                            </button>
+                            <button type="button" onclick="autofill('seller@locafy.com', '123456')" class="w-full text-left bg-white hover:bg-blue-50 border border-blue-200 rounded-xl p-2.5 transition flex items-center justify-between text-xs group">
+                                <div>
+                                    <span class="font-semibold block text-blue-900 group-hover:text-blue-600">Chủ nhà trọ (Seller Demo)</span>
+                                    <span class="text-gray-500 font-mono">seller@locafy.com / 123456</span>
+                                </div>
+                                <i class="fa-solid fa-right-to-bracket text-blue-400 group-hover:text-blue-600 transition"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -68,6 +102,51 @@
             }
         }
 
+        function seedDemoAccounts() {
+            const accounts = loadAccounts();
+            const demoAccounts = [
+                {
+                    name: 'Chủ nhà Demo',
+                    username: 'seller123',
+                    email: 'seller@locafy.com',
+                    phone: '0912345678',
+                    password: '123456',
+                    role: 'seller',
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    name: 'Người thuê Demo',
+                    username: 'buyer123',
+                    email: 'buyer@locafy.com',
+                    phone: '0987654321',
+                    password: '123456',
+                    role: 'buyer',
+                    createdAt: new Date().toISOString()
+                }
+            ];
+            
+            let updated = false;
+            demoAccounts.forEach(demoAcc => {
+                if (!accounts.some(acc => acc.username.toLowerCase() === demoAcc.username.toLowerCase() || acc.email.toLowerCase() === demoAcc.email.toLowerCase())) {
+                    accounts.push(demoAcc);
+                    updated = true;
+                }
+            });
+            
+            if (updated) {
+                localStorage.setItem(accountsKey, JSON.stringify(accounts));
+            }
+        }
+
+        // Initialize Seeding
+        seedDemoAccounts();
+
+        window.autofill = function(email, password) {
+            document.getElementById('identifier').value = email;
+            document.getElementById('password').value = password;
+            showMessage('Đã tự động điền tài khoản demo. Hãy nhấn Đăng nhập!', 'info');
+        };
+
         function showMessage(text, tone = 'info') {
             loginMessage.textContent = text;
             loginMessage.className = 'mt-4 rounded-2xl px-4 py-3 text-sm border';
@@ -78,6 +157,16 @@
                 loginMessage.classList.add('bg-red-50', 'border-red-200', 'text-red-700');
             } else {
                 loginMessage.classList.add('bg-gray-50', 'border-gray-200', 'text-gray-700');
+            }
+        }
+
+        // Preserve redirect param on navigation to register
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        if (redirect) {
+            const registerLink = document.querySelector('a[href="register.html"]');
+            if (registerLink) {
+                registerLink.href = `register.html?redirect=${encodeURIComponent(redirect)}`;
             }
         }
 
@@ -103,7 +192,6 @@
             loginForm.reset();
             showMessage(`Đăng nhập thành công! Chào mừng ${matchedUser.name}.`, 'success');
             setTimeout(() => {
-                const params = new URLSearchParams(window.location.search);
                 const redirectUrl = params.get('redirect');
                 window.location.href = redirectUrl ? decodeURIComponent(redirectUrl) : 'index.html';
             }, 1000);
