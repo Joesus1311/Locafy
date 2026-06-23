@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Quản lý Hóa đơn & Thanh toán - Locafy Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'seller') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Chủ trọ!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Hub</span>
+        </div>
+        
+        <div class="px-4 mb-4">
+            <a href="add-room.html" class="w-full bg-white text-teal-deep font-label-md text-sm py-2.5 rounded-full hover:bg-stone-100 transition-colors shadow-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">add</span>
+                Đăng tin phòng mới
+            </a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto px-2 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-sm">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-management.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-sm">Quản lý phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="appointment-management.html">
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="font-label-md text-sm">Lịch hẹn xem</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="tenant-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-sm">Khách thuê</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="payment.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+                <span class="font-label-md text-sm font-bold">Hóa đơn & Tiền</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="message-manage.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-sm">Tin nhắn</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="maintenance-requests.html">
+                <span class="material-symbols-outlined">build</span>
+                <span class="font-label-md text-sm">Yêu cầu sửa chữa</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="contract-builder.html">
+                <span class="material-symbols-outlined">edit_document</span>
+                <span class="font-label-md text-sm">Tạo hợp đồng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="account-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-sm">Cài đặt hồ sơ</span>
+            </a>
+        </nav>
+        
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-sm">Đăng xuất</span>
+            </button>
+        </div>
+        
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Hóa đơn thu tiền nhà</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="openCreateInvoiceModal()" class="flex items-center gap-2 bg-teal-deep text-white px-5 py-2 rounded-full font-bold hover:opacity-90 active:scale-95 transition-all text-sm">
+                    <span class="material-symbols-outlined text-lg">add_card</span>
+                    Tạo hóa đơn mới
+                </button>
+                <div class="text-right">
+                    <p class="font-label-md text-sm text-on-surface leading-tight" id="header-landlord-name">Chủ trọ Locafy</p>
+                    <p class="font-label-sm text-xs text-on-surface-variant">Chủ nhà</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold text-sm" id="header-avatar-fallback">LL</div>
+            </div>
+        </header>
+
+        <!-- Page Content Scrollable Area -->
+        <div class="flex-grow overflow-y-auto pt-24 px-8 pb-12 max-w-[1280px] w-full mx-auto">
+            <!-- Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-[20px] soft-shadow flex flex-col justify-center">
+                    <span class="font-label-sm text-stone-500 uppercase tracking-wider mb-1 text-xs">Đã thu (Tháng này)</span>
+                    <h2 class="font-headline-md text-2xl font-bold mt-1 text-success" id="stat-collected">0 ₫</h2>
+                </div>
+                <div class="bg-white p-6 rounded-[20px] soft-shadow flex flex-col justify-center">
+                    <span class="font-label-sm text-stone-500 uppercase tracking-wider mb-1 text-xs">Chưa thanh toán</span>
+                    <h2 class="font-headline-md text-2xl font-bold mt-1 text-amber-500" id="stat-unpaid">0 ₫</h2>
+                </div>
+                <div class="bg-white p-6 rounded-[20px] soft-shadow flex flex-col justify-center">
+                    <span class="font-label-sm text-stone-500 uppercase tracking-wider mb-1 text-xs">Quá hạn cần thu</span>
+                    <h2 class="font-headline-md text-2xl font-bold mt-1 text-error" id="stat-overdue">0 ₫</h2>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-[20px] soft-shadow overflow-hidden">
+                <div class="p-6 border-b border-stone-100 flex flex-col md:flex-row justify-between items-center gap-4 bg-stone-50/50">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-bold text-teal-deep">Bộ lọc trạng thái:</span>
+                        <select id="status-filter" class="bg-white border border-stone-200 rounded-xl px-4 py-2 font-label-sm text-xs focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all">
+                            <option value="all">Tất cả</option>
+                            <option value="Đã thanh toán">Đã thanh toán</option>
+                            <option value="Chưa thanh toán">Chưa thanh toán</option>
+                            <option value="Quá hạn">Quá hạn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-stone-50 border-b border-stone-200">
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Mã / Khách thuê</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Phòng thuê</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Số tiền</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Hạn đóng tiền</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Trạng thái</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider text-right">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100 font-body-sm text-sm" id="invoices-tbody">
+                            <!-- Dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-4 border-t border-stone-100 flex items-center justify-between text-stone-500" id="invoices-summary">
+                    Hiển thị 0 hóa đơn
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Invoice Modal Dialog -->
+    <div id="createInvoiceModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md hidden transition-all duration-300 opacity-0">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl transform scale-90 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-headline-sm text-lg font-bold text-teal-deep">Tạo hóa đơn thu tiền nhà</h3>
+                <button onclick="closeCreateInvoiceModal()" class="text-stone-400 hover:text-stone-600">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            
+            <form onsubmit="submitNewInvoice(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-stone-500 mb-1">Chọn khách thuê có phòng đang hoạt động *</label>
+                    <select id="modal-room-select" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none" required>
+                        <!-- Rented rooms options -->
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-semibold text-stone-500 mb-1">Số tiền thanh toán (VND) *</label>
+                    <input id="modal-amount" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none font-bold text-teal-deep" type="number" placeholder="5500000" required>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-stone-500 mb-1">Hạn đóng tiền *</label>
+                    <input id="modal-duedate" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none" type="date" required>
+                </div>
+
+                <div class="flex justify-end gap-2 pt-4">
+                    <button type="button" onclick="closeCreateInvoiceModal()" class="px-5 py-2 rounded-full border border-stone-200 text-stone-500 text-sm font-semibold hover:bg-stone-50">Hủy</button>
+                    <button type="submit" class="px-6 py-2 bg-teal-deep text-white text-sm font-bold rounded-full hover:opacity-90 active:scale-95 shadow-md">Tạo hóa đơn</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const paymentsKey = 'locafyPayments';
+        const listingsKey = 'locafySellerListings';
+
+        const samplePayments = [
+            {
+                id: 'INV-2026-001',
+                tenantName: 'Người thuê Demo',
+                tenantEmail: 'buyer@locafy.com',
+                roomTitle: 'Studio 201 - Blue Horizon',
+                amount: 7500000,
+                dueDate: '2026-07-05',
+                status: 'Chưa thanh toán',
+                ownerUsername: 'seller123'
+            },
+            {
+                id: 'INV-2026-002',
+                tenantName: 'Lê Thu Hà',
+                tenantEmail: 'ha.le@example.com',
+                roomTitle: 'Phòng 102 - Urban Loft',
+                amount: 6000000,
+                dueDate: '2026-06-05',
+                status: 'Đã thanh toán',
+                ownerUsername: 'seller123'
+            },
+            {
+                id: 'INV-2026-003',
+                tenantName: 'Nguyễn Thị Mai',
+                tenantEmail: 'mai.nguyen@example.com',
+                roomTitle: 'P. 201 - Vinhomes Central',
+                amount: 5500000,
+                dueDate: '2026-05-05',
+                status: 'Đã thanh toán',
+                ownerUsername: 'seller123'
+            },
+            {
+                id: 'INV-2026-004',
+                tenantName: 'Trần Văn Hùng',
+                tenantEmail: 'hung.tran@example.com',
+                roomTitle: 'P. 405 - Masteri Thảo Điền',
+                amount: 8000000,
+                dueDate: '2026-06-01',
+                status: 'Quá hạn',
+                ownerUsername: 'seller123'
+            }
+        ];
+
+        async function loadPayments() {
+            if (window.db) {
+                return await window.db.getPayments();
+            }
+            let data = localStorage.getItem(paymentsKey);
+            if (!data) {
+                localStorage.setItem(paymentsKey, JSON.stringify(samplePayments));
+                return samplePayments;
+            }
+            return JSON.parse(data);
+        }
+
+        function savePayments(list) {
+            localStorage.setItem(paymentsKey, JSON.stringify(list));
+        }
+
+        if (currentUser) {
+            const displayName = currentUser.name || currentUser.username;
+            const _el_ln = document.getElementById('landlord-name'); if(_el_ln) _el_ln.textContent = displayName;
+            document.getElementById('header-landlord-name').textContent = displayName;
+            const initials = displayName.substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+        }
+
+        const tbody = document.getElementById('payments-tbody');
+        const summary = document.getElementById('payments-summary');
+        const statusFilter = document.getElementById('status-filter');
+
+        async function renderPayments() {
+            const allPayments = await loadPayments();
+            const payments = allPayments.filter(p => !p.ownerUsername || p.ownerUsername === currentUser.username);
+            const statusVal = statusFilter.value;
+
+            const filtered = payments.filter(p => {
+                return (statusVal === 'all') || (p.status === statusVal);
+            });
+
+            // Compute summary metrics
+            let collected = 0;
+            let unpaid = 0;
+            let overdue = 0;
+
+            payments.forEach(p => {
+                if (p.status === 'Đã thanh toán') collected += p.amount;
+                else if (p.status === 'Chưa thanh toán') unpaid += p.amount;
+                else if (p.status === 'Quá hạn') overdue += p.amount;
+            });
+
+            document.getElementById('stat-collected').textContent = collected.toLocaleString() + ' ₫';
+            document.getElementById('stat-unpaid').textContent = unpaid.toLocaleString() + ' ₫';
+            document.getElementById('stat-overdue').textContent = overdue.toLocaleString() + ' ₫';
+
+            summary.textContent = `Hiển thị ${filtered.length} / ${payments.length} hóa đơn`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-stone-400">
+                            Không tìm thấy hóa đơn nào.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            filtered.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-stone-50/50 transition-colors';
+
+                let badgeClass = 'bg-stone-100 text-stone-600';
+                if (p.status === 'Đã thanh toán') badgeClass = 'bg-green-50 text-success';
+                else if (p.status === 'Chưa thanh toán') badgeClass = 'bg-amber-50 text-amber-700';
+                else if (p.status === 'Quá hạn') badgeClass = 'bg-red-50 text-error';
+                else if (p.status === 'Chờ chủ nhà xác nhận') badgeClass = 'bg-blue-50 text-blue-700 font-bold border border-blue-200 animate-pulse';
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6">
+                        <div>
+                            <p class="font-bold text-teal-deep">${p.tenantName}</p>
+                            <p class="text-[11px] text-stone-400">Mã: ${p.id}</p>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 text-stone-600">${p.roomTitle}</td>
+                    <td class="py-4 px-6 font-bold text-stone-800">${p.amount.toLocaleString()} ₫</td>
+                    <td class="py-4 px-6 text-stone-500">${p.dueDate}</td>
+                    <td class="py-4 px-6">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">
+                            ${p.status}
+                        </span>
+                    </td>
+                    <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-2">
+                            ${p.status === 'Chờ chủ nhà xác nhận' ? `
+                                <button onclick="markAsPaid('${p.id}')" class="px-3 py-1 bg-blue-600 text-white rounded-full text-xs font-bold hover:bg-blue-700 transition-all shadow-sm">Xác nhận thu tiền</button>
+                            ` : (p.status !== 'Đã thanh toán' ? `
+                                <button onclick="markAsPaid('${p.id}')" class="px-3 py-1 bg-success text-white rounded-full text-xs font-bold hover:opacity-90 active:scale-95 transition-all shadow-sm">Thu tiền</button>
+                                <button onclick="alert('Đã gửi thông báo nhắc đóng tiền nhà đến ${p.tenantName}')" class="px-3 py-1 bg-stone-100 border border-stone-200 text-stone-600 text-xs font-bold rounded-full hover:bg-stone-200 transition-all">Nhắc nhở</button>
+                            ` : `
+                                <span class="text-xs text-success italic font-medium">Hoàn tất</span>
+                            `)}
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.markAsPaid = async function(id) {
+            const payments = await loadPayments();
+            const idx = payments.findIndex(p => p.id === id);
+            if (idx !== -1) {
+                payments[idx].status = 'Đã thanh toán';
+                if (window.db) {
+                    await window.db.savePayment(payments[idx]);
+                } else {
+                    savePayments(payments);
+                }
+                await renderPayments();
+            }
+        };
+
+        window.openCreateInvoiceModal = async function() {
+            let activeContracts = [];
+            if (window.db) {
+                const contracts = await window.db.getContracts();
+                activeContracts = contracts.filter(c => c.ownerUsername === currentUser.username && c.status === 'active');
+            } else {
+                const listings = JSON.parse(localStorage.getItem(listingsKey)) || [];
+                const myRentedRooms = listings.filter(item => item.ownerUsername === currentUser.username && (item.status === 'rented' || item.rented === true));
+                activeContracts = myRentedRooms.map(room => ({
+                    renterName: room.tenant ? room.tenant.name : 'Khách thuê',
+                    renterEmail: room.tenant ? room.tenant.email : '',
+                    roomTitle: room.title,
+                    price: room.price,
+                    roomId: room.id,
+                    ownerUsername: room.ownerUsername
+                }));
+            }
+
+            const select = document.getElementById('modal-room-select');
+            select.innerHTML = '';
+
+            if (activeContracts.length === 0) {
+                select.innerHTML = '<option value="" disabled>Chưa có phòng nào có khách thuê</option>';
+            } else {
+                activeContracts.forEach(contract => {
+                    const opt = document.createElement('option');
+                    opt.value = JSON.stringify({
+                        tenantName: contract.renterName,
+                        tenantEmail: contract.renterEmail || '',
+                        roomTitle: contract.roomTitle,
+                        roomId: contract.roomId,
+                        price: contract.price,
+                        ownerUsername: contract.ownerUsername
+                    });
+                    opt.textContent = `${contract.renterName} - ${contract.roomTitle}`;
+                    select.appendChild(opt);
+                });
+            }
+
+            const modal = document.getElementById('createInvoiceModal');
+            const innerCard = modal.querySelector('div');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                innerCard.classList.remove('scale-90');
+                innerCard.classList.add('scale-100');
+            }, 10);
+        };
+
+        window.closeCreateInvoiceModal = function() {
+            const modal = document.getElementById('createInvoiceModal');
+            const innerCard = modal.querySelector('div');
+            modal.classList.add('opacity-0');
+            innerCard.classList.add('scale-90');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+
+        window.submitNewInvoice = async function(e) {
+            e.preventDefault();
+            const roomDataStr = document.getElementById('modal-room-select').value;
+            const amountVal = parseInt(document.getElementById('modal-amount').value);
+            const dueDate = document.getElementById('modal-duedate').value;
+
+            if (!roomDataStr) {
+                alert('Vui lòng chọn khách thuê để tạo hóa đơn!');
+                return;
+            }
+
+            const roomData = JSON.parse(roomDataStr);
+            const payments = await loadPayments();
+            
+            const newInvoice = {
+                id: 'INV-2026-' + (payments.length + 1).toString().padStart(3, '0'),
+                tenantName: roomData.tenantName,
+                tenantEmail: roomData.tenantEmail || '',
+                roomTitle: roomData.roomTitle,
+                amount: amountVal,
+                dueDate: dueDate,
+                status: 'Chưa thanh toán',
+                ownerUsername: roomData.ownerUsername || currentUser.username,
+                roomId: roomData.roomId || ''
+            };
+
+            if (window.db) {
+                await window.db.savePayment(newInvoice);
+            } else {
+                payments.push(newInvoice);
+                savePayments(payments);
+            }
+            closeCreateInvoiceModal();
+            await renderPayments();
+            
+            // Clear inputs
+            document.getElementById('modal-amount').value = '';
+            document.getElementById('modal-duedate').value = '';
+        };
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        statusFilter.addEventListener('change', () => renderPayments());
+
+        async function init() {
+            let attempts = 0;
+            while (!window.db && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+            await renderPayments();
+        }
+        init();
+    </script>
+</body>
+</html>

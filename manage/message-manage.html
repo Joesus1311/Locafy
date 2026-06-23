@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Tin nhắn & Tư vấn - Locafy Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'seller') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Chủ trọ!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Hub</span>
+        </div>
+        
+        <div class="px-4 mb-4">
+            <a href="add-room.html" class="w-full bg-white text-teal-deep font-label-md text-sm py-2.5 rounded-full hover:bg-stone-100 transition-colors shadow-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">add</span>
+                Đăng tin phòng mới
+            </a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto px-2 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-sm">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-management.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-sm">Quản lý phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="appointment-management.html">
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="font-label-md text-sm">Lịch hẹn xem</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="tenant-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-sm">Khách thuê</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="payment.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-sm">Hóa đơn & Tiền</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="message-manage.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                <span class="font-label-md text-sm font-bold">Tin nhắn</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="maintenance-requests.html">
+                <span class="material-symbols-outlined">build</span>
+                <span class="font-label-md text-sm">Yêu cầu sửa chữa</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="contract-builder.html">
+                <span class="material-symbols-outlined">edit_document</span>
+                <span class="font-label-md text-sm">Tạo hợp đồng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="account-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-sm">Cài đặt hồ sơ</span>
+            </a>
+        </nav>
+        
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-sm">Đăng xuất</span>
+            </button>
+        </div>
+        
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex h-screen overflow-hidden bg-surface relative">
+        <!-- Message Workspace Split layout -->
+        <div class="flex-grow flex h-full overflow-hidden">
+            <!-- Left Side Conversations List -->
+            <section class="w-80 lg:w-96 bg-white border-r border-stone-200 flex flex-col z-10 shrink-0">
+                <div class="p-4 border-b border-stone-100 space-y-3 bg-stone-50/50">
+                    <h2 class="font-bold text-lg text-teal-deep">Hộp thư tư vấn</h2>
+                    <div class="relative w-full">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-[18px]">search</span>
+                        <input class="w-full bg-white text-on-surface placeholder-stone-400 rounded-xl pl-10 pr-4 py-2 border border-stone-200 focus:ring-2 focus:ring-teal-deep outline-none text-xs" placeholder="Tìm kiếm tin nhắn..." type="text">
+                    </div>
+                </div>
+                
+                <div class="flex-1 overflow-y-auto no-scrollbar py-2" id="conversations-list">
+                    <!-- Conversations list will be dynamically rendered here -->
+                </div>
+            </section>
+
+            <!-- Right Side Messaging Feed -->
+            <section class="flex-1 flex flex-col bg-white h-full relative">
+                <!-- Chat Window Header -->
+                <div class="h-20 border-b border-stone-100 flex items-center justify-between px-6 bg-white/80 backdrop-blur-md sticky top-0 z-20">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold text-sm" id="chat-header-avatar">
+                            NM
+                        </div>
+                        <div>
+                            <h2 id="chat-header-name" class="font-bold text-base text-stone-900 leading-snug">Nguyễn Thị Mai</h2>
+                            <div class="flex items-center gap-1 text-success text-[10px] font-semibold">
+                                <span class="w-1.5 h-1.5 rounded-full bg-success"></span>
+                                Đang hoạt động
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed -->
+                <div id="message-container" class="flex-grow overflow-y-auto p-6 space-y-4 bg-stone-50/30">
+                    <!-- Loaded dynamically -->
+                </div>
+
+                <!-- Textbox and Quick replies -->
+                <div class="bg-white border-t border-stone-100 p-4">
+                    <div class="flex gap-2 overflow-x-auto no-scrollbar mb-3">
+                        <button onclick="sendQuickReply('Dạ vâng, phòng vẫn còn trống em nhé.')" class="bg-stone-50 text-teal-deep border border-stone-200 hover:border-teal-deep/30 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all shadow-sm">
+                            Phòng vẫn còn em nhé
+                        </button>
+                        <button onclick="sendQuickReply('Em muốn hẹn giờ qua xem phòng trực tiếp không?')" class="bg-stone-50 text-teal-deep border border-stone-200 hover:border-teal-deep/30 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all shadow-sm">
+                            Có tiện xem phòng chiều nay không?
+                        </button>
+                        <button onclick="sendQuickReply('Cảm ơn em đã liên hệ Locafy!')" class="bg-stone-50 text-teal-deep border border-stone-200 hover:border-teal-deep/30 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all shadow-sm">
+                            Cảm ơn em nhé!
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-2 bg-stone-50 border border-stone-200 rounded-2xl p-2 focus-within:ring-2 focus-within:ring-teal-deep focus-within:bg-white transition-all shadow-inner">
+                        <input id="chat-input" class="flex-grow bg-transparent border-none focus:ring-0 text-sm py-2 px-3 text-stone-800 placeholder-stone-400 outline-none" placeholder="Nhập câu trả lời..." type="text">
+                        <button onclick="sendMessage()" class="bg-teal-deep text-white w-9 h-9 rounded-full flex items-center justify-center hover:opacity-90 active:scale-95 transition-all shadow-sm shrink-0">
+                            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">send</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        let activeChatKey = ''; // username of the buyer
+        let buyersList = [];
+        let buyerChats = {}; // map of buyer username -> list of messages
+
+        async function loadConversations() {
+            let accounts = [];
+            if (window.db) {
+                accounts = await window.db.getAccounts();
+            } else {
+                accounts = JSON.parse(localStorage.getItem('locafyAccounts') || '[]');
+            }
+            buyersList = accounts.filter(acc => acc.role === 'buyer');
+
+            // Load messages and store chats
+            for (let buyer of buyersList) {
+                const chatId = `${currentUser.username}_${buyer.username}`;
+                let messages = [];
+                if (window.db) {
+                    messages = await window.db.getChats(chatId, currentUser.username);
+                } else {
+                    const allChats = JSON.parse(localStorage.getItem('locafyChats') || '{}');
+                    messages = allChats[chatId] || [];
+                }
+                buyerChats[buyer.username] = messages;
+            }
+
+            // Set first buyer as active if not set
+            if (buyersList.length > 0 && !activeChatKey) {
+                activeChatKey = buyersList[0].username;
+            }
+
+            renderConversationsList();
+            renderMessages();
+        }
+
+        function renderConversationsList() {
+            const listContainer = document.getElementById('conversations-list');
+            if (!listContainer) return;
+
+            listContainer.innerHTML = '';
+
+            buyersList.forEach(buyer => {
+                const messages = buyerChats[buyer.username] || [];
+                const lastMsg = messages.length > 0 ? messages[messages.length - 1].text : 'Chưa có tin nhắn...';
+                const lastTime = messages.length > 0 ? messages[messages.length - 1].time : '';
+                const name = buyer.name || buyer.username;
+                const initials = name.substring(0, 2).toUpperCase();
+
+                const div = document.createElement('div');
+                const isActive = buyer.username === activeChatKey;
+                div.className = `px-4 py-3 cursor-pointer flex gap-3 items-center border-l-4 transition-all ${
+                    isActive ? 'bg-stone-100/80 border-teal-deep font-semibold' : 'hover:bg-stone-50 border-transparent'
+                }`;
+                div.onclick = () => selectChat(buyer.username);
+                div.innerHTML = `
+                    <div class="w-10 h-10 rounded-full bg-teal-deep/10 text-teal-deep flex items-center justify-center font-bold text-sm shrink-0">${initials}</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-baseline mb-0.5">
+                            <h3 class="font-bold text-xs text-stone-850 truncate">${name}</h3>
+                            <span class="text-[10px] text-stone-400">${lastTime}</span>
+                        </div>
+                        <p class="text-xs text-stone-500 truncate">${lastMsg}</p>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+        }
+
+        function renderMessages() {
+            const buyer = buyersList.find(b => b.username === activeChatKey);
+            if (!buyer) return;
+
+            const name = buyer.name || buyer.username;
+            const initials = name.substring(0, 2).toUpperCase();
+
+            document.getElementById('chat-header-name').textContent = name;
+            document.getElementById('chat-header-avatar').textContent = initials;
+
+            const container = document.getElementById('message-container');
+            container.innerHTML = '';
+
+            const messages = buyerChats[activeChatKey] || [];
+
+            messages.forEach(msg => {
+                const div = document.createElement('div');
+                
+                if (msg.sender === 'receiver') {
+                    // Left bubble (from tenant)
+                    div.className = "flex gap-2 max-w-[80%]";
+                    div.innerHTML = `
+                        <div class="w-8 h-8 rounded-full bg-teal-deep/10 text-teal-deep flex items-center justify-center font-bold text-xs shrink-0 mt-auto">${initials}</div>
+                        <div>
+                            <div class="bg-white border border-stone-200/60 px-4 py-2.5 rounded-2xl rounded-bl-sm text-stone-700 text-sm shadow-sm">
+                                ${msg.text}
+                            </div>
+                            <span class="text-[10px] text-stone-400 mt-1 block ml-1">${msg.time}</span>
+                        </div>
+                    `;
+                } else {
+                    // Right bubble (from landlord)
+                    div.className = "flex gap-2 max-w-[80%] ml-auto justify-end";
+                    div.innerHTML = `
+                        <div class="flex flex-col items-end">
+                            <div class="bg-teal-deep text-white px-4 py-2.5 rounded-2xl rounded-br-sm text-sm shadow-sm font-medium">
+                                ${msg.text}
+                            </div>
+                            <span class="text-[10px] text-stone-400 mt-1 block mr-1">${msg.time}</span>
+                        </div>
+                    `;
+                }
+                container.appendChild(div);
+            });
+
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+
+        window.selectChat = function(buyerUsername) {
+            activeChatKey = buyerUsername;
+            renderConversationsList();
+            renderMessages();
+        };
+
+        window.sendMessage = async function() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text || !activeChatKey) return;
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+            const chatId = `${currentUser.username}_${activeChatKey}`;
+            const message = {
+                sender: 'sender',
+                text: text,
+                time: timeStr
+            };
+
+            if (window.db) {
+                await window.db.saveChatMessage(chatId, message, currentUser.username);
+            } else {
+                const chats = JSON.parse(localStorage.getItem('locafyChats') || '{}');
+                if (!chats[chatId]) chats[chatId] = [];
+                chats[chatId].push(message);
+                localStorage.setItem('locafyChats', JSON.stringify(chats));
+            }
+
+            // Update in-memory state
+            if (!buyerChats[activeChatKey]) buyerChats[activeChatKey] = [];
+            buyerChats[activeChatKey].push(message);
+
+            input.value = '';
+            renderMessages();
+            renderConversationsList();
+
+            // Simulate automatic tenant reply for demo
+            if (activeChatKey === 'buyer123') {
+                setTimeout(async () => {
+                    const replies = [
+                        "Dạ em cảm ơn anh ạ. Hẹn gặp anh lúc 5h chiều nay nhé!",
+                        "Dạ phòng này giá cọc có bớt được tí nào không anh?",
+                        "Ok anh, em sẽ đến đúng giờ ạ."
+                    ];
+                    const countKey = `reply_count_${activeChatKey}`;
+                    let count = parseInt(sessionStorage.getItem(countKey) || '0');
+                    if (count < replies.length) {
+                        const replyText = replies[count];
+                        sessionStorage.setItem(countKey, count + 1);
+
+                        const replyMsg = {
+                            sender: 'receiver',
+                            text: replyText,
+                            time: timeStr
+                        };
+
+                        if (window.db) {
+                            await window.db.saveChatMessage(chatId, replyMsg, activeChatKey);
+                        } else {
+                            const chats = JSON.parse(localStorage.getItem('locafyChats') || '{}');
+                            if (!chats[chatId]) chats[chatId] = [];
+                            chats[chatId].push(replyMsg);
+                            localStorage.setItem('locafyChats', JSON.stringify(chats));
+                        }
+
+                        buyerChats[activeChatKey].push(replyMsg);
+                        renderMessages();
+                        renderConversationsList();
+                    }
+                }, 1500);
+            }
+        };
+
+        window.sendQuickReply = function(text) {
+            document.getElementById('chat-input').value = text;
+            sendMessage();
+        };
+
+        if (currentUser) {
+            const displayName = currentUser.name || currentUser.username;
+            const _el_ln = document.getElementById('landlord-name'); if(_el_ln) _el_ln.textContent = displayName;
+            document.getElementById('header-landlord-name').textContent = displayName;
+            const initials = displayName.substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+        }
+
+        // Send message on Enter key
+        document.getElementById('chat-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Async db poller init
+        async function init() {
+            let attempts = 0;
+            while (!window.db && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+            await loadConversations();
+        }
+        init();
+    </script>
+</body>
+</html>

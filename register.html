@@ -1,100 +1,201 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html class="light" lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD0G0J8NC"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-RVD0G0J8NC');
-    </script>
-    <title>Đăng ký - Locafy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    
+    <!-- Environment Config & Dynamic Analytics -->
+    <script src="env.js"></script>
+    <script src="analytics.js" async></script>
+    
+    <title>Đăng ký | Locafy</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #FAFAF9;
+        }
+        @media (min-width: 1024px) {
+            html, body {
+                overflow: hidden;
+            }
+        }
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .input-focus:focus {
+            outline: none;
+            border: 2px solid #0F3D3E;
+            background-color: white;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .otp-input:focus {
+            border-color: #0F3D3E;
+            box-shadow: 0 0 0 2px rgba(15, 61, 62, 0.1);
+        }
+    </style>
+    <link rel="stylesheet" href="./design-system.css">
+    <script src="./design-system.js"></script>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900">
-    <div class="max-w-3xl mx-auto px-4 py-10">
-        <div class="mb-6 flex items-center justify-between">
-            <a href="index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-700">
-                <i class="fa-solid fa-arrow-left"></i>
-                Về trang chủ
-            </a>
-            <div class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">Locafy</div>
-        </div>
-
-        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-6 items-start">
-            <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <p class="text-xs font-bold uppercase tracking-[0.25em] text-blue-600">Tạo tài khoản</p>
-                <h1 class="mt-3 text-3xl font-bold text-gray-900">Đăng ký tài khoản Locafy</h1>
-                <p class="mt-3 text-sm text-gray-600 leading-relaxed">Tạo tài khoản để lưu thông tin tìm nhà, quản lý yêu thích và tiếp tục các bước đặt phòng nhanh hơn.</p>
-                <div class="mt-5 rounded-2xl bg-blue-50 p-4 text-sm text-blue-800">
-                    <p class="font-semibold">Lưu trữ cục bộ</p>
-                    <p class="mt-1">Thông tin tài khoản được lưu trên máy của bạn bằng <span class="font-bold">localStorage</span>.</p>
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <form id="register-form" class="space-y-3">
-                    <div>
-                        <label for="name" class="block text-sm font-semibold text-gray-700">Họ và tên</label>
-                        <input id="name" name="name" type="text" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Nguyễn Văn A">
-                    </div>
-                    <div>
-                        <label for="username" class="block text-sm font-semibold text-gray-700">Tên đăng nhập</label>
-                        <input id="username" name="username" type="text" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="nguyenvana123">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-semibold text-gray-700">Email</label>
-                        <input id="email" name="email" type="email" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="example@email.com">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-semibold text-gray-700">Số điện thoại</label>
-                        <input id="phone" name="phone" type="tel" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0912345678">
-                    </div>
-                    <div>
-                        <label for="password" class="block text-sm font-semibold text-gray-700">Mật khẩu</label>
-                        <input id="password" name="password" type="password" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700">Vai trò</label>
-                        <div class="mt-2 grid gap-2 sm:grid-cols-2">
-                            <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-3 py-2.5 text-sm text-gray-700">
-                                <input type="radio" name="role" value="buyer" checked>
-                                <span>Người mua / thuê</span>
-                            </label>
-                            <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 px-3 py-2.5 text-sm text-gray-700">
-                                <input type="radio" name="role" value="seller">
-                                <span>Người bán / chủ nhà</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="w-full rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Đăng ký</button>
-                </form>
-
-                <div id="register-message" class="mt-4 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
-                    Tài khoản sẽ được lưu trên thiết bị này.
-                </div>
-
-                <div class="mt-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 text-sm text-blue-900 shadow-sm">
-                    <p class="font-bold flex items-center gap-1.5 text-blue-800"><i class="fa-solid fa-circle-info text-blue-600"></i> Bản thử nghiệm cục bộ</p>
-                    <p class="mt-1 text-xs text-blue-850 leading-relaxed">Tài khoản được đăng ký sẽ lưu trữ trong <strong>localStorage</strong> của trình duyệt trên thiết bị này.</p>
-                </div>
-
-                <p class="mt-4 text-sm text-gray-600">
-                    Đã có tài khoản?
-                    <a href="login.html" class="font-semibold text-blue-700">Đăng nhập ngay</a>
-                </p>
-            </section>
-        </div>
+<body class="bg-surface text-on-surface font-body-md selection:bg-teal-vibrant/30">
+    <a href="index.html" class="absolute top-6 left-6 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 lg:bg-white/15 lg:hover:bg-white/25 lg:text-white lg:backdrop-blur-md lg:border lg:border-white/20 shadow-premium-sm hover-lift transition-all" title="Về trang chủ">
+        <i class="fa-solid fa-arrow-left text-[18px]"></i>
+    </a>
+<main class="min-h-screen lg:h-screen w-full flex flex-col lg:flex-row bg-surface overflow-x-hidden lg:overflow-hidden">
+<!-- Left Side: Lifestyle Image Section -->
+<div class="hidden lg:flex w-1/2 h-full relative overflow-hidden bg-primary-container">
+<div class="absolute inset-0 z-0">
+<img alt="Căn hộ hiện đại" class="w-full h-full object-cover opacity-90" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80">
+</div>
+<div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60 z-10"></div>
+<div class="relative z-20 flex flex-col justify-end p-16 text-white w-full h-full">
+<div>
+<h1 class="font-headline-xl text-headline-xl mb-6 max-w-md">Khám phá không gian sống phù hợp với bạn.</h1>
+<p class="font-body-lg text-body-lg max-w-sm opacity-90">Kết nối nhanh chóng với hàng ngàn phòng trọ và căn hộ chất lượng.</p>
+</div>
+</div>
+</div>
+<!-- Right Side: Registration Form -->
+<div class="w-full lg:w-1/2 min-h-screen lg:h-full overflow-y-auto flex items-center justify-center p-6 md:p-8 bg-surface">
+<div class="w-full max-w-[480px] bg-white p-6 md:p-8 rounded-[24px] shadow-[0_20px_50px_rgba(15,61,62,0.08)] border border-stone-200/50 my-4">
+<div class="mb-5">
+<h2 class="font-headline-md text-headline-md text-teal-deep mb-1">Đăng ký tài khoản</h2>
+<p class="font-body-sm text-body-sm text-stone-500">Chào mừng bạn gia nhập cộng đồng Locafy</p>
+</div>
+<!-- Role Selection -->
+<input type="hidden" id="role-input" name="role" value="buyer">
+<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="role-card cursor-pointer border-2 border-teal-deep bg-teal-deep/5 p-3 rounded-xl transition-all flex items-center gap-3" id="role-renter" onclick="selectRole('renter')">
+<i class="fa-solid fa-user text-teal-deep text-[22px] transition-colors"></i>
+<div class="text-left">
+    <h4 class="font-label-sm text-label-sm text-teal-deep font-bold">Người thuê</h4>
+    <p class="text-[10px] text-stone-500 leading-tight">Tìm phòng ở</p>
+</div>
+</div>
+<div class="role-card cursor-pointer border-2 border-transparent bg-surface-container-low p-3 rounded-xl transition-all flex items-center gap-3" id="role-owner" onclick="selectRole('owner')">
+<i class="fa-solid fa-house-user text-stone-500 text-[22px] transition-colors"></i>
+<div class="text-left">
+    <h4 class="font-label-sm text-label-sm text-on-surface font-bold">Chủ trọ</h4>
+    <p class="text-[10px] text-stone-500 leading-tight">Quản lý khu trọ</p>
+</div>
+</div>
+</div>
+<form id="register-form" class="space-y-2.5">
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="username">Tên đăng nhập</label>
+<div class="relative">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+        <i class="fa-solid fa-id-badge text-[14px]"></i>
     </div>
+    <input id="username" name="username" class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="nguyenvana123" required="" type="text">
+</div>
+</div>
 
-    <script>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="phone">Số điện thoại</label>
+<div class="relative">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+        <i class="fa-solid fa-phone text-[14px]"></i>
+    </div>
+    <input id="phone" name="phone" class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="0912345678" required="" type="tel">
+</div>
+</div>
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="email">Email</label>
+<div class="relative">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+        <i class="fa-solid fa-envelope text-[14px]"></i>
+    </div>
+    <input id="email" name="email" class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="example@email.com" required="" type="email">
+</div>
+</div>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="password">Mật khẩu</label>
+<div class="relative" id="password-wrapper">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+        <i class="fa-solid fa-lock text-[14px]"></i>
+    </div>
+    <input id="password" name="password" class="w-full pl-10 pr-10 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="••••••••" required="" type="password">
+    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-teal-deep transition-colors" type="button" onclick="togglePassVisibility('password')">
+        <i class="fa-solid fa-eye text-[14px]"></i>
+    </button>
+</div>
+</div>
+<div class="space-y-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="confirm-password">Xác nhận mật khẩu</label>
+<div class="relative" id="confirm-password-wrapper">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+        <i class="fa-solid fa-key text-[14px]"></i>
+    </div>
+    <input id="confirm-password" name="confirm-password" class="w-full pl-10 pr-10 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="••••••••" required="" type="password">
+    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-teal-deep transition-colors" type="button" onclick="togglePassVisibility('confirm-password')">
+        <i class="fa-solid fa-eye text-[14px]"></i>
+    </button>
+</div>
+</div>
+</div>
+
+<button class="w-full h-[44px] bg-teal-deep text-white rounded-full font-headline-sm text-headline-sm hover:opacity-90 transition-all duration-300 mt-3 shadow-lg shadow-teal-deep/20 active:scale-[0.98]" type="submit">
+                        Đăng ký
+                    </button>
+</form>
+
+<div id="register-message" class="mt-4 rounded-xl px-4 py-3 text-body-sm border transition-all duration-300 hidden"></div>
+
+<div class="mt-8 flex flex-col items-center">
+<p class="font-body-sm text-body-sm text-stone-500">
+                        Đã có tài khoản? <a class="text-teal-deep font-bold hover:underline" href="login.html">Đăng nhập</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<!-- OTP Verification Modal (Hidden by default) -->
+<div class="fixed inset-0 z-[100] hidden items-center justify-center p-4" id="otp-modal">
+<div class="absolute inset-0 bg-teal-deep/20 backdrop-blur-sm" onclick="closeOTP()"></div>
+<div class="relative bg-white w-full max-w-[400px] p-6 md:p-10 rounded-[24px] md:rounded-[32px] shadow-2xl animate-in fade-in zoom-in duration-300">
+<button class="absolute top-6 right-6 text-stone-400 hover:text-teal-deep" onclick="closeOTP()">
+<i class="fa-solid fa-xmark text-lg"></i>
+</button>
+<div class="text-center mb-6">
+<div class="w-14 h-14 bg-teal-deep/10 rounded-full flex items-center justify-center mx-auto mb-4">
+<i class="fa-solid fa-shield-halved text-teal-deep text-2xl"></i>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-teal-deep mb-1">Xác thực mã OTP</h3>
+<p class="font-body-sm text-body-sm text-stone-500">Mã xác thực 6 chữ số đã được gửi đến số điện thoại của bạn.</p>
+</div>
+<div class="flex justify-between gap-1.5 sm:gap-2 mb-6">
+<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
+<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
+<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
+<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
+<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
+<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
+</div>
+<button class="w-full h-[48px] bg-teal-deep text-white rounded-full font-headline-sm text-headline-sm hover:opacity-90 transition-all duration-300" onclick="confirmOTP()">
+                Xác nhận mã OTP
+            </button>
+<div class="mt-6 text-center">
+<p class="font-body-sm text-body-sm text-stone-500">
+                    Không nhận được mã? <button type="button" id="resend-otp-btn" onclick="resendOTP()" class="text-teal-deep font-bold hover:underline disabled:opacity-50 disabled:cursor-not-allowed">Gửi lại mã</button>
+</p>
+</div>
+</div>
+</div>
+<script>
         const accountsKey = 'locafyAccounts';
         const currentUserKey = 'locafyCurrentUser';
         const registerForm = document.getElementById('register-form');
@@ -108,20 +209,29 @@
             }
         }
 
+        function hashPassword(password) {
+            if (!password) return '';
+            if (password.startsWith('bG9jYWZ5X')) return password;
+            try {
+                return btoa("locafy_" + password);
+            } catch (e) {
+                return password;
+            }
+        }
+
         function saveAccounts(accounts) {
             localStorage.setItem(accountsKey, JSON.stringify(accounts));
         }
 
         function showMessage(text, tone = 'info') {
             registerMessage.textContent = text;
-            registerMessage.className = 'mt-4 rounded-2xl px-4 py-3 text-sm border';
-            registerMessage.classList.remove('bg-green-50', 'border-green-200', 'text-green-800', 'bg-red-50', 'border-red-200', 'text-red-700', 'bg-gray-50', 'border-gray-200', 'text-gray-700');
+            registerMessage.className = 'mt-4 rounded-xl px-4 py-3 text-body-sm border transition-all duration-300';
             if (tone === 'success') {
-                registerMessage.classList.add('bg-green-50', 'border-green-200', 'text-green-800');
+                registerMessage.className += ' bg-secondary-50 border-secondary-100 text-secondary-700';
             } else if (tone === 'error') {
-                registerMessage.classList.add('bg-red-50', 'border-red-200', 'text-red-700');
+                registerMessage.className += ' bg-danger-50 border-danger-100 text-danger-700';
             } else {
-                registerMessage.classList.add('bg-gray-50', 'border-gray-200', 'text-gray-700');
+                registerMessage.className += ' bg-stone-50 border-stone-200 text-stone-700';
             }
         }
 
@@ -135,24 +245,107 @@
             }
         }
 
-        registerForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const formData = new FormData(registerForm);
-            const name = formData.get('name').trim();
-            const username = formData.get('username').trim().toLowerCase();
-            const email = formData.get('email').trim().toLowerCase();
-            const phone = formData.get('phone').trim();
-            const password = formData.get('password');
-            const role = formData.get('role') === 'seller' ? 'seller' : 'buyer';
-
-            if (!name || !username || !email || !phone || !password) {
-                showMessage('Vui lòng điền đầy đủ thông tin.', 'error');
-                return;
+        function selectRole(role) {
+            const renterCard = document.getElementById('role-renter');
+            const ownerCard = document.getElementById('role-owner');
+            const roleInput = document.getElementById('role-input');
+            const renterIcon = renterCard.querySelector('i');
+            const ownerIcon = ownerCard.querySelector('i');
+            
+            if (role === 'renter') {
+                roleInput.value = 'buyer';
+                renterCard.classList.add('border-teal-deep', 'bg-teal-deep/5');
+                renterCard.classList.remove('border-transparent', 'bg-surface-container-low');
+                renterCard.querySelector('h4').classList.add('text-teal-deep');
+                if (renterIcon) renterIcon.className = "fa-solid fa-user text-teal-deep text-[22px] transition-colors";
+                
+                ownerCard.classList.remove('border-teal-deep', 'bg-teal-deep/5');
+                ownerCard.classList.add('border-transparent', 'bg-surface-container-low');
+                ownerCard.querySelector('h4').classList.remove('text-teal-deep');
+                if (ownerIcon) ownerIcon.className = "fa-solid fa-house-user text-stone-500 text-[22px] transition-colors";
+            } else {
+                roleInput.value = 'seller';
+                ownerCard.classList.add('border-teal-deep', 'bg-teal-deep/5');
+                ownerCard.classList.remove('border-transparent', 'bg-surface-container-low');
+                ownerCard.querySelector('h4').classList.add('text-teal-deep');
+                if (ownerIcon) ownerIcon.className = "fa-solid fa-house-user text-teal-deep text-[22px] transition-colors";
+                
+                renterCard.classList.remove('border-teal-deep', 'bg-teal-deep/5');
+                renterCard.classList.add('border-transparent', 'bg-surface-container-low');
+                renterCard.querySelector('h4').classList.remove('text-teal-deep');
+                if (renterIcon) renterIcon.className = "fa-solid fa-user text-stone-500 text-[22px] transition-colors";
             }
+        }
 
-            // Validations
-            if (name.length < 3) {
-                showMessage('Họ và tên phải có ít nhất 3 ký tự.', 'error');
+        window.togglePassVisibility = function (inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const wrapper = document.getElementById(inputId + '-wrapper');
+            if (!passwordInput || !wrapper) return;
+            const icon = wrapper.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                if (icon) icon.className = 'fa-solid fa-eye-slash text-[16px]';
+            } else {
+                passwordInput.type = 'password';
+                if (icon) icon.className = 'fa-solid fa-eye text-[16px]';
+            }
+        };
+
+        function showOTP() {
+            document.getElementById('otp-modal').classList.remove('hidden');
+            document.getElementById('otp-modal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus on first input
+            setTimeout(() => {
+                const firstOtp = document.querySelector('.otp-input');
+                if (firstOtp) firstOtp.focus();
+            }, 100);
+
+            if (typeof startResendCountdown === 'function') startResendCountdown();
+        }
+
+        function closeOTP() {
+            document.getElementById('otp-modal').classList.add('hidden');
+            document.getElementById('otp-modal').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Simple OTP auto-focus logic
+        const otpInputs = document.querySelectorAll('.otp-input');
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+
+        // Lưu thông tin đăng ký để xác thực sau khi nhập OTP
+        let validatedFormData = null; // dùng cho fallback offline
+        let pendingEmail = null;      // email đang chờ xác thực OTP (chế độ API)
+        let offlineMode = false;      // true khi API không kết nối được
+
+        registerForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const role = document.getElementById('role-input').value;
+
+            // Map name to username to maintain layout compatibility with other pages
+            const name = username;
+
+            if (!username || !email || !phone || !password || !confirmPassword) {
+                showMessage('Vui lòng điền đầy đủ thông tin.', 'error');
                 return;
             }
 
@@ -179,27 +372,151 @@
                 return;
             }
 
-            const accounts = loadAccounts();
-            if (accounts.some((account) => account.email.toLowerCase() === email)) {
-                showMessage('Email đã tồn tại. Vui lòng đăng nhập hoặc dùng email khác.', 'error');
-                return;
-            }
-            if (accounts.some((account) => account.username && account.username.toLowerCase() === username)) {
-                showMessage('Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.', 'error');
+            if (password !== confirmPassword) {
+                showMessage('Mật khẩu xác nhận không khớp.', 'error');
                 return;
             }
 
-            const newUser = { name, username, email, phone, password, role, createdAt: new Date().toISOString() };
-            accounts.push(newUser);
-            saveAccounts(accounts);
-            localStorage.setItem(currentUserKey, JSON.stringify({ name, username, email, phone, role }));
+            validatedFormData = { name, username, email, phone, password, role };
+            pendingEmail = email;
+            offlineMode = false;
+
+            const submitBtn = registerForm.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
+
+            try {
+                // Gọi API: server kiểm tra trùng, hash mật khẩu, gửi OTP qua email
+                const data = await window.LocafyApi.send('POST', '/auth/register', { name, username, email, phone, password, role });
+                showOTP();
+                if (data.emailSent) {
+                    showMessage('Mã OTP đã được gửi tới email ' + email + '. Vui lòng kiểm tra hộp thư.', 'info');
+                } else if (data.devOtp) {
+                    // Chưa cấu hình SMTP: hiển thị mã để test
+                    showMessage('Chế độ thử nghiệm — mã OTP của bạn là: ' + data.devOtp, 'info');
+                }
+            } catch (err) {
+                if (err.status && (err.status === 400 || err.status === 409)) {
+                    // Lỗi nghiệp vụ (email/username trùng...) -> báo, không vào OTP
+                    showMessage(err.data?.error || 'Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.', 'error');
+                } else {
+                    // Lỗi mạng -> fallback đăng ký cục bộ (vẫn yêu cầu OTP hình thức)
+                    const accounts = JSON.parse(localStorage.getItem(accountsKey) || '[]');
+                    if (accounts.some(a => (a.email || '').toLowerCase() === email)) {
+                        showMessage('Email đã tồn tại. Vui lòng đăng nhập hoặc dùng email khác.', 'error');
+                    } else if (accounts.some(a => a.username && a.username.toLowerCase() === username)) {
+                        showMessage('Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.', 'error');
+                    } else {
+                        offlineMode = true;
+                        showOTP();
+                        showMessage('Không kết nối được máy chủ — chế độ ngoại tuyến. Nhập mã bất kỳ 6 số để hoàn tất.', 'info');
+                    }
+                }
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+            }
+        });
+
+        async function confirmOTP() {
+            const otpInputs = document.querySelectorAll('.otp-input');
+            let otpCode = '';
+            otpInputs.forEach(input => { otpCode += input.value.trim(); });
+
+            if (otpCode.length < 6) {
+                showMessage('Vui lòng nhập đầy đủ mã OTP 6 chữ số.', 'error');
+                return;
+            }
+            if (!validatedFormData) {
+                showMessage('Có lỗi xảy ra, vui lòng thử lại.', 'error');
+                closeOTP();
+                return;
+            }
+
+            const { name, username, email, phone, password, role } = validatedFormData;
+            const confirmBtn = document.querySelector('#otp-modal button[onclick="confirmOTP()"]');
+            if (confirmBtn) confirmBtn.disabled = true;
+
+            try {
+                if (!offlineMode) {
+                    // Xác thực OTP qua API -> server tạo tài khoản
+                    const data = await window.LocafyApi.send('POST', '/auth/verify-otp', { email: pendingEmail || email, code: otpCode });
+                    loginAfterRegister(data.user || { name, username, email, phone, role });
+                } else {
+                    throw Object.assign(new Error('offline'), { offline: true });
+                }
+            } catch (err) {
+                if (err.offline) {
+                    // Fallback: lưu cục bộ (chấp nhận mã hình thức)
+                    const newUser = { name, username, email, phone, password: hashPassword(password), role, createdAt: new Date().toISOString() };
+                    await window.db.saveAccount(newUser);
+                    loginAfterRegister({ name, username, email, phone, role });
+                } else if (err.status && (err.status === 400 || err.status === 429)) {
+                    showMessage(err.data?.error || 'Mã OTP không đúng hoặc đã hết hạn.', 'error');
+                    if (confirmBtn) confirmBtn.disabled = false;
+                } else {
+                    showMessage('Không kết nối được máy chủ. Vui lòng thử lại.', 'error');
+                    if (confirmBtn) confirmBtn.disabled = false;
+                }
+            }
+        }
+
+        function loginAfterRegister(user) {
+            localStorage.setItem(currentUserKey, JSON.stringify({
+                name: user.name, username: user.username, email: user.email, phone: user.phone, role: user.role
+            }));
             registerForm.reset();
-            showMessage(`Đăng ký thành công! Xin chào ${name}. Bạn đã được đăng nhập với vai trò ${role === 'seller' ? 'người bán/chủ nhà' : 'người mua/thuê'}.`, 'success');
+            document.querySelectorAll('.otp-input').forEach(input => { input.value = ''; });
+            closeOTP();
+            showMessage(`Đăng ký thành công! Xin chào ${user.name || user.username}. Bạn đăng nhập với vai trò ${user.role === 'seller' ? 'chủ nhà' : 'người thuê'}.`, 'success');
             setTimeout(() => {
                 const redirectUrl = params.get('redirect');
                 window.location.href = redirectUrl ? decodeURIComponent(redirectUrl) : 'index.html';
             }, 1200);
-        });
+        }
+
+        // Gửi lại mã OTP + đếm ngược 60s
+        let resendTimer = null;
+        function startResendCountdown() {
+            const btn = document.getElementById('resend-otp-btn');
+            if (!btn) return;
+            let seconds = 60;
+            btn.disabled = true;
+            btn.textContent = `Gửi lại (${seconds}s)`;
+            clearInterval(resendTimer);
+            resendTimer = setInterval(() => {
+                seconds--;
+                if (seconds <= 0) {
+                    clearInterval(resendTimer);
+                    btn.disabled = false;
+                    btn.textContent = 'Gửi lại mã';
+                } else {
+                    btn.textContent = `Gửi lại (${seconds}s)`;
+                }
+            }, 1000);
+        }
+
+        async function resendOTP() {
+            if (!pendingEmail && validatedFormData) pendingEmail = validatedFormData.email;
+            if (!pendingEmail) { showMessage('Không có yêu cầu OTP nào đang chờ.', 'error'); return; }
+            if (offlineMode) { showMessage('Đang ở chế độ ngoại tuyến, không cần OTP thật.', 'info'); return; }
+            try {
+                const data = await window.LocafyApi.send('POST', '/auth/send-otp', { email: pendingEmail });
+                startResendCountdown();
+                if (data.emailSent) showMessage('Đã gửi lại mã OTP tới email của bạn.', 'success');
+                else if (data.devOtp) showMessage('Chế độ thử nghiệm — mã OTP mới: ' + data.devOtp, 'info');
+            } catch (err) {
+                showMessage(err.data?.error || 'Không gửi lại được mã OTP.', 'error');
+            }
+        }
+        window.resendOTP = resendOTP;
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
     </script>
 </body>
 </html>

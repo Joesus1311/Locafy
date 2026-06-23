@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Environment Config & Dynamic Analytics -->
+    <script src="../env.js"></script>
+    <script src="../analytics.js" async></script>
+    <title>Phòng Trọ Yêu Thích - Locafy</title>
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../design-system.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .house-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .house-card > .p-5 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .house-card > .p-5 > div:last-of-type {
+            margin-top: auto;
+        }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser) {
+            alert('Vui lòng đăng nhập để xem danh sách phòng yêu thích!');
+            window.location.href = '../login.html?redirect=user/favorites.html';
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- TopNavBar (giống index.html) -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-0 min-h-16 sm:min-h-20 flex flex-col gap-2.5 md:flex-row md:items-center md:justify-between">
+            <div class="flex items-center justify-between md:justify-start">
+                <a href="../index.html" class="flex items-center justify-center md:justify-start space-x-2 min-w-0">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg shrink-0">
+                        <i class="fa-solid fa-house-chimney text-lg"></i>
+                    </div>
+                    <span class="text-lg sm:text-xl font-extrabold text-blue-900">Locafy</span>
+                </a>
+
+                <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-700 hover:bg-gray-50 md:hidden" aria-label="Mở menu">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="../index.html" class="text-gray-600 hover:text-blue-600">Trang Chủ</a>
+                <a href="../phong-tro.html" class="text-gray-600 hover:text-blue-600">Phòng Trọ</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Tìm Ở Ghép</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Tin Tức</a>
+            </nav>
+
+            <div id="mobile-menu" class="hidden md:hidden rounded-2xl border border-gray-200 bg-white p-3 shadow-lg">
+                <nav class="flex flex-col gap-2 text-sm font-semibold">
+                    <a href="../index.html" class="rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-50">Trang Chủ</a>
+                    <a href="../phong-tro.html" class="rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-50">Phòng Trọ</a>
+                    <a href="#" class="rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-50">Tìm Ở Ghép</a>
+                    <a href="#" class="rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-50">Tin Tức</a>
+                </nav>
+                <div id="mobile-auth-actions" class="mt-3 flex flex-col gap-2 border-t border-gray-100 pt-3">
+                    <a href="../login.html" class="rounded-lg border border-gray-200 px-3 py-2 text-center text-sm font-semibold text-gray-700 hover:bg-gray-50">Đăng nhập</a>
+                    <a href="../register.html" class="rounded-lg bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-blue-700">Đăng ký</a>
+                </div>
+            </div>
+
+            <div id="auth-actions" class="flex flex-col items-stretch gap-2 w-full md:w-auto md:flex-row md:items-center md:justify-end">
+                <a href="../login.html" class="hidden sm:inline-flex items-center justify-center rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">Đăng nhập</a>
+                <a href="../register.html" class="hidden sm:inline-flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition">Đăng ký</a>
+                <a href="../login.html?redirect=manage/seller-post.html" class="w-full justify-center md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-md transition duration-200 flex items-center space-x-1">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span class="whitespace-nowrap">Đăng Tin Miễn Phí</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 min-h-[60vh]">
+        <!-- Page Title -->
+        <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Lưu Trữ Cá Nhân</p>
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-2">Phòng Trọ Yêu Thích</h1>
+                <p class="text-sm text-gray-500 mt-1">Danh sách tin đăng phòng trọ bạn đã lưu để xem lại hoặc so sánh.</p>
+            </div>
+            <a href="../phong-tro.html" class="inline-flex items-center justify-center rounded-xl border border-blue-200 px-4 py-2.5 text-sm font-bold text-blue-750 bg-blue-50 hover:bg-blue-100 transition shadow-sm">
+                <i class="fa-solid fa-compass mr-2"></i>
+                Khám phá thêm phòng trọ
+            </a>
+        </div>
+
+        <!-- Favorites Grid -->
+        <div id="favorites-list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Dynamic favorite cards will render here -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="hidden flex-col items-center justify-center py-16 text-center" id="empty-state">
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4 shadow-inner">
+                <i class="fa-solid fa-heart-crack text-2xl"></i>
+            </div>
+            <h2 class="text-lg font-bold text-gray-900 mb-1">Danh sách yêu thích trống</h2>
+            <p class="text-xs text-gray-500 max-w-xs leading-relaxed mb-5">Bạn chưa lưu phòng trọ nào. Hãy tìm và lưu lại những tin đăng ưng ý.</p>
+            <a href="../phong-tro.html" class="inline-flex items-center justify-center rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 shadow-md transition text-sm">
+                Tìm phòng trọ ngay
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer (giống index.html) -->
+    <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div class="space-y-4">
+                <div class="bg-blue-600 text-white px-3 py-1.5 rounded-lg font-bold text-lg tracking-wider inline-block">
+                    Locafy
+                </div>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Locafy - Mạng lưới kết nối người thuê và cho thuê bất động sản, phòng trọ, căn hộ mini hàng đầu Việt Nam.
+                </p>
+                <div class="flex space-x-4 pt-2">
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Về chúng tôi</h4>
+                <ul class="space-y-2.5 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 transition">Giới thiệu dịch vụ</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Quy chế hoạt động</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Chính sách bảo mật</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Giải quyết khiếu nại</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Hỗ trợ khách hàng</h4>
+                <ul class="space-y-2.5 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 transition">Bảng giá dịch vụ</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Hướng dẫn đăng tin</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Quy định đăng tin</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Liên hệ trợ giúp</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Liên hệ</h4>
+                <ul class="space-y-3 text-sm text-slate-400">
+                    <li class="flex items-start space-x-2">
+                        <i class="fa-solid fa-envelope mt-1 text-blue-400"></i>
+                        <span>hotro@locafy.vn</span>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <i class="fa-solid fa-phone mt-1 text-blue-400"></i>
+                        <span>1900 123 456 (8:00 - 21:00)</span>
+                    </li>
+                    <li class="flex items-start space-x-2">
+                        <i class="fa-solid fa-location-dot mt-1 text-blue-400"></i>
+                        <span>Tòa nhà Locafy, Cầu Giấy, Hà Nội</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+            <p>© 2026 Locafy.vn. Toàn bộ bản quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <!-- Database client -->
+    <script src="../supabase-client.js"></script>
+
+    <script>
+        const currentUserKey = 'locafyCurrentUser';
+        const authActions = document.getElementById('auth-actions');
+        const mobileAuthActions = document.getElementById('mobile-auth-actions');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem(currentUserKey));
+            } catch (error) {
+                return null;
+            }
+        }
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        function getInitials(user) {
+            return (user.name || user.username || 'U').substring(0, 2).toUpperCase();
+        }
+
+        function buildDropdownItems(user) {
+            if (user.role === 'admin') {
+                return `
+                    <a href="../admin/dashboard.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-chart-line text-blue-600 w-4 text-center"></i>Trang quản trị</a>
+                    <hr class="border-gray-100 my-1">
+                    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium text-left"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i>Đăng xuất</button>`;
+            } else if (user.role === 'seller') {
+                return `
+                    <a href="../manage/dashboard.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-chart-pie text-blue-600 w-4 text-center"></i>Bảng điều khiển</a>
+                    <a href="../manage/account-settings.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-gear text-blue-600 w-4 text-center"></i>Cài đặt tài khoản</a>
+                    <a href="../manage/seller-post.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-circle-plus text-blue-600 w-4 text-center"></i>Đăng tin mới</a>
+                    <hr class="border-gray-100 my-1">
+                    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium text-left"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i>Đăng xuất</button>`;
+            } else {
+                return `
+                    <a href="account-settings.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-gear text-blue-600 w-4 text-center"></i>Cài đặt tài khoản</a>
+                    <a href="notification.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-bell text-blue-600 w-4 text-center"></i>Thông báo</a>
+                    <a href="appointments.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-calendar-check text-blue-600 w-4 text-center"></i>Lịch xem phòng</a>
+                    <a href="favorites.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-heart text-blue-600 w-4 text-center"></i>Yêu thích</a>
+                    <hr class="border-gray-100 my-1">
+                    <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium text-left"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i>Đăng xuất</button>`;
+            }
+        }
+
+        function updateAuthUI() {
+            const user = getCurrentUser();
+            if (user) {
+                const initials = getInitials(user);
+                const dropdownItems = buildDropdownItems(user);
+
+                const avatarDropdownHtml = `
+                    <div class="flex items-center gap-3">
+                        <a href="notification.html" class="relative flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-blue-600 transition-all active:scale-95 shadow-sm" title="Thông báo">
+                            <i class="fa-regular fa-bell text-lg"></i>
+                            <span id="header-noti-badge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-[10px] font-bold w-5 h-5 items-center justify-center border-2 border-white shadow-sm animate-pulse"></span>
+                        </a>
+                        <div class="relative inline-block text-left">
+                            <button id="user-avatar-btn" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 transition-all active:scale-95 focus:outline-none shadow-md" onclick="toggleUserDropdown(event)">${initials}</button>
+                            <div id="user-avatar-dropdown" class="hidden absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-gray-200/60 py-2 z-50" style="animation: fadeInDown 0.15s ease-out;">
+                                <div class="px-4 py-3 border-b border-gray-100">
+                                    <p class="text-sm font-bold text-gray-900">${user.name || user.username}</p>
+                                    <p class="text-xs text-gray-500">${user.email || ''}</p>
+                                </div>
+                                ${dropdownItems}
+                            </div>
+                        </div>
+                    </div>`;
+
+                let postListingHtml = '';
+                if (user.role === 'seller') {
+                    postListingHtml = `<a href="../manage/seller-post.html" class="w-full justify-center md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-md transition duration-200 flex items-center space-x-1"><i class="fa-solid fa-circle-plus"></i><span class="whitespace-nowrap">Đăng Tin Miễn Phí</span></a>`;
+                }
+
+                if (authActions) {
+                    authActions.innerHTML = avatarDropdownHtml + postListingHtml;
+                }
+                if (mobileAuthActions) {
+                    const mobileItems = buildDropdownItems(user);
+                    mobileAuthActions.innerHTML = `
+                        <div class="flex items-center gap-3 px-1 py-2 mb-1">
+                            <div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">${initials}</div>
+                            <div><p class="text-sm font-bold text-gray-900">${user.name || user.username}</p><p class="text-xs text-gray-500">${user.email || ''}</p></div>
+                        </div>
+                        ${mobileItems}`;
+                }
+
+                // Fetch unread notifications dynamically
+                (async () => {
+                    try {
+                        let notifs = [];
+                        if (window.db) {
+                            notifs = await window.db.getNotifications();
+                        } else {
+                            const data = localStorage.getItem('locafyNotifications');
+                            notifs = data ? JSON.parse(data) : [];
+                        }
+                        const myNotifs = notifs.filter(n => n.renterEmail === user.email);
+                        const unreadCount = myNotifs.filter(n => !n.read).length;
+                        const badge = document.getElementById('header-noti-badge');
+                        if (badge) {
+                            if (unreadCount > 0) {
+                                badge.textContent = unreadCount > 9 ? '9+' : unreadCount;
+                                badge.classList.remove('hidden');
+                                badge.classList.add('flex');
+                            } else {
+                                badge.classList.add('hidden');
+                                badge.classList.remove('flex');
+                            }
+                        }
+                    } catch(e) {
+                        console.error('Error updating notification badge:', e);
+                    }
+                })();
+            } else {
+                const postListingBtn = document.querySelector('a[href^="../manage/seller-post.html"], a[href="../login.html?redirect=manage/seller-post.html"]');
+                if (postListingBtn) {
+                    postListingBtn.href = '../login.html?redirect=manage/seller-post.html';
+                }
+            }
+        }
+
+        window.toggleUserDropdown = function(e) {
+            e.stopPropagation();
+            const dd = document.getElementById('user-avatar-dropdown');
+            if (dd) dd.classList.toggle('hidden');
+        };
+
+        document.addEventListener('click', function(e) {
+            const dd = document.getElementById('user-avatar-dropdown');
+            const btn = document.getElementById('user-avatar-btn');
+            if (dd && btn && !dd.contains(e.target) && !btn.contains(e.target)) {
+                dd.classList.add('hidden');
+            }
+        });
+
+        window.logout = function() {
+            localStorage.removeItem(currentUserKey);
+            window.location.href = '../index.html';
+        };
+
+        const houseDatabase = {
+            'gia-hung-apartment': {
+                id: 'gia-hung-apartment',
+                type: 'Nhà trọ',
+                name: 'Gia Hưng Apartment',
+                rating: '5.0',
+                location: 'Gia Hưng Apartment, Tổ 1, cụm 1, Hòa Lạc, Hà Nội',
+                description: 'Căn hộ mini tại Gia Hưng Apartment, giá 3.3 - 3.8 triệu, có sẵn phòng trống.',
+                roomCount: 'Căn hộ mini',
+                price: '3.3 - 3.8 triệu',
+                contact: '096 5767777',
+                image: '../images/docx/image24.jpg'
+            },
+            'hoang-nhu': {
+                id: 'hoang-nhu',
+                type: 'Nhà trọ',
+                name: 'CCMN Hoàng Như',
+                rating: '4.9',
+                location: '43 ngõ 1 đường cây xăng 39, Hòa Lạc, Hà Nội',
+                description: 'Phòng trọ tại 43 ngõ 1 đường cây xăng 39, giá 2.8 - 3.5 triệu, thuận tiện cho sinh viên và người làm việc.',
+                roomCount: 'Phòng trọ',
+                price: '2.8 - 3.5 triệu',
+                contact: '0869 161 118',
+                image: '../images/docx/image21.png'
+            },
+            'tro-thuan-hoai': {
+                id: 'tro-thuan-hoai',
+                type: 'Nhà trọ',
+                name: 'Trọ Thuận Hoài',
+                rating: '4.8',
+                location: '294 thôn 4, Hòa Lạc, Hà Nội',
+                description: 'Trọ Thuận Hoài ở 294 thôn 4, giá 1.8 - 2.0 triệu, phù hợp người thuê tiết kiệm.',
+                roomCount: 'Phòng trọ',
+                price: '1.8 - 2.0 triệu',
+                contact: '0398701893',
+                image: '../images/docx/image1.jpg'
+            },
+            'hoa-lac-apartment-docx': {
+                id: 'hoa-lac-apartment-docx',
+                type: 'Nhà trọ',
+                name: 'Hòa Lạc Apartment',
+                rating: '5.0',
+                location: 'Hoà Lạc Apartment 206 cụm 1, Thôn 2, Thạch Thất, Hà Nội',
+                description: 'Hòa Lạc Apartment có nội thất cơ bản, giá 3.5 - 4.0 triệu.',
+                roomCount: 'Căn hộ mini',
+                price: '3.5 - 4.0 triệu',
+                contact: '0896899996',
+                image: '../images/docx/image13.jpg'
+            },
+            'otro-thi': {
+                id: 'otro-thi',
+                type: 'Nhà trọ',
+                name: 'Trọ Tạp hóa ông Thi',
+                rating: '4.7',
+                location: 'Hòa Lạc, Hà Nội',
+                description: 'Có tạp hóa ở cửa, chỗ để xe, 2 phòng trống. Giá 1.5 triệu, điện 3.5k, dịch vụ 70k (bao gồm nước, máy giặt, wifi).',
+                roomCount: '2 phòng trống',
+                price: '1.5 triệu',
+                contact: 'Liên hệ tại chỗ',
+                image: '../images/docx/image25.jpg'
+            },
+            'minh-chau': {
+                id: 'minh-chau',
+                type: 'Nhà trọ',
+                name: 'Nhà trọ Minh Châu',
+                rating: '4.8',
+                location: 'Ngõ 157, Thôn 4, Thạch Hòa, Hòa Lạc, Hà Nội',
+                description: 'Nhà trọ Minh Châu tại ngõ 157, giá 1.5 triệu + 50k wifi + 50k giặt.',
+                roomCount: 'Phòng trọ',
+                price: '1.5 triệu + wifi/giặt',
+                contact: '0984658666',
+                image: '../images/docx/image38.png'
+            },
+            'bt23-minh-chau': {
+                id: 'bt23-minh-chau',
+                type: 'Nhà trọ',
+                name: 'Tòa BT23 Khu sinh thái Minh Châu',
+                rating: '4.9',
+                location: 'Khu sinh thái Minh Châu, Đoài Phương, Hòa Lạc, Hà Nội',
+                description: 'Tòa BT23 tại khu sinh thái Minh Châu, giá 3 triệu/phòng, điện 3.5k, nước 50k, dịch vụ 250k.',
+                roomCount: 'Phòng trọ',
+                price: '3.0 triệu/phòng',
+                contact: '0912010306',
+                image: '../images/docx/image4.png'
+            },
+            'hai-dang': {
+                id: 'hai-dang',
+                type: 'Nhà trọ',
+                name: 'Nhà trọ Hải Đăng',
+                rating: '4.8',
+                location: 'Nhà trọ Hải Đăng, Hòa Lạc, Hà Nội, Việt Nam',
+                description: 'Nhà trọ Hải Đăng, giá 1.6 triệu/người, phòng đôi 3.2 triệu, free dịch vụ, điện 3.6k.',
+                roomCount: 'Phòng đôi',
+                price: '1.6 triệu/người',
+                contact: '0973092247',
+                image: '../images/docx/image26.jpg'
+            },
+            'duong-linh-1': {
+                id: 'duong-linh-1',
+                type: 'Nhà trọ',
+                name: 'Nhà trọ Dương Linh 1',
+                rating: '5.0',
+                location: 'Hòa Lạc, Thạch Thất, Hà Nội',
+                description: 'Nhà trọ Dương Linh 1 nằm tại khu dân cư yên tĩnh, gần trường học, tiện ích đầy đủ.',
+                roomCount: '1 phòng',
+                price: 'Từ 3.5 triệu/tháng',
+                contact: '1900 123 456',
+                image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80'
+            },
+            'duong-linh-2': {
+                id: 'duong-linh-2',
+                type: 'Nhà trọ',
+                name: 'Nhà trọ Dương Linh 2',
+                rating: '5.0',
+                location: 'Thôn 4, Hòa Lạc, Thạch Thất, Hà Nội',
+                description: 'Phòng trọ sạch sẽ, đầy đủ tiện nghi, thuận tiện cho sinh viên.',
+                roomCount: '1 phòng',
+                price: 'Từ 3.2 triệu/tháng',
+                contact: '1900 123 456',
+                image: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80'
+            }
+        };
+
+        async function getSellerListings() {
+            if (window.db) {
+                return await window.db.getListings();
+            }
+            try {
+                return JSON.parse(localStorage.getItem('locafySellerListings')) || [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        async function getSelectedHouse(houseId) {
+            const sellerListings = await getSellerListings();
+            const sellerHouse = sellerListings.find((listing) => listing.id === houseId);
+
+            if (sellerHouse) {
+                return {
+                    id: sellerHouse.id || houseId,
+                    type: 'Nhà trọ',
+                    name: sellerHouse.title,
+                    rating: '5.0',
+                    location: sellerHouse.location,
+                    description: sellerHouse.description,
+                    roomCount: sellerHouse.roomCount || '1 phòng',
+                    price: typeof sellerHouse.price === 'number' ? sellerHouse.price.toLocaleString('vi-VN') + ' VND/tháng' : sellerHouse.price,
+                    contact: sellerHouse.contact || '0869 161 118',
+                    image: sellerHouse.image || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80'
+                };
+            }
+
+            if (houseDatabase[houseId]) {
+                return { ...houseDatabase[houseId] };
+            }
+
+            return null;
+        }
+
+        async function renderFavorites() {
+            const listContainer = document.getElementById('favorites-list');
+            const emptyState = document.getElementById('empty-state');
+            if (!listContainer) return;
+
+            const favorites = JSON.parse(localStorage.getItem('locafyFavorites') || '[]');
+            
+            listContainer.innerHTML = '';
+
+            if (favorites.length === 0) {
+                listContainer.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                emptyState.classList.add('flex');
+                return;
+            }
+
+            listContainer.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+            emptyState.classList.remove('flex');
+
+            for (const id of favorites) {
+                const house = await getSelectedHouse(id);
+                if (!house) continue;
+
+                const card = document.createElement('article');
+                card.className = 'house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200';
+
+                card.innerHTML = `
+                    <a href="../house-detail.html?house=${house.id}" class="relative h-48 block overflow-hidden">
+                        <img src="${house.image}" alt="${house.name}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-350">
+                        <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">${house.rating} ★</div>
+                        <button onclick="removeFavorite(event, '${house.id}')" class="absolute top-3 right-3 bg-white text-rose-600 w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:bg-rose-50 transition active:scale-90" title="Xóa khỏi yêu thích">
+                            <i class="fa-solid fa-heart text-base"></i>
+                        </button>
+                    </a>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2">
+                                <h3 class="text-base font-bold text-gray-900 leading-snug"><a href="../house-detail.html?house=${house.id}" class="hover:text-blue-600 transition">${house.name}</a></h3>
+                                <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded shrink-0">${house.roomCount}</span>
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2 flex items-start"><i class="fa-solid fa-location-dot mt-0.5 mr-2 text-gray-400"></i>${house.location}</p>
+                            <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-phone mr-2 text-gray-400"></i>${house.contact}</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                            <span class="flex items-center"><i class="fa-solid fa-house-user mr-1.5 text-blue-500"></i>${house.type}</span>
+                            <span class="font-semibold text-red-500">${house.price}</span>
+                        </div>
+                        <div class="mt-4 grid grid-cols-2 gap-2 shrink-0">
+                            <button onclick="removeFavorite(event, '${house.id}')" class="py-2 text-center text-xs font-semibold bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 rounded-xl transition">
+                                Xóa yêu thích
+                            </button>
+                            <a href="../house-detail.html?house=${house.id}" class="py-2 text-center text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-sm transition">
+                                Chi tiết
+                            </a>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            }
+        }
+
+        window.removeFavorite = function(event, id) {
+            if (event) event.preventDefault();
+            if (confirm('Bạn có chắc chắn muốn xóa phòng trọ này khỏi danh sách yêu thích?')) {
+                let favorites = JSON.parse(localStorage.getItem('locafyFavorites') || '[]');
+                favorites = favorites.filter(favId => favId !== id);
+                localStorage.setItem('locafyFavorites', JSON.stringify(favorites));
+                renderFavorites();
+            }
+        };
+
+        async function init() {
+            let attempts = 0;
+            while (!window.db && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+            updateAuthUI();
+            await renderFavorites();
+        }
+        init();
+    </script>
+</body>
+</html>

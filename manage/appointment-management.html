@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Yêu Cầu Xem Phòng - Locafy Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'seller') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Chủ trọ!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Hub</span>
+        </div>
+        
+        <div class="px-4 mb-4">
+            <a href="add-room.html" class="w-full bg-white text-teal-deep font-label-md text-sm py-2.5 rounded-full hover:bg-stone-100 transition-colors shadow-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">add</span>
+                Đăng tin phòng mới
+            </a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto px-2 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-sm">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-management.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-sm">Quản lý phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="appointment-management.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event_available</span>
+                <span class="font-label-md text-sm font-bold">Lịch hẹn xem</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="tenant-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-sm">Khách thuê</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="payment.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-sm">Hóa đơn & Tiền</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="message-manage.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-sm">Tin nhắn</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="maintenance-requests.html">
+                <span class="material-symbols-outlined">build</span>
+                <span class="font-label-md text-sm">Yêu cầu sửa chữa</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="contract-builder.html">
+                <span class="material-symbols-outlined">edit_document</span>
+                <span class="font-label-md text-sm">Tạo hợp đồng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="account-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-sm">Cài đặt hồ sơ</span>
+            </a>
+        </nav>
+        
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-sm">Đăng xuất</span>
+            </button>
+        </div>
+        
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Lịch hẹn xem phòng trọ</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="font-label-md text-sm text-on-surface leading-tight" id="header-landlord-name">Chủ trọ Locafy</p>
+                    <p class="font-label-sm text-xs text-on-surface-variant">Chủ nhà</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold text-sm" id="header-avatar-fallback">LL</div>
+            </div>
+        </header>
+
+        <!-- Page Content Scrollable Area -->
+        <div class="flex-grow overflow-y-auto pt-24 px-8 pb-12">
+            <!-- Filter Tabs -->
+            <div class="flex gap-4 mb-6 border-b border-stone-100 pb-px">
+                <button onclick="filterStatus('all')" id="tab-all" class="font-label-md text-sm text-teal-deep pb-3 border-b-2 border-teal-deep font-bold relative top-[1px]">Tất cả</button>
+                <button onclick="filterStatus('pending')" id="tab-pending" class="font-label-md text-sm text-stone-500 hover:text-teal-deep pb-3 transition-colors">Chờ xác nhận</button>
+                <button onclick="filterStatus('approved')" id="tab-approved" class="font-label-md text-sm text-stone-500 hover:text-teal-deep pb-3 transition-colors">Đã xác nhận</button>
+                <button onclick="filterStatus('cancelled')" id="tab-cancelled" class="font-label-md text-sm text-stone-500 hover:text-teal-deep pb-3 transition-colors">Đã hủy</button>
+            </div>
+
+            <!-- Booking Cards List -->
+            <div class="space-y-4 max-w-5xl" id="appointments-container">
+                <!-- Dynamic cards go here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const bookingsKey = 'locafyBookings';
+
+        async function loadBookings() {
+            if (window.db) {
+                return await window.db.getBookings();
+            }
+            return JSON.parse(localStorage.getItem(bookingsKey)) || [];
+        }
+
+        function saveBookings(bookings) {
+            localStorage.setItem(bookingsKey, JSON.stringify(bookings));
+        }
+
+        if (currentUser) {
+            const displayName = currentUser.name || currentUser.username;
+            const _el_ln = document.getElementById('landlord-name'); if(_el_ln) _el_ln.textContent = displayName;
+            document.getElementById('header-landlord-name').textContent = displayName;
+            const initials = displayName.substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+        }
+
+        let currentFilter = 'all';
+
+        function filterStatus(status) {
+            currentFilter = status;
+            
+            // Highlight active tab
+            const tabs = ['all', 'pending', 'approved', 'cancelled'];
+            tabs.forEach(tab => {
+                const btn = document.getElementById('tab-' + tab);
+                if (tab === status) {
+                    btn.className = "font-label-md text-sm text-teal-deep pb-3 border-b-2 border-teal-deep font-bold relative top-[1px]";
+                } else {
+                    btn.className = "font-label-md text-sm text-stone-500 hover:text-teal-deep pb-3 transition-colors";
+                }
+            });
+
+            renderAppointments();
+        }
+
+        async function renderAppointments() {
+            const bookings = await loadBookings();
+            // Filter owned by this landlord
+            const myBookings = bookings.filter(b => b.ownerUsername === currentUser.username);
+
+            const container = document.getElementById('appointments-container');
+            container.innerHTML = '';
+
+            const filtered = myBookings.filter(b => {
+                if (currentFilter === 'all') return true;
+                return b.status === currentFilter;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white p-12 text-center text-stone-400 rounded-3xl soft-shadow">
+                        <span class="material-symbols-outlined text-4xl mb-2 text-stone-300">event_busy</span>
+                        <p class="text-sm">Không có yêu cầu xem phòng nào ở trạng thái này.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(b => {
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-3xl p-5 soft-shadow flex flex-col md:flex-row items-center gap-6 border border-stone-100 hover:border-teal-deep/10 transition-all ${b.status === 'cancelled' ? 'opacity-70 grayscale-[20%]' : ''}`;
+
+                let statusBadge = '';
+                if (b.status === 'pending') {
+                    statusBadge = `<span class="bg-amber-50 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full border border-amber-100">Chờ xác nhận</span>`;
+                } else if (b.status === 'approved') {
+                    statusBadge = `<span class="bg-green-50 text-success text-xs font-semibold px-3 py-1 rounded-full border border-green-100">Đã xác nhận</span>`;
+                } else {
+                    statusBadge = `<span class="bg-stone-100 text-stone-600 text-xs font-semibold px-3 py-1 rounded-full border border-stone-200">Đã hủy</span>`;
+                }
+
+                // Sample image fallback
+                const imageSrc = 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=150&q=80';
+
+                card.innerHTML = `
+                    <!-- Thumbnail -->
+                    <img alt="Thumbnail" class="w-32 h-24 rounded-2xl object-cover shrink-0" src="${imageSrc}">
+                    
+                    <!-- Details -->
+                    <div class="flex-1 w-full">
+                        <h4 class="font-bold text-base text-stone-900 leading-tight mb-1">${b.roomTitle}</h4>
+                        <div class="flex items-center gap-1.5 text-xs text-stone-400 mb-3">
+                            <span class="material-symbols-outlined text-[16px]">person</span>
+                            <span>Khách hàng: <strong>${b.tenantName}</strong> (${b.tenantPhone})</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 text-xs font-semibold text-teal-deep bg-stone-50 w-fit px-3 py-1.5 rounded-lg border border-stone-100">
+                            <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">calendar_today</span>
+                                <span>${b.date}</span>
+                            </div>
+                            <div class="w-1 h-1 bg-stone-300 rounded-full"></div>
+                            <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">schedule</span>
+                                <span>${b.time}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col items-end justify-between self-stretch shrink-0 py-1">
+                        <div>
+                            ${statusBadge}
+                        </div>
+                        <div class="flex items-center gap-2 mt-4 md:mt-0">
+                            ${b.status === 'pending' ? `
+                                <button onclick="updateStatus('${b.id}', 'approved')" class="px-4 py-2 bg-teal-deep text-white font-bold text-xs rounded-full hover:opacity-90 active:scale-95 transition-all shadow-sm">Xác nhận</button>
+                                <button onclick="updateStatus('${b.id}', 'cancelled')" class="px-4 py-2 bg-stone-100 text-stone-600 font-semibold text-xs rounded-full border border-stone-200 hover:bg-stone-200 active:scale-95 transition-all">Từ chối</button>
+                            ` : ''}
+                            <a href="tel:${b.tenantPhone}" class="px-3 py-2 text-teal-deep font-bold text-xs hover:underline flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">call</span> Gọi khách
+                            </a>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.updateStatus = async function(id, newStatus) {
+            const bookings = await loadBookings();
+            const index = bookings.findIndex(b => b.id === id);
+            if (index !== -1) {
+                bookings[index].status = newStatus;
+                if (newStatus === 'approved') {
+                    bookings[index].depositPaid = true;
+                }
+                
+                if (window.db) {
+                    await window.db.saveBooking(bookings[index]);
+                } else {
+                    saveBookings(bookings);
+                }
+                
+                // Create a notification for the renter
+                const booking = bookings[index];
+                const renterEmail = booking.renterEmail || booking.tenantEmail || (booking.tenantPhone ? (booking.tenantPhone.replace(/\s+/g, '') + '@locafy.com') : 'buyer@locafy.com');
+                
+                const newNotification = {
+                    id: 'notif-' + Date.now(),
+                    title: 'Lịch hẹn xem phòng ' + (newStatus === 'approved' ? 'đã được xác nhận' : 'đã bị từ chối'),
+                    description: `Chủ nhà đã ${newStatus === 'approved' ? 'đồng ý' : 'từ chối'} yêu cầu xem phòng của bạn cho căn hộ "${booking.roomTitle}". Thời gian: ${booking.date} lúc ${booking.time}.`,
+                    type: 'appointment',
+                    read: false,
+                    date: new Date().toISOString(),
+                    renterEmail: renterEmail
+                };
+                
+                if (window.db) {
+                    await window.db.saveNotification(newNotification);
+                } else {
+                    const notifications = JSON.parse(localStorage.getItem('locafyNotifications')) || [];
+                    notifications.push(newNotification);
+                    localStorage.setItem('locafyNotifications', JSON.stringify(notifications));
+                }
+
+                await renderAppointments();
+                alert(`Đã cập nhật trạng thái lịch hẹn xem phòng thành công!`);
+            }
+        };
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        // Initial render
+        async function init() {
+            let attempts = 0;
+            while (!window.db && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+            await renderAppointments();
+        }
+        init();
+    </script>
+</body>
+</html>

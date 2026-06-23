@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cài đặt hồ sơ - Locafy Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'seller') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Chủ trọ!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Hub</span>
+        </div>
+        
+        <div class="px-4 mb-4">
+            <a href="add-room.html" class="w-full bg-white text-teal-deep font-label-md text-sm py-2.5 rounded-full hover:bg-stone-100 transition-colors shadow-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">add</span>
+                Đăng tin phòng mới
+            </a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto px-2 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-sm">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-management.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-sm">Quản lý phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="appointment-management.html">
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="font-label-md text-sm">Lịch hẹn xem</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="tenant-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-sm">Khách thuê</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="payment.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-sm">Hóa đơn & Tiền</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="message-manage.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-sm">Tin nhắn</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="maintenance-requests.html">
+                <span class="material-symbols-outlined">build</span>
+                <span class="font-label-md text-sm">Yêu cầu sửa chữa</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="contract-builder.html">
+                <span class="material-symbols-outlined">edit_document</span>
+                <span class="font-label-md text-sm">Tạo hợp đồng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="account-settings.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+                <span class="font-label-md text-sm font-bold">Cài đặt hồ sơ</span>
+            </a>
+        </nav>
+        
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-sm">Đăng xuất</span>
+            </button>
+        </div>
+        
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Cài Đặt Hồ Sơ</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="window.location.href='add-room.html'" class="flex items-center gap-2 bg-teal-deep text-white px-5 py-2 rounded-full font-bold hover:opacity-90 active:scale-95 transition-all text-sm">
+                    <span class="material-symbols-outlined text-lg">add</span>
+                    Thêm phòng mới
+                </button>
+                <div class="text-right">
+                    <p class="font-label-md text-sm text-on-surface leading-tight" id="header-landlord-name">Chủ trọ Locafy</p>
+                    <p class="font-label-sm text-xs text-on-surface-variant">Chủ nhà</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold text-sm" id="header-avatar-fallback">LL</div>
+            </div>
+        </header>
+
+        <!-- Page Content Scrollable Area -->
+        <div class="flex-grow overflow-y-auto pt-24 px-8 pb-12">
+            <div class="w-full max-w-4xl mx-auto">
+                <!-- Profile Summary Card -->
+                <div class="bg-white rounded-[24px] p-8 mb-8 soft-shadow flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-teal-deep/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+                    <div class="relative w-28 h-28 flex-shrink-0">
+                        <div class="w-full h-full rounded-full bg-teal-deep text-white flex items-center justify-center font-bold text-3xl shadow-md border-4 border-white" id="summary-avatar-fallback">LL</div>
+                        <button onclick="mockChangeAvatar()" class="absolute bottom-0 right-0 bg-white shadow-md p-2 rounded-full hover:bg-stone-50 transition-all border border-stone-200 text-stone-700 flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[18px]">photo_camera</span>
+                        </button>
+                    </div>
+                    <div class="flex-grow text-center md:text-left z-10">
+                        <div class="flex flex-col md:flex-row items-center justify-center md:justify-start gap-3 mb-2">
+                            <h3 class="font-headline-lg text-xl font-bold text-stone-900" id="profile-summary-name">Chủ trọ Locafy</h3>
+                            <div class="bg-teal-deep/10 text-teal-deep px-3 py-1 rounded-full flex items-center gap-1 font-label-sm text-xs font-semibold border border-teal-deep/20">
+                                <span class="material-symbols-outlined text-[14px] text-teal-deep" style="font-variation-settings: 'FILL' 1;">verified</span>
+                                Đã xác minh danh tính
+                            </div>
+                        </div>
+                        <p class="font-body-md text-sm text-stone-500 flex items-center justify-center md:justify-start gap-2">
+                            <span class="material-symbols-outlined text-[18px]">calendar_today</span>
+                            Đối tác cho thuê từ 2025
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Settings Forms Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <!-- Personal Info Card -->
+                    <div class="bg-white rounded-[24px] p-6 soft-shadow flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-teal-deep text-[28px]">person</span>
+                            <h4 class="font-headline-sm text-base font-bold text-stone-900">Thông tin cá nhân</h4>
+                        </div>
+                        <div class="space-y-4 flex-grow">
+                            <div>
+                                <label class="block text-xs font-semibold text-stone-500 mb-1.5">Họ và tên</label>
+                                <input id="fullname-input" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all" type="text">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-stone-500 mb-1.5">Email</label>
+                                <input id="email-input" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all" type="email">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-stone-500 mb-1.5">Số điện thoại</label>
+                                <input id="phone-input" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all" type="tel">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hostel Info Card -->
+                    <div class="bg-white rounded-[24px] p-6 soft-shadow flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-teal-deep text-[28px]">apartment</span>
+                            <h4 class="font-headline-sm text-base font-bold text-stone-900">Thông tin khu trọ</h4>
+                        </div>
+                        <div class="space-y-4 flex-grow">
+                            <div>
+                                <label class="block text-xs font-semibold text-stone-500 mb-1.5">Tên khu trọ (Hiển thị công khai)</label>
+                                <input id="hostel-name-input" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all" type="text" placeholder="An Phú Residence">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-stone-500 mb-1.5">Địa chỉ</label>
+                                <textarea id="hostel-address-input" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all resize-none" rows="4" placeholder="Nhập địa chỉ khu trọ của bạn..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Card -->
+                    <div class="bg-white rounded-[24px] p-6 soft-shadow flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-teal-deep text-[28px]">notifications_active</span>
+                            <h4 class="font-headline-sm text-base font-bold text-stone-900">Cài đặt thông báo</h4>
+                        </div>
+                        <div class="space-y-6 flex-grow">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-bold text-stone-900">Thông báo qua Email</p>
+                                    <p class="text-xs text-stone-400">Hóa đơn, cập nhật hệ thống quan trọng</p>
+                                </div>
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input id="notify-email" class="sr-only peer" type="checkbox" checked>
+                                    <div class="w-11 h-6 bg-stone-200 rounded-full peer peer-checked:bg-teal-deep after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-bold text-stone-900">Thông báo qua SMS</p>
+                                    <p class="text-xs text-stone-400">Yêu cầu đặt xem phòng khẩn cấp</p>
+                                </div>
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input id="notify-sms" class="sr-only peer" type="checkbox">
+                                    <div class="w-11 h-6 bg-stone-200 rounded-full peer peer-checked:bg-teal-deep after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-bold text-stone-900">Thông báo trên ứng dụng</p>
+                                    <p class="text-xs text-stone-400">Tin nhắn từ khách thuê, nhắc nhở</p>
+                                </div>
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input id="notify-app" class="sr-only peer" type="checkbox" checked>
+                                    <div class="w-11 h-6 bg-stone-200 rounded-full peer peer-checked:bg-teal-deep after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security / Password Card -->
+                    <div class="bg-white rounded-[24px] p-6 soft-shadow flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="material-symbols-outlined text-teal-deep text-[28px]">lock</span>
+                            <h4 class="font-headline-sm text-base font-bold text-stone-900">Đổi mật khẩu bảo mật</h4>
+                        </div>
+                        <div class="space-y-4 flex-grow">
+                            <div>
+                                <label class="block text-xs font-semibold text-stone-500 mb-1.5">Mật khẩu hiện tại</label>
+                                <div class="relative">
+                                    <input id="current-pwd-input" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 pr-10 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all" placeholder="••••••••" type="password">
+                                    <button type="button" onclick="togglePasswordVisibility('current-pwd-input', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-lg">visibility</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-stone-500 mb-1.5">Mật khẩu mới</label>
+                                <div class="relative">
+                                    <input id="new-pwd-input" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 pr-10 text-sm focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all" placeholder="••••••••" type="password">
+                                    <button type="button" onclick="togglePasswordVisibility('new-pwd-input', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 flex items-center justify-center">
+                                        <span class="material-symbols-outlined text-lg">visibility</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Row -->
+                <div class="flex flex-col sm:flex-row justify-end items-center gap-4 pt-6 border-t border-stone-200/60 mt-8">
+                    <button onclick="logout()" class="w-full sm:w-auto px-6 py-2.5 rounded-full font-bold text-error border border-error hover:bg-red-50 text-sm transition-all duration-200 active:scale-95">
+                        Đăng xuất
+                    </button>
+                    <button onclick="saveChanges()" class="w-full sm:w-auto bg-teal-deep text-white px-8 py-2.5 rounded-full font-bold hover:opacity-90 active:scale-95 transition-all text-sm shadow-md">
+                        Lưu thay đổi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <script>
+        const accountsKey = 'locafyAccounts';
+        const currentUserKey = 'locafyCurrentUser';
+
+        async function loadAccounts() {
+            if (window.db) {
+                return await window.db.getAccounts();
+            }
+            try {
+                return JSON.parse(localStorage.getItem(accountsKey)) || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveAccounts(accounts) {
+            localStorage.setItem(accountsKey, JSON.stringify(accounts));
+        }
+
+        // Initialize Landlord Profile widget info & inputs
+        let currentAccount = null;
+
+        async function initProfile() {
+            if (!currentUser) return;
+            let attempts = 0;
+            while (!window.db && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+            const accounts = await loadAccounts();
+            currentAccount = accounts.find(acc => acc.username === currentUser.username);
+
+            if (!currentAccount) {
+                // fallback if not found in accounts
+                currentAccount = { ...currentUser };
+            }
+
+            const displayName = currentAccount.name || currentAccount.username;
+            updateSidebarAndHeader(displayName);
+
+            // Fill text fields
+            document.getElementById('fullname-input').value = currentAccount.name || '';
+            document.getElementById('email-input').value = currentAccount.email || '';
+            document.getElementById('phone-input').value = currentAccount.phone || '';
+            document.getElementById('hostel-name-input').value = currentAccount.hostelName || 'An Phú Residence';
+            document.getElementById('hostel-address-input').value = currentAccount.address || '123 Đường Mai Chí Thọ, Phường An Phú, Thành phố Thủ Đức, TP. Hồ Chí Minh';
+
+            // Fill notifications checkbox statuses
+            if (currentAccount.notifications) {
+                document.getElementById('notify-email').checked = currentAccount.notifications.email !== false;
+                document.getElementById('notify-sms').checked = currentAccount.notifications.sms === true;
+                document.getElementById('notify-app').checked = currentAccount.notifications.app !== false;
+            } else {
+                document.getElementById('notify-email').checked = true;
+                document.getElementById('notify-sms').checked = false;
+                document.getElementById('notify-app').checked = true;
+            }
+        }
+
+        function updateSidebarAndHeader(name) {
+            const initials = name.substring(0, 2).toUpperCase();
+            const _el_ln = document.getElementById('landlord-name'); if(_el_ln) _el_ln.textContent = name;
+            document.getElementById('header-landlord-name').textContent = name;
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+            document.getElementById('summary-avatar-fallback').textContent = initials;
+            document.getElementById('profile-summary-name').textContent = name;
+        }
+
+        window.togglePasswordVisibility = function(inputId, button) {
+            const input = document.getElementById(inputId);
+            const icon = button.querySelector('.material-symbols-outlined');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        };
+
+        window.mockChangeAvatar = function() {
+            showToast('Chức năng tải ảnh avatar lên đang giả lập! Đã cập nhật ảnh đại diện.', 'success');
+        };
+
+        window.saveChanges = async function() {
+            if (!currentUser) return;
+            
+            const nameVal = document.getElementById('fullname-input').value.trim();
+            const emailVal = document.getElementById('email-input').value.trim();
+            const phoneVal = document.getElementById('phone-input').value.trim();
+            const hostelNameVal = document.getElementById('hostel-name-input').value.trim();
+            const addressVal = document.getElementById('hostel-address-input').value.trim();
+            
+            const notifyEmail = document.getElementById('notify-email').checked;
+            const notifySms = document.getElementById('notify-sms').checked;
+            const notifyApp = document.getElementById('notify-app').checked;
+
+            const currentPwd = document.getElementById('current-pwd-input').value;
+            const newPwd = document.getElementById('new-pwd-input').value;
+
+            if (!nameVal || !emailVal) {
+                showToast('Họ tên và Email không được để trống!', 'error');
+                return;
+            }
+
+            const accounts = await loadAccounts();
+            const account = accounts.find(acc => acc.username === currentUser.username) || { ...currentUser };
+
+            // Password update validation
+            if (currentPwd || newPwd) {
+                if (!currentPwd) {
+                    showToast('Vui lòng nhập mật khẩu hiện tại!', 'error');
+                    return;
+                }
+                if (!newPwd || newPwd.length < 6) {
+                    showToast('Mật khẩu mới phải dài tối thiểu 6 ký tự!', 'error');
+                    return;
+                }
+                // Verify current password via Auth API
+                try {
+                    await window.LocafyApi.send('POST', '/auth/login', {
+                        identifier: currentUser.username,
+                        password: currentPwd
+                    });
+                } catch (err) {
+                    showToast('Mật khẩu hiện tại không chính xác!', 'error');
+                    return;
+                }
+                account.password = newPwd;
+                
+                // Clear security fields
+                document.getElementById('current-pwd-input').value = '';
+                document.getElementById('new-pwd-input').value = '';
+            }
+
+            // Apply updates
+            account.name = nameVal;
+            account.email = emailVal;
+            account.phone = phoneVal;
+            account.hostelName = hostelNameVal;
+            account.address = addressVal;
+            account.notifications = {
+                email: notifyEmail,
+                sms: notifySms,
+                app: notifyApp
+            };
+
+            if (window.db) {
+                await window.db.saveAccount(account);
+            } else {
+                const idx = accounts.findIndex(acc => acc.username === currentUser.username);
+                if (idx !== -1) {
+                    accounts[idx] = account;
+                } else {
+                    accounts.push(account);
+                }
+                saveAccounts(accounts);
+            }
+
+            // Sync with current user session (keeping the login role same)
+            const updatedCurrentUser = {
+                ...currentUser,
+                name: nameVal,
+                email: emailVal,
+                phone: phoneVal
+            };
+            localStorage.setItem(currentUserKey, JSON.stringify(updatedCurrentUser));
+
+            // Refresh settings view
+            updateSidebarAndHeader(nameVal);
+            showToast('Đã lưu thay đổi hồ sơ thành công!', 'success');
+        };
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `px-6 py-3 rounded-xl shadow-lg text-sm font-bold flex items-center gap-2 transform translate-y-4 opacity-0 transition-all duration-300 ${
+                type === 'success' 
+                ? 'bg-emerald-600 text-white' 
+                : 'bg-red-500 text-white'
+            }`;
+            
+            const icon = type === 'success' ? 'check_circle' : 'error';
+            toast.innerHTML = `
+                <span class="material-symbols-outlined text-lg">${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            }, 10);
+            
+            // Remove toast
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        // Initialize profile details
+        initProfile();
+    </script>
+</body>
+</html>
