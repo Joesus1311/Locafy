@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cấu hình Hệ thống - Locafy Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+        
+        /* Toggle Switch Styles */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #0F3D3E;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0F3D3E;
+        }
+        .toggle-checkbox {
+            right: 0;
+            z-index: 1;
+            border-color: #e2e2e2;
+            transition: all 0.3s;
+        }
+        .toggle-label {
+            width: 3rem;
+            height: 1.5rem;
+            background-color: #e2e2e2;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .toggle-label::after {
+            content: '';
+            position: absolute;
+            top: 0.125rem;
+            left: 0.125rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .toggle-checkbox:checked + .toggle-label::after {
+            transform: translateX(1.5rem);
+        }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Quản trị viên!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-2 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-label-md">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="user-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-label-md">Người dùng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="verify-landlord.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="font-label-md text-label-md">Xét duyệt Chủ trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-censorship.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-label-md">Kiểm duyệt Phòng trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="reports-violations.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-label-md">Báo cáo & Vi phạm</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="content-management.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-label-md">Quản lý Nội dung</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="track-bookings.html">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="font-label-md text-label-md">Theo dõi thuê phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="system-settings.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+                <span class="font-label-md text-label-md font-bold">Cài đặt Hệ thống</span>
+            </a>
+        </nav>
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Đăng xuất</span>
+            </button>
+        </div>
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Cấu hình hệ thống</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="font-label-md text-label-md text-on-surface leading-tight" id="header-admin-name">Admin Locafy</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant">Quản trị viên</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold" id="header-avatar-fallback">AD</div>
+            </div>
+        </header>
+
+        <!-- Page Content Scrollable Area -->
+        <div class="flex-grow overflow-y-auto pt-24 px-8 pb-12 w-full">
+            <div class="mb-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <h2 class="font-headline-md text-headline-md text-teal-deep font-extrabold mb-1">Cài đặt & Cấu hình Hệ thống</h2>
+                <p class="font-body-md text-body-md text-stone-500">Quản lý các cấu hình nền tảng, hồ sơ cá nhân và thiết lập chế độ bảo mật.</p>
+            </div>
+
+            <div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <!-- Section: Hồ sơ quản trị viên -->
+                <section class="bg-white rounded-[24px] p-6 md:p-8 border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)] relative overflow-hidden transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)]">
+                    <div class="flex items-center gap-3.5 mb-6">
+                        <div class="w-11 h-11 rounded-2xl bg-teal-deep/5 text-teal-deep flex items-center justify-center border border-teal-deep/10 shadow-premium-sm">
+                            <span class="material-symbols-outlined text-[22px]">badge</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline-sm text-base font-extrabold text-teal-deep">Hồ sơ quản trị viên</h3>
+                            <p class="text-xs text-stone-400">Thông tin cá nhân quản trị hệ thống</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                        <!-- Avatar fallback large -->
+                        <div class="flex flex-col items-center gap-3 shrink-0">
+                            <div class="relative group">
+                                <div class="w-24 h-24 rounded-full bg-teal-deep text-white flex items-center justify-center font-extrabold text-3xl shadow-premium border-4 border-white" id="profile-avatar-fallback">
+                                    AD
+                                </div>
+                                <div class="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                                    <span class="material-symbols-outlined text-white text-[20px]">photo_camera</span>
+                                </div>
+                            </div>
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-teal-deep/60 bg-teal-deep/5 px-2.5 py-1 rounded-full">Super Admin</span>
+                        </div>
+                        
+                        <!-- Form -->
+                        <form id="profile-form" class="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-5" onsubmit="saveProfile(event)">
+                            <div class="space-y-1.5">
+                                <label class="font-label-sm text-xs font-bold text-stone-600 block ml-1">Họ và tên</label>
+                                <input id="admin-fullname" class="w-full bg-stone-50 border border-stone-200/80 rounded-xl px-4 py-3 font-body-md text-sm text-on-surface focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none" type="text" required>
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="font-label-sm text-xs font-bold text-stone-600 block ml-1">Email</label>
+                                <input id="admin-email" class="w-full bg-stone-50 border border-stone-200/80 rounded-xl px-4 py-3 font-body-md text-sm text-on-surface focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none" type="email" required>
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="font-label-sm text-xs font-bold text-stone-600 block ml-1">Số điện thoại</label>
+                                <input id="admin-phone" class="w-full bg-stone-50 border border-stone-200/80 rounded-xl px-4 py-3 font-body-md text-sm text-on-surface focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none" type="tel">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="font-label-sm text-xs font-bold text-stone-600 block ml-1">Chức vụ</label>
+                                <div class="relative">
+                                    <input class="w-full bg-stone-100/80 border border-stone-200/60 rounded-xl px-4 py-3 font-body-md text-sm text-stone-500 outline-none cursor-not-allowed" type="text" value="Super Admin" readonly>
+                                    <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 text-[18px]">lock</span>
+                                </div>
+                            </div>
+                            <div class="md:col-span-2 flex justify-end pt-2">
+                                <button type="submit" class="px-6 py-2.5 bg-teal-deep text-white font-label-md text-sm rounded-full hover:opacity-95 active:scale-95 transition-all shadow-md shadow-teal-deep/10 hover-lift">
+                                    Lưu thay đổi
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Section: Cấu hình hệ thống -->
+                <section class="bg-white rounded-[24px] p-6 md:p-8 border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)]">
+                    <div class="flex items-center gap-3.5 mb-6">
+                        <div class="w-11 h-11 rounded-2xl bg-teal-deep/5 text-teal-deep flex items-center justify-center border border-teal-deep/10 shadow-premium-sm">
+                            <span class="material-symbols-outlined text-[22px]">tune</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline-sm text-base font-extrabold text-teal-deep">Cấu hình nền tảng</h3>
+                            <p class="text-xs text-stone-400">Kiểm soát hoạt động toàn hệ thống</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <!-- Toggle Maintenance -->
+                        <div class="flex items-center justify-between p-4 rounded-xl hover:bg-stone-50/80 transition-colors">
+                            <div class="flex gap-3">
+                                <span class="material-symbols-outlined text-stone-400 mt-0.5 text-[20px]">construction</span>
+                                <div>
+                                    <h4 class="font-headline-sm text-sm font-bold text-stone-850 mb-0.5">Chế độ bảo trì hệ thống</h4>
+                                    <p class="font-body-sm text-xs text-stone-400">Tạm dừng truy cập của người dùng để nâng cấp hoặc sửa lỗi.</p>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer select-none">
+                                <input id="maintenance-toggle" type="checkbox" onchange="toggleSetting('maintenance')" class="sr-only peer">
+                                <div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-deep"></div>
+                            </label>
+                        </div>
+                        <hr class="border-stone-100">
+                        <!-- Toggle Email Notification -->
+                        <div class="flex items-center justify-between p-4 rounded-xl hover:bg-stone-50/80 transition-colors">
+                            <div class="flex gap-3">
+                                <span class="material-symbols-outlined text-stone-400 mt-0.5 text-[20px]">mail</span>
+                                <div>
+                                    <h4 class="font-headline-sm text-sm font-bold text-stone-850 mb-0.5">Thông báo hệ thống qua Email</h4>
+                                    <p class="font-body-sm text-xs text-stone-400">Nhận báo cáo sự cố và thống kê đăng trọ tự động hàng tuần.</p>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer select-none">
+                                <input id="email-toggle" type="checkbox" onchange="toggleSetting('emailNotifs')" class="sr-only peer">
+                                <div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-deep"></div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section: Bảo mật tài khoản -->
+                <section class="bg-white rounded-[24px] p-6 md:p-8 border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)] transition-all hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)]">
+                    <div class="flex items-center gap-3.5 mb-6">
+                        <div class="w-11 h-11 rounded-2xl bg-teal-deep/5 text-teal-deep flex items-center justify-center border border-teal-deep/10 shadow-premium-sm">
+                            <span class="material-symbols-outlined text-[22px]">shield_lock</span>
+                        </div>
+                        <div>
+                            <h3 class="font-headline-sm text-base font-extrabold text-teal-deep">Bảo mật tài khoản</h3>
+                            <p class="text-xs text-stone-400">Cấu hình bảo vệ tài khoản và khóa mật mã</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- 2FA Box -->
+                        <div class="bg-stone-50/50 p-6 rounded-2xl border border-stone-200/60 flex flex-col justify-between hover:bg-stone-50 transition-colors">
+                            <div>
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-deep border border-stone-250/60 shadow-premium-sm">
+                                        <span class="material-symbols-outlined text-[20px]">phonelink_setup</span>
+                                    </div>
+                                    <span class="bg-green-50 text-success text-xs font-semibold px-3 py-1 rounded-full border border-green-100 flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>Đã bật</span>
+                                </div>
+                                <h4 class="text-sm font-bold text-stone-900 mb-1">Xác thực 2 yếu tố (2FA)</h4>
+                                <p class="text-xs text-stone-450 leading-relaxed mb-6">Tăng cường bảo mật đăng nhập qua Google Authenticator hoặc SMS OTP.</p>
+                            </div>
+                            <button onclick="alert('Tính năng bảo mật đang chạy ở phiên bản thử nghiệm offline.')" class="w-full py-2.5 bg-white border border-stone-200/80 hover:bg-stone-50 rounded-full text-xs font-bold text-stone-700 transition-all hover-lift shadow-premium-sm">Cấu hình xác thực</button>
+                        </div>
+                        
+                        <!-- Password Update -->
+                        <div class="bg-stone-50/50 p-6 rounded-2xl border border-stone-200/60 flex flex-col justify-between hover:bg-stone-50 transition-colors">
+                            <div>
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-deep border border-stone-250/60 shadow-premium-sm">
+                                        <span class="material-symbols-outlined text-[20px]">key</span>
+                                    </div>
+                                </div>
+                                <h4 class="text-sm font-bold text-stone-900 mb-1">Thay đổi mật khẩu</h4>
+                                <p class="text-xs text-stone-450 leading-relaxed mb-6">Cập nhật mật khẩu định kỳ của bạn để tránh rủi ro xâm nhập trái phép.</p>
+                            </div>
+                            <button onclick="changePassword()" class="w-full py-2.5 bg-white border border-stone-200/80 hover:bg-stone-50 rounded-full text-xs font-bold text-stone-700 transition-all hover-lift shadow-premium-sm">Đổi mật khẩu</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const settingsKey = 'locafySystemSettings';
+
+        // System settings stay in localStorage (no DB table)
+        function getSystemSettings() {
+            let data = localStorage.getItem(settingsKey);
+            if (!data) {
+                const defaults = { maintenance: false, emailNotifs: true };
+                localStorage.setItem(settingsKey, JSON.stringify(defaults));
+                return defaults;
+            }
+            return JSON.parse(data);
+        }
+
+        function saveSystemSettings(settings) {
+            localStorage.setItem(settingsKey, JSON.stringify(settings));
+        }
+
+        // Initialize User Info
+        if (currentUser) {
+            const _el_an = document.getElementById('admin-name'); if(_el_an) _el_an.textContent = currentUser.name || currentUser.username;
+            document.getElementById('header-admin-name').textContent = currentUser.name || currentUser.username;
+            const initials = (currentUser.name || currentUser.username).substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+            document.getElementById('profile-avatar-fallback').textContent = initials;
+
+            // Fill form inputs
+            document.getElementById('admin-fullname').value = currentUser.name || currentUser.username;
+            document.getElementById('admin-email').value = currentUser.email || '';
+            document.getElementById('admin-phone').value = currentUser.phone || '';
+        }
+
+        // Initialize Toggles
+        const config = getSystemSettings();
+        document.getElementById('maintenance-toggle').checked = config.maintenance;
+        document.getElementById('email-toggle').checked = config.emailNotifs;
+
+        window.toggleSetting = function(key) {
+            const settings = getSystemSettings();
+            if (key === 'maintenance') {
+                settings.maintenance = document.getElementById('maintenance-toggle').checked;
+            } else if (key === 'emailNotifs') {
+                settings.emailNotifs = document.getElementById('email-toggle').checked;
+            }
+            saveSystemSettings(settings);
+            alert('Đã cập nhật thiết lập hệ thống thành công!');
+        };
+
+        window.saveProfile = async function(e) {
+            e.preventDefault();
+            const fullName = document.getElementById('admin-fullname').value.trim();
+            const email = document.getElementById('admin-email').value.trim();
+            const phone = document.getElementById('admin-phone').value.trim();
+
+            if (!fullName || !email) {
+                alert('Vui lòng điền đầy đủ họ tên và email.');
+                return;
+            }
+
+            // Save in current session
+            currentUser.name = fullName;
+            currentUser.email = email;
+            currentUser.phone = phone;
+            localStorage.setItem('locafyCurrentUser', JSON.stringify(currentUser));
+
+            // Sync to DB via API
+            await window.db.saveAccount({
+                username: currentUser.username,
+                name: fullName,
+                email: email,
+                phone: phone,
+                role: currentUser.role,
+                verified: currentUser.verified,
+            });
+
+            // Refresh UI names
+            const _el_an = document.getElementById('admin-name'); if(_el_an) _el_an.textContent = fullName;
+            document.getElementById('header-admin-name').textContent = fullName;
+            const initials = fullName.substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+            document.getElementById('profile-avatar-fallback').textContent = initials;
+
+            alert('Đã lưu thông tin hồ sơ của bạn!');
+        };
+
+        window.changePassword = async function() {
+            const newPassword = prompt('Vui lòng nhập mật khẩu mới:');
+            if (newPassword && newPassword.length >= 6) {
+                // Update via API (password will be stored in DB)
+                await window.db.saveAccount({
+                    username: currentUser.username,
+                    password: newPassword,
+                    email: currentUser.email,
+                    role: currentUser.role,
+                    name: currentUser.name,
+                    verified: currentUser.verified,
+                });
+                alert('Đã thay đổi mật khẩu quản trị thành công!');
+            } else if (newPassword) {
+                alert('Mật khẩu quá ngắn (phải có ít nhất 6 ký tự).');
+            }
+        };
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+    </script>
+</body>
+</html>

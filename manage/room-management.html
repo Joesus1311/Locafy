@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Quản lý Phòng trọ - Locafy Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'seller') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Chủ trọ!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Hub</span>
+        </div>
+        
+        <div class="px-4 mb-4">
+            <a href="add-room.html" class="w-full bg-white text-teal-deep font-label-md text-sm py-2.5 rounded-full hover:bg-stone-100 transition-colors shadow-sm flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">add</span>
+                Đăng tin phòng mới
+            </a>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto px-2 space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-sm">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="room-management.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bed</span>
+                <span class="font-label-md text-sm font-bold">Quản lý phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="appointment-management.html">
+                <span class="material-symbols-outlined">event_available</span>
+                <span class="font-label-md text-sm">Lịch hẹn xem</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="tenant-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-sm">Khách thuê</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="payment.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-sm">Hóa đơn & Tiền</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="message-manage.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-sm">Tin nhắn</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="maintenance-requests.html">
+                <span class="material-symbols-outlined">build</span>
+                <span class="font-label-md text-sm">Yêu cầu sửa chữa</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="contract-builder.html">
+                <span class="material-symbols-outlined">edit_document</span>
+                <span class="font-label-md text-sm">Tạo hợp đồng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2.5 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="account-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-sm">Cài đặt hồ sơ</span>
+            </a>
+        </nav>
+        
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-sm">Đăng xuất</span>
+            </button>
+        </div>
+        
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Danh Sách Tin Đăng Phòng Trọ</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="window.location.href='add-room.html'" class="flex items-center gap-2 bg-teal-deep text-white px-5 py-2 rounded-full font-bold hover:opacity-90 active:scale-95 transition-all text-sm">
+                    <span class="material-symbols-outlined text-lg">add</span>
+                    Thêm phòng mới
+                </button>
+                <div class="text-right">
+                    <p class="font-label-md text-sm text-on-surface leading-tight" id="header-landlord-name">Chủ trọ Locafy</p>
+                    <p class="font-label-sm text-xs text-on-surface-variant">Chủ nhà</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold text-sm" id="header-avatar-fallback">LL</div>
+            </div>
+        </header>
+
+        <!-- Page Content Scrollable Area -->
+        <div class="flex-grow overflow-y-auto pt-24 px-8 pb-12">
+            <!-- Stats Bento Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-[20px] soft-shadow flex flex-col justify-center">
+                    <span class="font-label-sm text-stone-500 uppercase tracking-wider mb-1 text-xs">Tổng phòng sở hữu</span>
+                    <h2 class="font-headline-md text-2xl font-bold mt-1 text-teal-deep" id="stat-total-rooms">0</h2>
+                </div>
+                <div class="bg-white p-6 rounded-[20px] soft-shadow flex flex-col justify-center">
+                    <span class="font-label-sm text-stone-500 uppercase tracking-wider mb-1 text-xs">Đang cho thuê</span>
+                    <h2 class="font-headline-md text-2xl font-bold mt-1 text-success" id="stat-rented-rooms">0</h2>
+                </div>
+                <div class="bg-white p-6 rounded-[20px] soft-shadow flex flex-col justify-center">
+                    <span class="font-label-sm text-stone-500 uppercase tracking-wider mb-1 text-xs">Còn trống</span>
+                    <h2 class="font-headline-md text-2xl font-bold mt-1 text-blue-500" id="stat-empty-rooms">0</h2>
+                </div>
+            </div>
+
+            <!-- Filters & Actions -->
+            <div class="bg-white rounded-[20px] p-4 soft-shadow mb-6 flex flex-col md:flex-row justify-between items-center gap-4 relative z-20">
+                <div class="relative w-full md:w-96">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">search</span>
+                    <input id="search-input" class="w-full bg-stone-50 text-on-surface font-body-md text-sm rounded-xl pl-12 pr-4 py-2.5 border border-stone-200 focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all outline-none" placeholder="Tìm kiếm theo tên phòng, vị trí..." type="text">
+                </div>
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <!-- Status Filter -->
+                    <select id="status-filter" class="bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 font-label-sm text-sm text-on-surface-variant focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all">
+                        <option value="all">Tất cả trạng thái</option>
+                        <option value="empty">Còn trống</option>
+                        <option value="rented">Đang thuê</option>
+                        <option value="pending">Chờ duyệt (Admin)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Room List Table -->
+            <div class="bg-white rounded-[20px] soft-shadow overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-stone-50 border-b border-stone-200">
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Thông tin phòng</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Khu vực</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Giá thuê</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Phê duyệt</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Trạng thái thuê</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider text-right">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100 font-body-sm text-sm" id="rooms-tbody">
+                            <!-- Dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination Footer -->
+                <div class="px-6 py-4 border-t border-stone-100 flex items-center justify-between text-stone-500" id="rooms-summary">
+                    Hiển thị 0 phòng
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const listingsKey = 'locafySellerListings';
+
+        async function loadListings() {
+            if (window.db) {
+                return await window.db.getListings();
+            }
+            return JSON.parse(localStorage.getItem(listingsKey)) || [];
+        }
+
+        function saveListings(listings) {
+            localStorage.setItem(listingsKey, JSON.stringify(listings));
+        }
+
+        if (currentUser) {
+            const displayName = currentUser.name || currentUser.username;
+            const _el_ln = document.getElementById('landlord-name'); if(_el_ln) _el_ln.textContent = displayName;
+            document.getElementById('header-landlord-name').textContent = displayName;
+            const initials = displayName.substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+        }
+
+        const tbody = document.getElementById('rooms-tbody');
+        const summary = document.getElementById('rooms-summary');
+        const searchInput = document.getElementById('search-input');
+        const statusFilter = document.getElementById('status-filter');
+
+        async function renderRooms() {
+            const listings = await loadListings();
+            // Filter owned by this landlord
+            const myRooms = listings.filter(item => item.ownerUsername === currentUser.username);
+
+            const query = searchInput.value.toLowerCase().trim();
+            const statusVal = statusFilter.value;
+
+            tbody.innerHTML = '';
+
+            const filtered = myRooms.filter(room => {
+                const matchesSearch = 
+                    room.title.toLowerCase().includes(query) ||
+                    room.location.toLowerCase().includes(query);
+                
+                const isRented = room.status === 'rented' || room.rented === true;
+                const isCensored = room.censored || false;
+
+                let matchesStatus = true;
+                if (statusVal === 'empty') {
+                    matchesStatus = !isRented && isCensored;
+                } else if (statusVal === 'rented') {
+                    matchesStatus = isRented && isCensored;
+                } else if (statusVal === 'pending') {
+                    matchesStatus = !isCensored;
+                }
+
+                return matchesSearch && matchesStatus;
+            });
+
+            // Update stats
+            const total = myRooms.length;
+            const rented = myRooms.filter(r => r.status === 'rented' || r.rented === true).length;
+            const empty = total - rented;
+
+            document.getElementById('stat-total-rooms').textContent = total;
+            document.getElementById('stat-rented-rooms').textContent = rented;
+            document.getElementById('stat-empty-rooms').textContent = empty;
+
+            summary.textContent = `Hiển thị ${filtered.length} / ${total} phòng trọ của bạn`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-stone-400">
+                            Không tìm thấy phòng trọ nào phù hợp.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filtered.forEach(room => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-stone-50/50 transition-colors';
+
+                const isRented = room.status === 'rented' || room.rented === true;
+                const isCensored = room.censored || false;
+
+                const censBadge = isCensored
+                    ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-50 text-success text-xs font-semibold"><span class="w-1 h-1 rounded-full bg-success"></span>Đã duyệt</span>`
+                    : `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-xs font-semibold"><span class="w-1 h-1 rounded-full bg-amber-500"></span>Đang duyệt</span>`;
+
+                const rentBadge = isRented
+                    ? `<button onclick="toggleRentStatus('${room.id}')" class="px-2.5 py-1 rounded-full bg-teal-vibrant/15 text-teal-deep text-xs font-bold transition-transform hover:scale-105 active:scale-95">Đang thuê</button>`
+                    : `<button onclick="toggleRentStatus('${room.id}')" class="px-2.5 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold transition-transform hover:scale-105 active:scale-95">Còn trống</button>`;
+
+                const imageSrc = room.image || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=100&q=80';
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6">
+                        <div class="flex items-center gap-3">
+                            <img alt="Thumbnail" class="w-12 h-12 rounded-lg object-cover" src="${imageSrc}">
+                            <div>
+                                <p class="font-bold text-teal-deep">${room.title}</p>
+                                <p class="text-xs text-stone-400">Diện tích: ${room.area || '25'} m² • Liên hệ: ${room.contactPhone || 'Chủ trọ'}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 text-stone-600">${room.location}</td>
+                    <td class="py-4 px-6 font-bold text-primary">${room.price}</td>
+                    <td class="py-4 px-6">${censBadge}</td>
+                    <td class="py-4 px-6">${rentBadge}</td>
+                    <td class="py-4 px-6 text-right">
+                        <div class="flex items-center justify-end gap-1.5">
+                            <a href="seller-edit.html?id=${room.id}" class="p-1.5 text-stone-400 hover:text-teal-deep hover:bg-stone-100 rounded-lg transition-colors" title="Sửa tin">
+                                <span class="material-symbols-outlined text-[20px]">edit</span>
+                            </a>
+                            <button onclick="deleteRoom('${room.id}')" class="p-1.5 text-stone-400 hover:text-error hover:bg-stone-100 rounded-lg transition-colors" title="Xóa tin">
+                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.toggleRentStatus = async function(id) {
+            const listings = await loadListings();
+            const index = listings.findIndex(item => item.id === id);
+            if (index !== -1) {
+                const currentStatus = listings[index].status === 'rented' || listings[index].rented === true;
+                listings[index].status = currentStatus ? 'empty' : 'rented';
+                listings[index].rented = !currentStatus;
+                if (window.db) {
+                    await window.db.saveListing(listings[index]);
+                } else {
+                    saveListings(listings);
+                }
+                await renderRooms();
+            }
+        };
+
+        window.deleteRoom = async function(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa tin đăng phòng trọ này? Hành động này không thể hoàn tác.')) {
+                if (window.db) {
+                    await window.db.deleteListing(id);
+                } else {
+                    const listings = await loadListings();
+                    const filtered = listings.filter(item => item.id !== id);
+                    saveListings(filtered);
+                }
+                await renderRooms();
+            }
+        };
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        searchInput.addEventListener('input', () => renderRooms());
+        statusFilter.addEventListener('change', () => renderRooms());
+
+        async function init() {
+            let attempts = 0;
+            while (!window.db && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+            await renderRooms();
+        }
+        init();
+    </script>
+</body>
+</html>

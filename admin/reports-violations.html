@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Báo cáo vi phạm - Locafy Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Quản trị viên!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-2 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-label-md">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="user-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-label-md">Người dùng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="verify-landlord.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="font-label-md text-label-md">Xét duyệt Chủ trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-censorship.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-label-md">Kiểm duyệt Phòng trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="reports-violations.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+                <span class="font-label-md text-label-md font-bold">Báo cáo & Vi phạm</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="content-management.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-label-md">Quản lý Nội dung</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="track-bookings.html">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="font-label-md text-label-md">Theo dõi thuê phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="system-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Cài đặt Hệ thống</span>
+            </a>
+        </nav>
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Đăng xuất</span>
+            </button>
+        </div>
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Quản Lý Báo Cáo Vi Phạm</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="font-label-md text-label-md text-on-surface leading-tight" id="header-admin-name">Admin Locafy</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant">Quản trị viên</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold" id="header-avatar-fallback">AD</div>
+            </div>
+        </header>
+
+        <!-- Page Content Scrollable Area -->
+        <div class="flex-1 overflow-y-auto pt-24 px-8 pb-12">
+            <div class="mb-6">
+                <h2 class="font-headline-sm text-headline-sm text-on-surface mb-1">Phiếu báo cáo và khiếu nại</h2>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Xử lý các báo cáo vi phạm từ người tìm phòng đối với chất lượng phòng hoặc hành vi chủ trọ.</p>
+            </div>
+
+            <!-- Reports List Table -->
+            <div class="bg-white rounded-[20px] soft-shadow overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-stone-50 border-b border-stone-200">
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Nội dung vi phạm</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Đối tượng bị báo cáo</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Người báo cáo</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Trạng thái</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider text-right">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100" id="reports-tbody">
+                            <!-- Dynamic report rows -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-4 border-t border-stone-100 flex items-center justify-between text-sm text-stone-500" id="reports-summary">
+                    Hiển thị 0 báo cáo
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const reportsKey = 'locafyViolations';
+
+        function loadReports() {
+            let reports = JSON.parse(localStorage.getItem(reportsKey));
+            if (!reports) {
+                // Seed default mock reports
+                reports = [
+                    { id: 'rep1', type: 'Lừa đảo tiền đặt cọc', target: 'seller123', sender: 'buyer123', status: 'pending', desc: 'Chủ nhà yêu cầu chuyển cọc giữ chân trước khi xem phòng nhưng sau đó chặn số liên lạc.' },
+                    { id: 'rep2', type: 'Thông tin địa chỉ sai lệch', target: 'CCMN Hoàng Như', sender: 'buyer123', status: 'pending', desc: 'Thực tế phòng ở cách rất xa vị trí cây xăng 39 so với mô tả.' },
+                    { id: 'rep3', type: 'Hình ảnh không trùng khớp', target: 'Trọ Thuận Hoài', sender: 'buyer123', status: 'resolved', desc: 'Phòng thực tế cũ kỹ, ẩm mốc khác xa hình ảnh phòng mẫu sạch sẽ.' }
+                ];
+                localStorage.setItem(reportsKey, JSON.stringify(reports));
+            }
+            return reports;
+        }
+
+        function saveReports(reports) {
+            localStorage.setItem(reportsKey, JSON.stringify(reports));
+        }
+
+        if (currentUser) {
+            const _el_an = document.getElementById('admin-name'); if(_el_an) _el_an.textContent = currentUser.name || currentUser.username;
+            document.getElementById('header-admin-name').textContent = currentUser.name || currentUser.username;
+            const initials = (currentUser.name || currentUser.username).substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+        }
+
+        const tbody = document.getElementById('reports-tbody');
+        const summary = document.getElementById('reports-summary');
+
+        function renderReports() {
+            const reports = loadReports();
+            tbody.innerHTML = '';
+            summary.textContent = `Hiển thị ${reports.length} báo cáo vi phạm`;
+
+            if (reports.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-stone-400">
+                            Không có báo cáo vi phạm nào.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            reports.forEach(rep => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-stone-50/50 transition-colors';
+                
+                const isPending = rep.status === 'pending';
+                const statusBadge = isPending 
+                    ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 text-error text-xs font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-error"></span>Chờ xử lý</span>`
+                    : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-success text-xs font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>Đã giải quyết</span>`;
+
+                const actionButtons = isPending 
+                    ? `
+                        <div class="flex justify-end gap-2">
+                            <button onclick="resolveReport('${rep.id}')" class="px-4 py-1.5 bg-secondary text-white rounded-full font-label-sm text-xs hover:opacity-90 transition-all">Giải quyết</button>
+                            <button onclick="dismissReport('${rep.id}')" class="px-4 py-1.5 bg-stone-500 text-white rounded-full font-label-sm text-xs hover:opacity-90 transition-all">Bỏ qua</button>
+                        </div>
+                    `
+                    : `<span class="text-xs text-stone-400 italic">Không có thao tác</span>`;
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6">
+                        <div>
+                            <p class="font-bold text-teal-deep">${rep.type}</p>
+                            <p class="text-xs text-stone-500 mt-1 max-w-sm">${rep.desc}</p>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 text-stone-600 font-semibold">${rep.target}</td>
+                    <td class="py-4 px-6 text-stone-500">${rep.sender}</td>
+                    <td class="py-4 px-6">${statusBadge}</td>
+                    <td class="py-4 px-6 text-right">${actionButtons}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.resolveReport = function(id) {
+            const reports = loadReports();
+            const index = reports.findIndex(r => r.id === id);
+            if (index !== -1) {
+                reports[index].status = 'resolved';
+                saveReports(reports);
+                renderReports();
+            }
+        };
+
+        window.dismissReport = function(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa/bỏ qua báo cáo vi phạm này?')) {
+                const reports = loadReports();
+                const filtered = reports.filter(r => r.id !== id);
+                saveReports(filtered);
+                renderReports();
+            }
+        };
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        // Initial render
+        renderReports();
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "locafy",
+  "version": "1.0.0",
+  "description": "Locafy - Nền tảng tìm phòng trọ.",
+  "private": true,
+  "scripts": {
+    "build": "node generate-env.js",
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "bcryptjs": "^2.4.3",
+    "nodemailer": "^6.9.14"
+  }
+}

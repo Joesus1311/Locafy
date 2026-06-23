@@ -1,98 +1,122 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html class="light" lang="vi" style="">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVD0G0J8NC"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-RVD0G0J8NC');
-    </script>
-    <title>Đăng nhập - Locafy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    
+    <!-- Environment Config & Dynamic Analytics -->
+    <script src="env.js"></script>
+    <script src="analytics.js" async></script>
+    
+    <title>Đăng nhập | Locafy - Tìm nơi ở lý tưởng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="./design-system.css">
+    <script src="./design-system.js"></script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .backdrop-blur-login {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900">
-    <div class="max-w-3xl mx-auto px-4 py-10">
-        <div class="mb-6 flex items-center justify-between">
-            <a href="index.html" class="inline-flex items-center gap-2 text-sm font-semibold text-blue-700">
-                <i class="fa-solid fa-arrow-left"></i>
-                Về trang chủ
-            </a>
-            <div class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">Locafy</div>
-        </div>
-
-        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-6 items-start">
-            <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <p class="text-xs font-bold uppercase tracking-[0.25em] text-blue-600">Đăng nhập</p>
-                <h1 class="mt-3 text-3xl font-bold text-gray-900">Chào mừng quay lại</h1>
-                <p class="mt-3 text-sm text-gray-600 leading-relaxed">Đăng nhập để tiếp tục tìm phòng trọ, xem thông tin và lưu trạng thái trên thiết bị này.</p>
-                <div class="mt-5 rounded-2xl bg-slate-100 p-4 text-sm text-slate-700">
-                    <p class="font-semibold">Tài khoản lưu cục bộ</p>
-                    <p class="mt-1">Nếu bạn đã đăng ký trước đó, thông tin sẽ được kiểm tra từ <span class="font-bold">localStorage</span>.</p>
-                </div>
-
-                <div class="mt-4 rounded-2xl border border-blue-100 bg-blue-50/50 p-4 text-sm text-blue-900 shadow-sm">
-                    <p class="font-bold flex items-center gap-1.5 text-blue-800"><i class="fa-solid fa-circle-info text-blue-600"></i> Bản thử nghiệm cục bộ</p>
-                    <p class="mt-1 text-xs text-blue-850 leading-relaxed">Ứng dụng hoạt động không cần máy chủ (frontend prototype). Tài khoản của bạn được mô phỏng hoàn toàn qua <strong>localStorage</strong>.</p>
-                    
-                    <div class="mt-4 border-t border-blue-100 pt-3">
-                        <p class="font-bold text-xs uppercase tracking-wider text-blue-700 mb-2">Đăng nhập nhanh với tài khoản Demo:</p>
-                        <div class="space-y-2">
-                            <button type="button" onclick="autofill('buyer@locafy.com', '123456')" class="w-full text-left bg-white hover:bg-blue-50 border border-blue-200 rounded-xl p-2.5 transition flex items-center justify-between text-xs group">
-                                <div>
-                                    <span class="font-semibold block text-blue-900 group-hover:text-blue-600">Người thuê nhà (Buyer Demo)</span>
-                                    <span class="text-gray-500 font-mono">buyer@locafy.com / 123456</span>
-                                </div>
-                                <i class="fa-solid fa-right-to-bracket text-blue-400 group-hover:text-blue-600 transition"></i>
-                            </button>
-                            <button type="button" onclick="autofill('seller@locafy.com', '123456')" class="w-full text-left bg-white hover:bg-blue-50 border border-blue-200 rounded-xl p-2.5 transition flex items-center justify-between text-xs group">
-                                <div>
-                                    <span class="font-semibold block text-blue-900 group-hover:text-blue-600">Chủ nhà trọ (Seller Demo)</span>
-                                    <span class="text-gray-500 font-mono">seller@locafy.com / 123456</span>
-                                </div>
-                                <i class="fa-solid fa-right-to-bracket text-blue-400 group-hover:text-blue-600 transition"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <form id="login-form" class="space-y-3">
-                    <div>
-                        <label for="identifier" class="block text-sm font-semibold text-gray-700">Email hoặc tên đăng nhập</label>
-                        <input id="identifier" name="identifier" type="text" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="example@email.com hoặc nguyenvana123">
-                    </div>
-                    <div>
-                        <label for="password" class="block text-sm font-semibold text-gray-700">Mật khẩu</label>
-                        <input id="password" name="password" type="password" required class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="••••••••">
-                    </div>
-
-                    <button type="submit" class="w-full rounded-xl bg-gray-900 px-3 py-2.5 text-sm font-bold text-white hover:bg-black transition">Đăng nhập</button>
-                </form>
-
-                <div id="login-message" class="mt-4 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-700">
-                    Vui lòng nhập email hoặc tên đăng nhập và mật khẩu đã đăng ký.
-                </div>
-
-                <p class="mt-4 text-sm text-gray-600">
-                    Chưa có tài khoản?
-                    <a href="register.html" class="font-semibold text-blue-700">Đăng ký ngay</a>
+<body class="bg-surface text-on-surface font-body-md selection:bg-teal-vibrant/30">
+    <a href="index.html" class="absolute top-6 left-6 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 md:bg-white/15 md:hover:bg-white/25 md:text-white md:backdrop-blur-md md:border md:border-white/20 shadow-premium-sm hover-lift transition-all" title="Về trang chủ">
+        <i class="fa-solid fa-arrow-left text-[18px]"></i>
+    </a>
+      <main class="min-h-screen md:h-screen w-full flex flex-col md:flex-row bg-surface">
+<!-- Left Side: Hero Image Section -->
+<section class="hidden md:flex relative w-1/2 h-full overflow-hidden">
+<img alt="Luxury apartment interior" class="absolute inset-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80">
+<div class="absolute inset-0 bg-gradient-to-t from-teal-deep/80 via-teal-deep/20 to-transparent"></div>
+<div class="relative z-10 self-end p-16 w-full max-w-2xl">
+<h1 class="font-headline-xl text-headline-xl text-white mb-4 leading-tight">
+                    Tìm nơi ở lý tưởng dành cho bạn.
+                </h1>
+<p class="font-body-lg text-body-lg text-white/80">
+                    Khám phá những không gian sống đẳng cấp, được tuyển chọn kỹ lượng để mang lại cảm hứng mỗi ngày.
                 </p>
-            </section>
-        </div>
-    </div>
+</div>
+</section>
+<!-- Right Side: Login Form Section -->
+<section class="flex-1 min-h-screen md:h-full flex items-center justify-center p-4 md:p-8 bg-surface overflow-y-auto">
+<div class="w-full max-w-sm animate-in fade-in slide-in-from-bottom-4 duration-1000">
+<div class="bg-white p-5 md:p-8 rounded-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-stone-200/50">
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-teal-deep mb-1">Đăng nhập</h2>
+<p class="font-body-sm text-body-sm text-stone-500">Chào mừng bạn quay trở lại với Locafy</p>
+</div>
+<form id="login-form" class="space-y-4">
 
-    <script>
+<div class="space-y-1" style="opacity: 1; transform: translateY(0px); transition: 0.5s 0.3s;">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="identifier">Tên đăng nhập</label>
+<div class="relative">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+        <i class="fa-solid fa-user text-[14px]"></i>
+    </div>
+    <input class="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" id="identifier" name="identifier" placeholder="Tên đăng nhập" required type="text">
+</div>
+</div>
+<div class="space-y-1" style="opacity: 1; transform: translateY(0px); transition: 0.5s 0.4s;">
+<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="password">Mật khẩu</label>
+<div class="relative" id="password-wrapper">
+    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+        <i class="fa-solid fa-lock text-[14px]"></i>
+    </div>
+    <input class="w-full pl-10 pr-12 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" id="password" name="password" placeholder="••••••••" required type="password">
+    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-teal-deep transition-colors" type="button">
+        <i class="fa-solid fa-eye text-[16px]"></i>
+    </button>
+</div>
+</div>
+<div class="flex items-center justify-between py-1" style="opacity: 1; transform: translateY(0px); transition: 0.5s 0.6s;">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="w-4 h-4 rounded text-teal-vibrant focus:ring-teal-vibrant border-stone-300" type="checkbox">
+<span class="font-body-sm text-body-sm text-stone-600 group-hover:text-teal-deep transition-colors">Ghi nhớ đăng nhập</span>
+</label>
+<a class="font-label-sm text-label-sm text-teal-deep hover:text-teal-vibrant transition-colors" href="#">Quên mật khẩu?</a>
+</div>
+<button class="w-full py-3 bg-teal-deep text-white font-label-md text-label-md rounded-full shadow-lg shadow-teal-deep/20 active:scale-[0.98] transition-all hover:opacity-90">
+                            Đăng nhập
+                        </button>
+</form>
+
+<div id="login-message" class="fixed top-6 right-6 z-[9999] rounded-2xl px-5 py-4 text-body-md border shadow-premium max-w-sm transition-all duration-300 transform translate-x-full opacity-0 pointer-events-none flex items-start gap-3"></div>
+
+<p class="mt-6 text-center font-body-sm text-body-sm text-stone-500">
+                        Chưa có tài khoản? 
+                        <a class="text-teal-deep font-bold hover:text-teal-vibrant transition-colors ml-1" href="register.html">Đăng ký ngay</a>
+</p>
+</div>
+<!-- Subtle Decorative Element -->
+<div class="mt-8 flex justify-center gap-8 opacity-40">
+<span class="text-[10px] uppercase tracking-widest font-bold">Privacy</span>
+<span class="text-[10px] uppercase tracking-widest font-bold">Terms</span>
+<span class="text-[10px] uppercase tracking-widest font-bold">Help</span>
+</div>
+</div>
+</section>
+</main>
+<script>
         const accountsKey = 'locafyAccounts';
         const currentUserKey = 'locafyCurrentUser';
         const loginForm = document.getElementById('login-form');
         const loginMessage = document.getElementById('login-message');
+
+        function hashPassword(password) {
+            if (!password) return '';
+            if (password.startsWith('bG9jYWZ5X')) return password;
+            try {
+                return btoa("locafy_" + password);
+            } catch (e) {
+                return password;
+            }
+        }
 
         function loadAccounts() {
             try {
@@ -110,7 +134,7 @@
                     username: 'seller123',
                     email: 'seller@locafy.com',
                     phone: '0912345678',
-                    password: '123456',
+                    password: hashPassword('123456'),
                     role: 'seller',
                     createdAt: new Date().toISOString()
                 },
@@ -119,17 +143,34 @@
                     username: 'buyer123',
                     email: 'buyer@locafy.com',
                     phone: '0987654321',
-                    password: '123456',
+                    password: hashPassword('123456'),
                     role: 'buyer',
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    name: 'Quản trị viên Demo',
+                    username: 'admin123',
+                    email: 'admin@locafy.com',
+                    phone: '0900000000',
+                    password: hashPassword('123456'),
+                    role: 'admin',
                     createdAt: new Date().toISOString()
                 }
             ];
             
             let updated = false;
             demoAccounts.forEach(demoAcc => {
-                if (!accounts.some(acc => acc.username.toLowerCase() === demoAcc.username.toLowerCase() || acc.email.toLowerCase() === demoAcc.email.toLowerCase())) {
+                const existingIndex = accounts.findIndex(acc => acc.username.toLowerCase() === demoAcc.username.toLowerCase() || acc.email.toLowerCase() === demoAcc.email.toLowerCase());
+                if (existingIndex === -1) {
                     accounts.push(demoAcc);
                     updated = true;
+                } else {
+                    // Update password if it's not hashed in existing account to ensure it's hashed
+                    const existingAcc = accounts[existingIndex];
+                    if (existingAcc.password === '123456') {
+                        existingAcc.password = hashPassword('123456');
+                        updated = true;
+                    }
                 }
             });
             
@@ -147,17 +188,37 @@
             showMessage('Đã tự động điền tài khoản demo. Hãy nhấn Đăng nhập!', 'info');
         };
 
+        let messageTimeout;
         function showMessage(text, tone = 'info') {
-            loginMessage.textContent = text;
-            loginMessage.className = 'mt-4 rounded-2xl px-4 py-3 text-sm border';
-            loginMessage.classList.remove('bg-green-50', 'border-green-200', 'text-green-800', 'bg-red-50', 'border-red-200', 'text-red-700', 'bg-gray-50', 'border-gray-200', 'text-gray-700');
+            clearTimeout(messageTimeout);
+            
+            // Set message icon and class depending on tone
+            let iconHtml = '';
+            let toneClasses = '';
+            
             if (tone === 'success') {
-                loginMessage.classList.add('bg-green-50', 'border-green-200', 'text-green-800');
+                iconHtml = '<i class="fa-solid fa-circle-check text-green-500 text-[18px]"></i>';
+                toneClasses = 'bg-secondary-50 border-secondary-100 text-secondary-700';
             } else if (tone === 'error') {
-                loginMessage.classList.add('bg-red-50', 'border-red-200', 'text-red-700');
+                iconHtml = '<i class="fa-solid fa-triangle-exclamation text-red-500 text-[18px]"></i>';
+                toneClasses = 'bg-danger-50 border-danger-100 text-danger-700';
             } else {
-                loginMessage.classList.add('bg-gray-50', 'border-gray-200', 'text-gray-700');
+                iconHtml = '<i class="fa-solid fa-circle-info text-blue-500 text-[18px]"></i>';
+                toneClasses = 'bg-stone-50 border-stone-200 text-stone-700';
             }
+            
+            loginMessage.innerHTML = `
+                ${iconHtml}
+                <div class="flex-1 font-medium text-sm leading-snug">${text}</div>
+            `;
+            
+            // Apply layout base classes and theme classes
+            loginMessage.className = `fixed top-6 right-6 z-[9999] rounded-2xl px-5 py-4 text-body-md border shadow-premium max-w-sm transition-all duration-300 transform flex items-start gap-3 ${toneClasses} translate-x-0 opacity-100`;
+            
+            // Auto hide after 4 seconds
+            messageTimeout = setTimeout(() => {
+                loginMessage.classList.add('translate-x-full', 'opacity-0');
+            }, 4000);
         }
 
         // Preserve redirect param on navigation to register
@@ -170,32 +231,110 @@
             }
         }
 
-        loginForm.addEventListener('submit', (event) => {
+        // Đăng nhập cục bộ (fallback khi API lỗi mạng/offline)
+        async function localLogin(identifier, password) {
+            const accounts = JSON.parse(localStorage.getItem(accountsKey) || '[]');
+            const hashedTyped = hashPassword(password);
+            return accounts.find((account) => {
+                const emailMatches = account.email && account.email.toLowerCase() === identifier;
+                const usernameMatches = account.username && account.username.toLowerCase() === identifier;
+                return (emailMatches || usernameMatches) && (account.password === hashedTyped || account.password === password);
+            });
+        }
+
+        function finishLogin(user) {
+            localStorage.setItem(currentUserKey, JSON.stringify({
+                name: user.name, username: user.username, email: user.email, phone: user.phone, role: user.role || 'buyer'
+            }));
+            loginForm.reset();
+            showMessage(`Đăng nhập thành công! Chào mừng ${user.name || user.username}.`, 'success');
+            setTimeout(() => {
+                const redirectUrl = params.get('redirect');
+                if (redirectUrl) {
+                    window.location.href = decodeURIComponent(redirectUrl);
+                } else if (user.role === 'admin') {
+                    window.location.href = 'admin/dashboard.html';
+                } else if (user.role === 'seller') {
+                    window.location.href = 'manage/dashboard.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
+            }, 1000);
+        }
+
+        loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             const formData = new FormData(loginForm);
             const identifier = formData.get('identifier').trim().toLowerCase();
             const password = formData.get('password');
 
-            const accounts = loadAccounts();
-            const matchedUser = accounts.find((account) => {
-                const emailMatches = account.email && account.email.toLowerCase() === identifier;
-                const usernameMatches = account.username && account.username.toLowerCase() === identifier;
-                return (emailMatches || usernameMatches) && account.password === password;
-            });
+            const submitBtn = loginForm.querySelector('button[type="submit"], button:not([type])');
+            if (submitBtn) submitBtn.disabled = true;
 
-            if (!matchedUser) {
-                showMessage('Email, tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại.', 'error');
+            try {
+                // 1) Ưu tiên REST API (xác thực bcrypt/legacy phía server)
+                const data = await window.LocafyApi.send('POST', '/auth/login', { identifier, password });
+                finishLogin(data.user);
                 return;
+            } catch (err) {
+                // Lỗi xác thực (401/400) -> báo sai mật khẩu, KHÔNG fallback
+                if (err.status && (err.status === 400 || err.status === 401)) {
+                    showMessage(err.data?.error || 'Email, tên đăng nhập hoặc mật khẩu không đúng.', 'error');
+                    if (submitBtn) submitBtn.disabled = false;
+                    return;
+                }
+                // Lỗi mạng/server -> thử đăng nhập cục bộ
+                const localUser = await localLogin(identifier, password);
+                if (localUser) {
+                    finishLogin(localUser);
+                    return;
+                }
+                showMessage('Không kết nối được máy chủ và không tìm thấy tài khoản cục bộ.', 'error');
+                if (submitBtn) submitBtn.disabled = false;
             }
-
-            localStorage.setItem(currentUserKey, JSON.stringify({ name: matchedUser.name, username: matchedUser.username, email: matchedUser.email, phone: matchedUser.phone, role: matchedUser.role || 'buyer' }));
-            loginForm.reset();
-            showMessage(`Đăng nhập thành công! Chào mừng ${matchedUser.name}.`, 'success');
-            setTimeout(() => {
-                const redirectUrl = params.get('redirect');
-                window.location.href = redirectUrl ? decodeURIComponent(redirectUrl) : 'index.html';
-            }, 1000);
         });
+
+        // Password toggle visibility logic
+        const togglePasswordBtn = document.querySelector('#password-wrapper button');
+        if (togglePasswordBtn) {
+            togglePasswordBtn.addEventListener('click', () => {
+                const passwordInput = document.getElementById('password');
+                const icon = togglePasswordBtn.querySelector('i');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.className = 'fa-solid fa-eye-slash text-[16px]';
+                } else {
+                    passwordInput.type = 'password';
+                    icon.className = 'fa-solid fa-eye text-[16px]';
+                }
+            });
+        }
+
+        // Smooth fade-in for the form
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('form');
+            form.querySelectorAll('div').forEach((el, index) => {
+                // Ignore the input wrapper relative class or container
+                if (el.classList.contains('relative') || el.parentElement.classList.contains('relative')) return;
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+                el.style.transition = `all 0.5s ease ${index * 0.1 + 0.3}s`;
+                
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
     </script>
 </body>
 </html>

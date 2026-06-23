@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Quản lý nội dung CMS - Locafy Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Quản trị viên!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-2 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-label-md">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="user-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-label-md">Người dùng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="verify-landlord.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="font-label-md text-label-md">Xét duyệt Chủ trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-censorship.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-label-md">Kiểm duyệt Phòng trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="reports-violations.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-label-md">Báo cáo & Vi phạm</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="content-management.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+                <span class="font-label-md text-label-md font-bold">Quản lý Nội dung</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="track-bookings.html">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="font-label-md text-label-md">Theo dõi thuê phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="system-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Cài đặt Hệ thống</span>
+            </a>
+        </nav>
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Đăng xuất</span>
+            </button>
+        </div>
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Hệ Thống CMS</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="font-label-md text-label-md text-on-surface leading-tight" id="header-admin-name">Admin Locafy</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant">Quản trị viên</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold" id="header-avatar-fallback">AD</div>
+            </div>
+        </header>
+
+        <!-- Page Content Scrollable Area -->
+        <div class="flex-grow overflow-y-auto pt-24 px-8 pb-12">
+            <div class="mb-6 flex justify-between items-center">
+                <div>
+                    <h2 class="font-headline-sm text-headline-sm text-on-surface mb-1">Quản lý nội dung bài viết</h2>
+                    <p class="font-body-sm text-body-sm text-on-surface-variant">Tạo mới, biên tập bài viết cẩm nang thuê phòng trọ hoặc các chính sách nền tảng.</p>
+                </div>
+                <button onclick="addNewContent()" class="bg-secondary text-white px-5 py-2.5 rounded-full font-label-md text-sm hover:opacity-90 transition-colors flex items-center gap-2 shadow-sm">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    Viết bài mới
+                </button>
+            </div>
+
+            <!-- Content list -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="cms-container">
+                <!-- Dynamic CMS cards -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const cmsKey = 'locafyCMS';
+
+        function loadCMS() {
+            let cms = JSON.parse(localStorage.getItem(cmsKey));
+            if (!cms) {
+                cms = [
+                    { id: 'cms1', title: '5 Kinh nghiệm vàng khi đi thuê phòng trọ', category: 'Cẩm nang', author: 'Ban biên tập', date: '21/10/2023', views: 1242, status: 'published', body: 'Hãy cẩn thận kiểm tra hệ thống điện nước, đồng hồ công tơ trước khi đặt bút ký hợp đồng.' },
+                    { id: 'cms2', title: 'Quy định đăng tin và chính sách kiểm duyệt Locafy', category: 'Chính sách', author: 'Quản trị viên', date: '18/10/2023', views: 890, status: 'published', body: 'Các tin đăng trùng lặp hoặc chứa hình ảnh phản cảm sẽ bị gỡ bỏ ngay lập tức.' }
+                ];
+                localStorage.setItem(cmsKey, JSON.stringify(cms));
+            }
+            return cms;
+        }
+
+        function saveCMS(cms) {
+            localStorage.setItem(cmsKey, JSON.stringify(cms));
+        }
+
+        if (currentUser) {
+            const _el_an = document.getElementById('admin-name'); if(_el_an) _el_an.textContent = currentUser.name || currentUser.username;
+            document.getElementById('header-admin-name').textContent = currentUser.name || currentUser.username;
+            const initials = (currentUser.name || currentUser.username).substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+        }
+
+        const container = document.getElementById('cms-container');
+
+        function renderCMS() {
+            const cms = loadCMS();
+            container.innerHTML = '';
+
+            if (cms.length === 0) {
+                container.innerHTML = '<div class="col-span-2 text-center py-8 text-stone-400">Không có bài viết nào.</div>';
+                return;
+            }
+
+            cms.forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-[20px] soft-shadow border border-stone-100 flex flex-col justify-between';
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-stone-100 text-stone-700">${post.category}</span>
+                            <span class="text-xs text-stone-400">${post.date}</span>
+                        </div>
+                        <h3 class="font-bold text-teal-deep text-lg mb-2 leading-tight">${post.title}</h3>
+                        <p class="text-sm text-stone-500 line-clamp-3 mb-4">${post.body}</p>
+                    </div>
+                    <div class="flex justify-between items-center border-t border-stone-100 pt-4 mt-auto">
+                        <div class="text-xs text-stone-400">Tác giả: ${post.author} • ${post.views} lượt xem</div>
+                        <div class="flex gap-2">
+                            <button onclick="deletePost('${post.id}')" class="p-2 text-stone-400 hover:text-error hover:bg-stone-50 rounded-lg transition-all" title="Xóa">
+                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.addNewContent = function() {
+            const title = prompt('Nhập tiêu đề bài viết:');
+            if (!title) return;
+            const category = prompt('Nhập chuyên mục (ví dụ: Cẩm nang, Tin tức, Chính sách):', 'Tin tức');
+            const body = prompt('Nhập nội dung bài viết:');
+            
+            if (title && body) {
+                const cms = loadCMS();
+                const newPost = {
+                    id: 'cms_' + Date.now(),
+                    title,
+                    category: category || 'Tin tức',
+                    author: currentUser.name || currentUser.username,
+                    date: new Date().toLocaleDateString('vi-VN'),
+                    views: 0,
+                    status: 'published',
+                    body
+                };
+                cms.push(newPost);
+                saveCMS(cms);
+                renderCMS();
+            }
+        };
+
+        window.deletePost = function(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
+                const cms = loadCMS();
+                const filtered = cms.filter(post => post.id !== id);
+                saveCMS(filtered);
+                renderCMS();
+            }
+        };
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        // Initial render
+        renderCMS();
+    </script>
+</body>
+</html>

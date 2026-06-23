@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Locafy - Quản trị hệ hệ thống</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { backdrop-filter: blur(12px); background: rgba(255, 255, 255, 0.7); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .shadow-soft { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05); }
+    </style>
+    <script>
+        // Auth Guard - Block unauthorized users immediately
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Quản trị viên!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo -->
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
+        </div>
+        <!-- Navigation Tabs -->
+        <nav class="flex-1 overflow-y-auto px-2 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                <span class="font-label-md text-label-md font-bold">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="user-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-label-md">Người dùng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="verify-landlord.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="font-label-md text-label-md">Xét duyệt Chủ trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-censorship.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-label-md">Kiểm duyệt Phòng trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="reports-violations.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-label-md">Báo cáo & Vi phạm</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="content-management.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-label-md">Quản lý Nội dung</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="track-bookings.html">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="font-label-md text-label-md">Theo dõi thuê phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="system-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Cài đặt Hệ thống</span>
+            </a>
+        </nav>
+        <!-- Footer Actions -->
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Đăng xuất</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Trang Quản Trị Hệ Thống</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="font-label-md text-label-md text-on-surface leading-tight" id="header-admin-name">Admin Locafy</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant">Quản trị viên</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold" id="header-avatar-fallback">AD</div>
+            </div>
+        </header>
+
+        <div class="flex-grow overflow-y-auto pt-24 px-8 pb-12 w-full">
+            <!-- Header Section with Greeting -->
+            <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                <div>
+                    <h2 class="font-headline-md text-headline-md text-teal-deep font-extrabold mb-1">Tổng quan Hệ thống</h2>
+                    <p class="font-body-md text-body-md text-stone-500">Giám sát hoạt động đăng trọ, thống kê doanh thu và quản trị hệ thống.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="flex h-2.5 w-2.5 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-success"></span>
+                    </span>
+                    <span class="text-xs font-bold text-stone-500 uppercase tracking-wider">Hệ thống đang hoạt động ổn định</span>
+                </div>
+            </div>
+
+            <!-- Statistics Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-in fade-in slide-in-from-bottom-3 duration-600">
+                <!-- Card: Users -->
+                <div class="bg-white p-6 rounded-3xl border border-stone-200/60 shadow-[0_10px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-teal-deep/5 text-teal-deep flex items-center justify-center border border-teal-deep/10 shadow-premium-sm">
+                                <span class="material-symbols-outlined text-[20px]">group</span>
+                            </div>
+                            <span class="bg-green-50 text-success text-xs font-bold px-2.5 py-1 rounded-full border border-green-100 flex items-center gap-1">
+                                +12% <span class="material-symbols-outlined text-xs">trending_up</span>
+                            </span>
+                        </div>
+                        <p class="font-label-sm text-xs font-bold text-stone-400 uppercase tracking-wider">Tổng người dùng</p>
+                        <h2 class="font-headline-md text-2xl font-black text-teal-deep mt-1" id="stat-total-users">0</h2>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-stone-100 flex items-center justify-between">
+                        <!-- Sparkline SVG -->
+                        <svg class="w-24 h-6 text-teal-deep" viewBox="0 0 100 25" fill="none">
+                            <path d="M0,20 Q15,5 30,15 T60,5 T90,12 L100,8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span class="text-[10px] text-stone-400 font-semibold">Cập nhật hôm nay</span>
+                    </div>
+                </div>
+
+                <!-- Card: Listings -->
+                <div class="bg-white p-6 rounded-3xl border border-stone-200/60 shadow-[0_10px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-teal-deep/5 text-teal-deep flex items-center justify-center border border-teal-deep/10 shadow-premium-sm">
+                                <span class="material-symbols-outlined text-[20px]">home</span>
+                            </div>
+                            <span class="bg-green-50 text-success text-xs font-bold px-2.5 py-1 rounded-full border border-green-100 flex items-center gap-1">
+                                +8.4% <span class="material-symbols-outlined text-xs">trending_up</span>
+                            </span>
+                        </div>
+                        <p class="font-label-sm text-xs font-bold text-stone-400 uppercase tracking-wider">Tổng tin đăng phòng</p>
+                        <h2 class="font-headline-md text-2xl font-black text-teal-deep mt-1" id="stat-total-listings">0</h2>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-stone-100 flex items-center justify-between">
+                        <!-- Sparkline SVG -->
+                        <svg class="w-24 h-6 text-teal-deep" viewBox="0 0 100 25" fill="none">
+                            <path d="M0,15 Q20,22 40,8 T80,18 L100,5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span class="text-[10px] text-stone-400 font-semibold">Thêm mới tuần này</span>
+                    </div>
+                </div>
+
+                <!-- Card: Revenue -->
+                <div class="bg-white p-6 rounded-3xl border border-stone-200/60 shadow-[0_10px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-teal-deep/5 text-teal-deep flex items-center justify-center border border-teal-deep/10 shadow-premium-sm">
+                                <span class="material-symbols-outlined text-[20px]">payments</span>
+                            </div>
+                            <span class="bg-green-50 text-success text-xs font-bold px-2.5 py-1 rounded-full border border-green-100 flex items-center gap-1">
+                                +15.2% <span class="material-symbols-outlined text-xs">trending_up</span>
+                            </span>
+                        </div>
+                        <p class="font-label-sm text-xs font-bold text-stone-400 uppercase tracking-wider">Doanh thu cọc</p>
+                        <h2 class="font-headline-md text-2xl font-black text-teal-deep mt-1">1.25B <span class="text-xs font-bold text-stone-500">VND</span></h2>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-stone-100 flex items-center justify-between">
+                        <!-- Sparkline SVG -->
+                        <svg class="w-24 h-6 text-teal-deep" viewBox="0 0 100 25" fill="none">
+                            <path d="M0,22 L20,18 L40,12 L60,15 L80,5 L100,8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span class="text-[10px] text-stone-400 font-semibold">Tăng trưởng nhanh</span>
+                    </div>
+                </div>
+
+                <!-- Card: Landlords -->
+                <div class="bg-white p-6 rounded-3xl border border-stone-200/60 shadow-[0_10px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-teal-deep/5 text-teal-deep flex items-center justify-center border border-teal-deep/10 shadow-premium-sm">
+                                <span class="material-symbols-outlined text-[20px]">verified_user</span>
+                            </div>
+                            <span class="bg-green-50 text-success text-xs font-bold px-2.5 py-1 rounded-full border border-green-100 flex items-center gap-1" id="stat-new-landlords-trend">
+                                +2 <span class="material-symbols-outlined text-xs">add</span>
+                            </span>
+                        </div>
+                        <p class="font-label-sm text-xs font-bold text-stone-400 uppercase tracking-wider">Tổng chủ trọ</p>
+                        <h2 class="font-headline-md text-2xl font-black text-teal-deep mt-1" id="stat-total-landlords">0</h2>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-stone-100 flex items-center justify-between">
+                        <!-- Sparkline SVG -->
+                        <svg class="w-24 h-6 text-teal-deep" viewBox="0 0 100 25" fill="none">
+                            <path d="M0,18 Q30,8 60,20 T100,10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span class="text-[10px] text-stone-400 font-semibold">Đối tác đăng trọ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Charts & Priority Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <!-- Detailed Analytics & Growth Chart -->
+                <div class="lg:col-span-2 bg-white p-6 md:p-8 rounded-[24px] border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)] flex flex-col justify-between hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="font-headline-sm text-base font-extrabold text-teal-deep">Thống kê Truy cập & Đặt phòng</h3>
+                            <p class="font-body-sm text-xs text-stone-400">Lịch sử tương tác và chuyển đổi trong 10 ngày gần nhất</p>
+                        </div>
+                        <select class="bg-stone-50 border border-stone-200 rounded-full px-4 py-2 font-label-sm text-xs text-stone-600 focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep outline-none cursor-pointer">
+                            <option>Tháng này</option>
+                            <option>Tháng trước</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Advanced SVG Bar & Line Chart -->
+                    <div class="relative w-full h-64 flex flex-col justify-end mt-4">
+                        <!-- SVG Grid & lines -->
+                        <svg class="absolute inset-0 w-full h-full text-stone-100" fill="none" preserveAspectRatio="none">
+                            <line x1="0" y1="25%" x2="100%" y2="25%" stroke="currentColor" stroke-dasharray="4,4"/>
+                            <line x1="0" y1="50%" x2="100%" y2="50%" stroke="currentColor" stroke-dasharray="4,4"/>
+                            <line x1="0" y1="75%" x2="100%" y2="75%" stroke="currentColor" stroke-dasharray="4,4"/>
+                            <line x1="0" y1="100%" x2="100%" y2="100%" stroke="currentColor"/>
+                        </svg>
+                        
+                        <!-- Columns/Bars container -->
+                        <div class="relative w-full h-56 flex items-end justify-between gap-3 px-4 z-10">
+                            <!-- Mon -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">40%</div>
+                                <div class="w-full bg-teal-deep/10 group-hover:bg-teal-deep transition-all rounded-t-md h-[40%] cursor-pointer"></div>
+                                <span class="text-[10px] text-stone-400 font-bold mt-2">T2</span>
+                            </div>
+                            <!-- Tue -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">60%</div>
+                                <div class="w-full bg-teal-deep/10 group-hover:bg-teal-deep transition-all rounded-t-md h-[60%] cursor-pointer"></div>
+                                <span class="text-[10px] text-stone-400 font-bold mt-2">T3</span>
+                            </div>
+                            <!-- Wed -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">55%</div>
+                                <div class="w-full bg-teal-deep/10 group-hover:bg-teal-deep transition-all rounded-t-md h-[55%] cursor-pointer"></div>
+                                <span class="text-[10px] text-stone-400 font-bold mt-2">T4</span>
+                            </div>
+                            <!-- Thu -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">80%</div>
+                                <div class="w-full bg-teal-deep/20 group-hover:bg-teal-deep transition-all rounded-t-md h-[80%] cursor-pointer"></div>
+                                <span class="text-[10px] text-stone-400 font-bold mt-2">T5</span>
+                            </div>
+                            <!-- Fri -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">45%</div>
+                                <div class="w-full bg-teal-deep/10 group-hover:bg-teal-deep transition-all rounded-t-md h-[45%] cursor-pointer"></div>
+                                <span class="text-[10px] text-stone-400 font-bold mt-2">T6</span>
+                            </div>
+                            <!-- Sat -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">95%</div>
+                                <div class="w-full bg-teal-vibrant group-hover:opacity-90 transition-all rounded-t-md h-[95%] cursor-pointer shadow-sm"></div>
+                                <span class="text-[10px] text-stone-500 font-extrabold mt-2">T7</span>
+                            </div>
+                            <!-- Sun -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">85%</div>
+                                <div class="w-full bg-teal-vibrant group-hover:opacity-90 transition-all rounded-t-md h-[85%] cursor-pointer shadow-sm"></div>
+                                <span class="text-[10px] text-stone-500 font-extrabold mt-2">CN</span>
+                            </div>
+                            <!-- Mon2 -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">50%</div>
+                                <div class="w-full bg-teal-deep/10 group-hover:bg-teal-deep transition-all rounded-t-md h-[50%] cursor-pointer"></div>
+                                <span class="text-[10px] text-stone-400 font-bold mt-2">T2</span>
+                            </div>
+                            <!-- Tue2 -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">65%</div>
+                                <div class="w-full bg-teal-deep/10 group-hover:bg-teal-deep transition-all rounded-t-md h-[65%] cursor-pointer"></div>
+                                <span class="text-[10px] text-stone-400 font-bold mt-2">T3</span>
+                            </div>
+                            <!-- Wed2 -->
+                            <div class="flex-1 flex flex-col items-center group h-full justify-end relative">
+                                <div class="absolute -top-6 bg-stone-900 text-white text-[10px] font-bold px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-30 shadow-md">70%</div>
+                                <div class="w-full bg-teal-deep/15 group-hover:bg-teal-deep transition-all rounded-t-md h-[70%] cursor-pointer"></div>
+                                <span class="text-[10px] text-stone-400 font-bold mt-2">T4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Violations & Quick Actions -->
+                <div class="flex flex-col gap-6">
+                    <!-- Recent Violations Widget -->
+                    <div class="bg-white p-6 rounded-[24px] border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)] transition-all">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-sm font-bold text-stone-850">Báo cáo vi phạm mới</h3>
+                            <span class="w-2.5 h-2.5 rounded-full bg-danger inline-block animate-pulse"></span>
+                        </div>
+                        <div class="space-y-4" id="violations-list">
+                            <!-- Dynamic Violations -->
+                        </div>
+                        <a href="reports-violations.html" class="block text-center w-full mt-5 py-2.5 bg-stone-50 border border-stone-200 hover:bg-stone-100 rounded-full font-label-sm text-xs font-bold text-stone-700 transition-all shadow-premium-sm hover-lift">
+                            Xem tất cả báo cáo
+                        </a>
+                    </div>
+
+                    <!-- System Health Status Widget -->
+                    <div class="bg-white p-6 rounded-[24px] border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)]">
+                        <h3 class="text-sm font-bold text-stone-850 mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px] text-teal-deep">dns</span>
+                            Trạng thái Tài nguyên
+                        </h3>
+                        <div class="space-y-3.5">
+                            <!-- CPU -->
+                            <div>
+                                <div class="flex justify-between text-[11px] font-bold text-stone-600 mb-1">
+                                    <span>CPU Usage</span>
+                                    <span>28%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                                    <div class="bg-teal-deep h-full rounded-full" style="width: 28%"></div>
+                                </div>
+                            </div>
+                            <!-- RAM -->
+                            <div>
+                                <div class="flex justify-between text-[11px] font-bold text-stone-600 mb-1">
+                                    <span>RAM Memory</span>
+                                    <span>64%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                                    <div class="bg-amber-500 h-full rounded-full" style="width: 64%"></div>
+                                </div>
+                            </div>
+                            <!-- DB status -->
+                            <div>
+                                <div class="flex justify-between text-[11px] font-bold text-stone-600 mb-1">
+                                    <span>Database Latency</span>
+                                    <span>12ms</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                                    <div class="bg-success h-full rounded-full" style="width: 15%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Row: Approval Queue & Quick Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Approval Queue Table (Tin đăng mới) -->
+                <div class="lg:col-span-2 bg-white p-6 md:p-8 rounded-[24px] border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)] transition-all">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="font-headline-sm text-base font-extrabold text-teal-deep">Danh sách chờ duyệt (Tin đăng mới)</h3>
+                            <p class="text-xs text-stone-400">Kiểm duyệt các phòng đăng lên hệ thống trước khi hiển thị cho người thuê</p>
+                        </div>
+                        <span class="text-xs font-bold bg-amber-50 text-amber-700 border border-amber-100 px-3 py-1 rounded-full" id="censorship-queue-count">Đang tải...</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-stone-50 border-b border-stone-200/80 font-label-sm text-xs text-stone-500 uppercase tracking-wider">
+                                    <th class="py-3 px-4 font-bold">Phòng / Tên phòng</th>
+                                    <th class="py-3 px-4 font-bold">Chủ trọ</th>
+                                    <th class="py-3 px-4 font-bold">Khu vực</th>
+                                    <th class="py-3 px-4 font-bold">Giá thuê</th>
+                                    <th class="py-3 px-4 font-bold text-right">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody class="font-body-sm text-sm divide-y divide-stone-100" id="approval-tbody">
+                                <!-- Dynamic Row values -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Block -->
+                <div class="bg-white p-6 md:p-8 rounded-[24px] border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)]">
+                    <h3 class="font-headline-sm text-base font-extrabold text-teal-deep mb-4">Phím Hành động Nhanh</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Action 1 -->
+                        <button onclick="window.location.href='system-settings.html'" class="flex flex-col items-center justify-center p-4 bg-stone-50/50 border border-stone-200/60 rounded-xl hover:bg-stone-100/60 transition-colors gap-2 text-center group cursor-pointer">
+                            <span class="material-symbols-outlined text-[24px] text-teal-deep group-hover:scale-110 transition-transform">settings</span>
+                            <span class="text-xs font-bold text-stone-700">Cài đặt</span>
+                        </button>
+                        <!-- Action 2 -->
+                        <button onclick="alert('Tính năng Export Báo cáo đang tạo gói tải xuống...')" class="flex flex-col items-center justify-center p-4 bg-stone-50/50 border border-stone-200/60 rounded-xl hover:bg-stone-100/60 transition-colors gap-2 text-center group cursor-pointer">
+                            <span class="material-symbols-outlined text-[24px] text-teal-deep group-hover:scale-110 transition-transform">download_for_offline</span>
+                            <span class="text-xs font-bold text-stone-700">Tải Báo cáo</span>
+                        </button>
+                        <!-- Action 3 -->
+                        <button onclick="alert('Đã xóa bộ nhớ đệm thành công!')" class="flex flex-col items-center justify-center p-4 bg-stone-50/50 border border-stone-200/60 rounded-xl hover:bg-stone-100/60 transition-colors gap-2 text-center group cursor-pointer">
+                            <span class="material-symbols-outlined text-[24px] text-teal-deep group-hover:scale-110 transition-transform">cleaning_services</span>
+                            <span class="text-xs font-bold text-stone-700">Xóa Cache</span>
+                        </button>
+                        <!-- Action 4 -->
+                        <button onclick="alert('Vui lòng soạn tin nhắn quảng bá trong Cài đặt hệ thống.')" class="flex flex-col items-center justify-center p-4 bg-stone-50/50 border border-stone-200/60 rounded-xl hover:bg-stone-100/60 transition-colors gap-2 text-center group cursor-pointer">
+                            <span class="material-symbols-outlined text-[24px] text-teal-deep group-hover:scale-110 transition-transform">notifications_active</span>
+                            <span class="text-xs font-bold text-stone-700">Quảng bá</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User & Landlord Management Bento Section & Logs -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- User List -->
+                <div class="bg-white p-6 md:p-8 rounded-[24px] border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)]">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-base font-extrabold text-teal-deep">Người dùng Đăng ký Mới</h3>
+                        <a class="text-xs text-teal-deep font-bold hover:underline" href="user-management.html">Quản lý</a>
+                    </div>
+                    <div class="space-y-4" id="new-users-list">
+                        <!-- Dynamic new users list -->
+                    </div>
+                </div>
+                
+                <!-- Landlord List -->
+                <div class="bg-white p-6 md:p-8 rounded-[24px] border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)]">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-base font-extrabold text-teal-deep">Chủ trọ Hệ thống</h3>
+                        <a class="text-xs text-teal-deep font-bold hover:underline" href="verify-landlord.html">Xem hết</a>
+                    </div>
+                    <div class="space-y-4" id="landlords-list">
+                        <!-- Dynamic landlords list -->
+                    </div>
+                </div>
+
+                <!-- Admin Action Logs feed -->
+                <div class="bg-white p-6 md:p-8 rounded-[24px] border border-stone-200/60 shadow-[0_15px_30px_rgba(0,0,0,0.03)]">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-base font-extrabold text-teal-deep">Nhật ký Hoạt động</h3>
+                        <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Thời gian thực</span>
+                    </div>
+                    <div class="space-y-4 text-xs">
+                        <div class="flex gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-teal-deep mt-1.5 shrink-0"></span>
+                            <div class="flex-1">
+                                <p class="text-stone-700"><span class="font-bold">Backup Database</span> tự động hoàn thành sạch sẽ.</p>
+                                <p class="text-[10px] text-stone-400">10 phút trước</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-teal-deep mt-1.5 shrink-0"></span>
+                            <div class="flex-1">
+                                <p class="text-stone-700"><span class="font-bold">Admin</span> đã cập nhật Cài đặt hệ thống.</p>
+                                <p class="text-[10px] text-stone-400">20 phút trước</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-teal-deep mt-1.5 shrink-0"></span>
+                            <div class="flex-1">
+                                <p class="text-stone-700"><span class="font-bold">seller123</span> vừa gửi phê duyệt phòng mới.</p>
+                                <p class="text-[10px] text-stone-400">1 giờ trước</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Ensure supabase-client.js is loaded (provides window.db)
+        async function loadAccounts() {
+            return await window.db.getAccounts();
+        }
+
+        async function loadListings() {
+            return await window.db.getListings();
+        }
+
+        // Initialize display names
+        if (currentUser) {
+            const _el_an = document.getElementById('admin-name'); if(_el_an) _el_an.textContent = currentUser.name || currentUser.username;
+            document.getElementById('header-admin-name').textContent = currentUser.name || currentUser.username;
+            
+            // Set initials for avatars
+            const initials = (currentUser.name || currentUser.username).substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+        }
+
+        // Render Stats
+        async function updateStats() {
+            const accounts = await loadAccounts();
+            const listings = await loadListings();
+
+            document.getElementById('stat-total-users').textContent = accounts.length.toLocaleString();
+            document.getElementById('stat-total-listings').textContent = listings.length.toLocaleString();
+
+            const landlords = accounts.filter(acc => acc.role === 'seller');
+            document.getElementById('stat-total-landlords').textContent = landlords.length.toLocaleString();
+        }
+
+        // Render Approval Queue
+        async function renderApprovalQueue() {
+            const listings = await loadListings();
+            // Filter listings that are not censored (meaning pending review)
+            const pendingListings = listings.filter(item => !item.censored);
+            const tbody = document.getElementById('approval-tbody');
+            const queueCount = document.getElementById('censorship-queue-count');
+            
+            tbody.innerHTML = '';
+            queueCount.textContent = `Có ${pendingListings.length} tin chờ duyệt`;
+
+            if (pendingListings.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="py-8 text-center text-stone-400">
+                            Không có tin đăng nào đang chờ duyệt.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            pendingListings.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-stone-100 hover:bg-stone-50/50 transition-colors';
+                
+                const imageSrc = item.image || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=100&q=80';
+                
+                tr.innerHTML = `
+                    <td class="py-4 px-4 font-medium flex items-center gap-3">
+                        <img alt="Preview" class="w-10 h-10 rounded-lg object-cover shadow-premium-sm" src="${imageSrc}">
+                        <span class="font-bold text-teal-deep">${item.title}</span>
+                    </td>
+                    <td class="py-4 px-4 text-stone-600">@${item.ownerUsername || 'Chủ trọ'}</td>
+                    <td class="py-4 px-4 text-stone-500">${item.location}</td>
+                    <td class="py-4 px-4 font-bold text-teal-deep">${item.price}</td>
+                    <td class="py-4 px-4 text-right">
+                        <div class="flex justify-end gap-2">
+                            <button onclick="approveListing('${item.id}')" class="px-3.5 py-1.5 bg-teal-deep text-white rounded-full font-label-sm text-xs hover:opacity-90 active:scale-95 transition-all shadow-sm">Duyệt</button>
+                            <button onclick="rejectListing('${item.id}')" class="px-3.5 py-1.5 bg-stone-200 text-stone-600 rounded-full font-label-sm text-xs hover:bg-stone-300 active:scale-95 transition-all">Hủy</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.approveListing = async function(id) {
+            const listings = await loadListings();
+            const item = listings.find(item => item.id === id);
+            if (item) {
+                item.censored = true;
+                item.status = 'approved';
+                await window.db.saveListing(item);
+                await renderApprovalQueue();
+                await updateStats();
+            }
+        };
+
+        window.rejectListing = async function(id) {
+            if (confirm('Bạn có chắc chắn muốn từ chối và xóa tin đăng này?')) {
+                await window.db.deleteListing(id);
+                await renderApprovalQueue();
+                await updateStats();
+            }
+        };
+
+        // Render Users and Landlords list
+        async function renderBentoLists() {
+            const accounts = await loadAccounts();
+
+            // Render New Users (last 3 accounts registered)
+            const usersContainer = document.getElementById('new-users-list');
+            usersContainer.innerHTML = '';
+            
+            const recentUsers = [...accounts].reverse().slice(0, 3);
+            if (recentUsers.length === 0) {
+                usersContainer.innerHTML = '<p class="text-stone-400 text-sm">Chưa có người dùng nào đăng ký.</p>';
+            } else {
+                recentUsers.forEach(user => {
+                    const div = document.createElement('div');
+                    div.className = 'flex items-center justify-between p-3 rounded-2xl hover:bg-stone-50/80 transition-colors border border-transparent hover:border-stone-200/50';
+                    const initials = (user.name || user.username).substring(0, 2).toUpperCase();
+                    div.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-stone-100 text-stone-600 flex items-center justify-center font-bold border border-stone-200/60 shadow-premium-sm text-xs">${initials}</div>
+                            <div>
+                                <p class="font-label-md text-xs font-bold text-stone-800 leading-snug">${user.name || user.username}</p>
+                                <p class="text-[11px] text-stone-400">${user.email}</p>
+                            </div>
+                        </div>
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${user.role === 'seller' ? 'bg-amber-50 text-amber-700 border border-amber-100' : 'bg-teal-deep/5 text-teal-deep border border-teal-deep/10'}">
+                            ${user.role === 'seller' ? 'Chủ trọ' : 'Người thuê'}
+                        </span>
+                    `;
+                    usersContainer.appendChild(div);
+                });
+            }
+
+            // Render Landlords list
+            const landlordsContainer = document.getElementById('landlords-list');
+            landlordsContainer.innerHTML = '';
+
+            const landlords = accounts.filter(acc => acc.role === 'seller').slice(0, 3);
+            if (landlords.length === 0) {
+                landlordsContainer.innerHTML = '<p class="text-stone-400 text-sm">Chưa có chủ trọ nào đăng ký.</p>';
+            } else {
+                landlords.forEach(landlord => {
+                    const div = document.createElement('div');
+                    div.className = 'flex items-center justify-between p-3 rounded-2xl hover:bg-stone-50/80 transition-colors border border-transparent hover:border-stone-200/50';
+                    const initials = (landlord.name || landlord.username).substring(0, 2).toUpperCase();
+                    div.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center font-bold border border-amber-100 shadow-premium-sm text-xs">${initials}</div>
+                            <div>
+                                <p class="font-label-md text-xs font-bold text-stone-800 leading-snug">${landlord.name || landlord.username}</p>
+                                <p class="text-[11px] text-stone-400">${landlord.phone || 'Chưa cung cấp SĐT'}</p>
+                            </div>
+                        </div>
+                        <span class="flex items-center text-[10px] font-bold text-stone-500 gap-1 bg-stone-50 px-2 py-0.5 rounded border border-stone-200/40">
+                            <span class="material-symbols-outlined text-[12px] text-yellow-500 fill-1">star</span> 5.0
+                        </span>
+                    `;
+                    landlordsContainer.appendChild(div);
+                });
+            }
+        }
+
+        // Render mock violations
+        function renderViolations() {
+            const container = document.getElementById('violations-list');
+            container.innerHTML = `
+                <div class="flex gap-3.5 p-3 rounded-xl hover:bg-stone-50/80 transition-all border border-transparent hover:border-stone-200/40">
+                    <div class="w-9 h-9 rounded-lg bg-danger/5 text-danger flex items-center justify-center shrink-0 border border-danger/10 shadow-premium-sm">
+                        <span class="material-symbols-outlined text-[18px]">report</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-xs text-stone-800 truncate leading-snug">Lừa đảo tiền đặt cọc</p>
+                        <p class="text-[10px] text-stone-400 mt-0.5">Chủ trọ: @seller123 • 2 giờ trước</p>
+                    </div>
+                </div>
+                <div class="flex gap-3.5 p-3 rounded-xl hover:bg-stone-50/80 transition-all border border-transparent hover:border-stone-200/40">
+                    <div class="w-9 h-9 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100 shadow-premium-sm">
+                        <span class="material-symbols-outlined text-[18px]">info</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-bold text-xs text-stone-800 truncate leading-snug">Thông tin địa chỉ sai lệch</p>
+                        <p class="text-[10px] text-stone-400 mt-0.5">Phòng: CCMN Cầu Giấy • 5 giờ trước</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        // Initialize page
+        (async () => {
+            await updateStats();
+            await renderApprovalQueue();
+            await renderBentoLists();
+            renderViolations();
+        })();
+    </script>
+</body>
+</html>

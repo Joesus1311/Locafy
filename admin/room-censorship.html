@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Kiểm duyệt tin đăng - Locafy Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Quản trị viên!');
+            window.location.href = '../login.html';
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo (matches index.html) -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center gap-2.5 group">
+                <div class="bg-white/15 group-hover:bg-white/25 transition-colors p-2 rounded-lg">
+                    <i class="fa-solid fa-house-chimney text-white text-base"></i>
+                </div>
+                <span class="text-lg font-extrabold text-white tracking-tight">Locafy</span>
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-2 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-label-md">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="user-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-label-md">Người dùng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="verify-landlord.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="font-label-md text-label-md">Xét duyệt Chủ trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="room-censorship.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bed</span>
+                <span class="font-label-md text-label-md font-bold">Kiểm duyệt Phòng trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="reports-violations.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-label-md">Báo cáo & Vi phạm</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="content-management.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-label-md">Quản lý Nội dung</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="track-bookings.html">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="font-label-md text-label-md">Theo dõi thuê phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="system-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Cài đặt Hệ thống</span>
+            </a>
+        </nav>
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Đăng xuất</span>
+            </button>
+        </div>
+        
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Kiểm Duyệt Phòng Trọ</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="font-label-md text-label-md text-on-surface leading-tight" id="header-admin-name">Admin Locafy</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant">Quản trị viên</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold" id="header-avatar-fallback">AD</div>
+            </div>
+        </header>
+
+        <!-- Page Content Scrollable Area -->
+        <div class="flex-1 overflow-y-auto pt-24 px-8 pb-12">
+            <div class="mb-6">
+                <h2 class="font-headline-sm text-headline-sm text-on-surface mb-1">Duyệt tin đăng phòng trọ</h2>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Kiểm duyệt các thông tin mô tả, giá cả, và hình ảnh bài đăng từ chủ trọ.</p>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="bg-white rounded-[20px] p-4 soft-shadow mb-6 flex flex-col md:flex-row justify-between items-center gap-4 relative z-20">
+                <div class="relative w-full md:w-96">
+                    <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-stone-400">search</span>
+                    <input id="search-input" class="w-full bg-stone-50 text-on-surface font-body-md text-sm rounded-xl pl-12 pr-4 py-2.5 border border-stone-200 focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all outline-none" placeholder="Tìm kiếm tin đăng (tiêu đề, địa chỉ)..." type="text">
+                </div>
+                <select id="status-filter" class="bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 font-label-sm text-sm text-on-surface-variant focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all w-full md:w-auto">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="pending">Chờ duyệt</option>
+                    <option value="approved">Đã duyệt</option>
+                </select>
+            </div>
+
+            <!-- Data Table -->
+            <div class="bg-white rounded-[20px] soft-shadow overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-stone-50 border-b border-stone-200">
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Tin đăng</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Địa chỉ</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Xét duyệt Chủ trọ</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Giá thuê</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider">Trạng thái</th>
+                                <th class="py-4 px-6 font-label-sm text-label-sm text-stone-500 uppercase tracking-wider text-right">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-stone-100" id="censorship-tbody">
+                            <!-- Dynamic Listings Rows -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="px-6 py-4 border-t border-stone-100 flex items-center justify-between text-sm text-stone-500" id="censorship-summary">
+                    Hiển thị 0 tin đăng
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function loadListings() {
+            return await window.db.getListings();
+        }
+
+        if (currentUser) {
+            const _el_an = document.getElementById('admin-name'); if(_el_an) _el_an.textContent = currentUser.name || currentUser.username;
+            document.getElementById('header-admin-name').textContent = currentUser.name || currentUser.username;
+            const initials = (currentUser.name || currentUser.username).substring(0, 2).toUpperCase();
+            const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
+            document.getElementById('header-avatar-fallback').textContent = initials;
+        }
+
+        const tbody = document.getElementById('censorship-tbody');
+        const summary = document.getElementById('censorship-summary');
+        const searchInput = document.getElementById('search-input');
+        const statusFilter = document.getElementById('status-filter');
+
+        async function renderListings() {
+            const listings = await loadListings();
+            const query = searchInput.value.toLowerCase().trim();
+            const statusVal = statusFilter.value;
+
+            tbody.innerHTML = '';
+            
+            const filteredListings = listings.filter(item => {
+                const matchesSearch = 
+                    (item.title || '').toLowerCase().includes(query) ||
+                    (item.location || '').toLowerCase().includes(query);
+                
+                const isApproved = item.censored || false;
+                const matchesStatus = (statusVal === 'all') ||
+                                     (statusVal === 'pending' && !isApproved) ||
+                                     (statusVal === 'approved' && isApproved);
+
+                return matchesSearch && matchesStatus;
+            });
+
+            summary.textContent = `Hiển thị ${filteredListings.length} / ${listings.length} tin đăng`;
+
+            if (filteredListings.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-stone-400">
+                            Không tìm thấy tin đăng nào phù hợp.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filteredListings.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-stone-50/50 transition-colors';
+                
+                const imageSrc = item.image || 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=100&q=80';
+                const isApproved = item.censored || false;
+                
+                const statusBadge = isApproved 
+                    ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-success text-xs font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>Đã duyệt</span>`
+                    : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-yellow-50 text-gold-accent text-xs font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-gold-accent"></span>Chờ duyệt</span>`;
+
+                const actionButtons = isApproved 
+                    ? `<button onclick="changeCensorStatus('${item.id}', false)" class="px-4 py-1.5 bg-danger text-white rounded-full font-label-sm text-xs hover:opacity-90 transition-all">Gỡ tin</button>`
+                    : `
+                        <div class="flex justify-end gap-2">
+                            <button onclick="changeCensorStatus('${item.id}', true)" class="px-4 py-1.5 bg-secondary text-white rounded-full font-label-sm text-xs hover:opacity-90 transition-all">Duyệt</button>
+                            <button onclick="deleteListingItem('${item.id}')" class="px-4 py-1.5 bg-stone-500 text-white rounded-full font-label-sm text-xs hover:opacity-90 transition-all">Xóa tin</button>
+                        </div>
+                    `;
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6">
+                        <div class="flex items-center gap-3">
+                            <img alt="Room Preview" class="w-12 h-12 rounded-lg object-cover shrink-0" src="${imageSrc}">
+                            <div>
+                                <p class="font-bold text-teal-deep">${item.title}</p>
+                                <p class="text-xs text-stone-400">${item.roomCount || '1 phòng'}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 text-stone-600">${item.location}</td>
+                    <td class="py-4 px-6 text-stone-500">${item.ownerUsername || 'Chủ trọ'}</td>
+                    <td class="py-4 px-6 font-bold text-primary">${item.price}</td>
+                    <td class="py-4 px-6">${statusBadge}</td>
+                    <td class="py-4 px-6 text-right">${actionButtons}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.changeCensorStatus = async function(id, isCensored) {
+            const listings = await loadListings();
+            const item = listings.find(item => item.id === id);
+            if (item) {
+                item.censored = isCensored;
+                item.status = isCensored ? 'approved' : 'pending';
+                await window.db.saveListing(item);
+                await renderListings();
+            }
+        };
+
+        window.deleteListingItem = async function(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa tin đăng này?')) {
+                await window.db.deleteListing(id);
+                await renderListings();
+            }
+        };
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        // Attach listeners
+        searchInput.addEventListener('input', () => renderListings());
+        statusFilter.addEventListener('change', () => renderListings());
+
+        // Initial render
+        renderListings();
+    </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Thông báo | Locafy</title>
+    <script src="../env.js"></script>
+    <script src="../analytics.js" async></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FAFAF9; }
+        .notification-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .notification-card:hover { transform: translateY(-2px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser) {
+            alert('Vui lòng đăng nhập để xem thông báo!');
+            window.location.href = '../login.html?redirect=user/notification.html';
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header giống index.html -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-0 min-h-16 sm:min-h-20 flex flex-col gap-2.5 md:flex-row md:items-center md:justify-between">
+            <div class="flex items-center justify-between md:justify-start">
+                <a href="../index.html" class="flex items-center justify-center md:justify-start space-x-2 min-w-0">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg shrink-0">
+                        <i class="fa-solid fa-house-chimney text-lg"></i>
+                    </div>
+                    <span class="text-lg sm:text-xl font-extrabold text-blue-900">Locafy</span>
+                </a>
+                <button id="mobile-menu-button" type="button" class="inline-flex items-center justify-center rounded-lg border border-gray-200 p-2 text-gray-700 hover:bg-gray-50 md:hidden" aria-label="Mở menu">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="../index.html" class="text-gray-600 hover:text-blue-600">Trang Chủ</a>
+                <a href="../phong-tro.html" class="text-gray-600 hover:text-blue-600">Phòng Trọ</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600">Tìm Ở Ghép</a>
+            </nav>
+            <div id="mobile-menu" class="hidden md:hidden rounded-2xl border border-gray-200 bg-white p-3 shadow-lg">
+                <nav class="flex flex-col gap-2 text-sm font-semibold">
+                    <a href="../index.html" class="rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-50">Trang Chủ</a>
+                    <a href="../phong-tro.html" class="rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-50">Phòng Trọ</a>
+                    <a href="#" class="rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-50">Tìm Ở Ghép</a>
+                </nav>
+                <div id="mobile-auth-actions" class="mt-3 flex flex-col gap-2 border-t border-gray-100 pt-3">
+                    <a href="../login.html" class="rounded-lg border border-gray-200 px-3 py-2 text-center text-sm font-semibold text-gray-700 hover:bg-gray-50">Đăng nhập</a>
+                    <a href="../register.html" class="rounded-lg bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-blue-700">Đăng ký</a>
+                </div>
+            </div>
+            <div id="auth-actions" class="flex flex-col items-stretch gap-2 w-full md:w-auto md:flex-row md:items-center md:justify-end">
+                <a href="../login.html" class="hidden sm:inline-flex items-center justify-center rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">Đăng nhập</a>
+                <a href="../register.html" class="hidden sm:inline-flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition">Đăng ký</a>
+                <a href="../login.html?redirect=manage/seller-post.html" class="w-full justify-center md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-md transition duration-200 flex items-center space-x-1">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span class="whitespace-nowrap">Đăng Tin Miễn Phí</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-8 min-h-screen max-w-4xl mx-auto px-6">
+        <!-- Page Title & Tabs -->
+        <div class="mb-8">
+            <h1 class="font-headline-md text-2xl font-black text-teal-deep mb-6">Thông báo hệ thống</h1>
+            <div class="flex items-center space-x-6 border-b border-stone-200 pb-1">
+                <button class="font-label-md text-sm text-teal-deep font-bold border-b-2 border-teal-deep pb-4 transition-all" id="tab-all" onclick="switchTab('all')">
+                    Tất cả
+                </button>
+                <button class="font-label-md text-sm text-stone-400 hover:text-teal-deep pb-4 transition-all" id="tab-unread" onclick="switchTab('unread')">
+                    Chưa đọc
+                </button>
+            </div>
+        </div>
+
+        <!-- Notification Feed -->
+        <div class="space-y-4" id="notification-feed">
+            <!-- Dynamic notifications render here -->
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
+        <div class="hidden flex-col items-center justify-center py-20 text-center" id="empty-state">
+            <div class="w-20 h-20 bg-teal-deep/5 border border-teal-deep/10 text-teal-deep rounded-full flex items-center justify-center mb-6 shadow-premium-sm">
+                <span class="material-symbols-outlined text-[36px]">notifications_off</span>
+            </div>
+            <h2 class="font-headline-sm text-base font-extrabold text-teal-deep mb-2">Bạn chưa có thông báo nào</h2>
+            <p class="text-xs text-stone-400 max-w-xs leading-relaxed">Chúng tôi sẽ gửi cảnh báo tại đây khi có tin tức mới hoặc hoạt động liên quan đến phòng của bạn.</p>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div class="space-y-4">
+                <div class="bg-blue-600 text-white px-3 py-1.5 rounded-lg font-bold text-lg tracking-wider inline-block">Locafy</div>
+                <p class="text-sm text-slate-400 leading-relaxed">Locafy - Mạng lưới kết nối người thuê và cho thuê bất động sản, phòng trọ, căn hộ mini hàng đầu Việt Nam.</p>
+                <div class="flex space-x-4 pt-2">
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-white text-xl"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Về chúng tôi</h4>
+                <ul class="space-y-2.5 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 transition">Giới thiệu dịch vụ</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Quy chế hoạt động</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Chính sách bảo mật</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Giải quyết khiếu nại</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Hỗ trợ khách hàng</h4>
+                <ul class="space-y-2.5 text-sm">
+                    <li><a href="#" class="hover:text-blue-400 transition">Bảng giá dịch vụ</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Hướng dẫn đăng tin</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Quy định đăng tin</a></li>
+                    <li><a href="#" class="hover:text-blue-400 transition">Liên hệ trợ giúp</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Liên hệ</h4>
+                <ul class="space-y-3 text-sm text-slate-400">
+                    <li class="flex items-start space-x-2"><i class="fa-solid fa-envelope mt-1 text-blue-400"></i><span>hotro@locafy.vn</span></li>
+                    <li class="flex items-start space-x-2"><i class="fa-solid fa-phone mt-1 text-blue-400"></i><span>1900 123 456 (8:00 - 21:00)</span></li>
+                    <li class="flex items-start space-x-2"><i class="fa-solid fa-location-dot mt-1 text-blue-400"></i><span>Tòa nhà Locafy, Cầu Giấy, Hà Nội</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+            <p>© 2026 Locafy.vn. Toàn bộ bản quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="../supabase-client.js"></script>
+    <script>
+        const currentUserKey = 'locafyCurrentUser';
+        const authActions = document.getElementById('auth-actions');
+        const mobileAuthActions = document.getElementById('mobile-auth-actions');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        function getCurrentUser() { try { return JSON.parse(localStorage.getItem(currentUserKey)); } catch(e) { return null; } }
+        if (mobileMenuButton && mobileMenu) { mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden')); }
+        function getInitials(user) { return (user.name || user.username || 'U').substring(0, 2).toUpperCase(); }
+        function buildDropdownItems(user) {
+            if (user.role === 'admin') return `<a href="../admin/dashboard.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-gauge text-blue-600 w-4 text-center"></i>Trang quản trị</a><hr class="border-gray-100 my-1"><button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium text-left"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i>Đăng xuất</button>`;
+            if (user.role === 'seller') return `<a href="../manage/dashboard.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-gauge text-blue-600 w-4 text-center"></i>Quản lý nhà trọ</a><a href="../manage/account-settings.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-gear text-blue-600 w-4 text-center"></i>Cài đặt tài khoản</a><a href="../manage/seller-post.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-circle-plus text-blue-600 w-4 text-center"></i>Đăng tin mới</a><hr class="border-gray-100 my-1"><button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium text-left"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i>Đăng xuất</button>`;
+            return `<a href="account-settings.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-gear text-blue-600 w-4 text-center"></i>Cài đặt tài khoản</a><a href="notification.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-bell text-blue-600 w-4 text-center"></i>Thông báo</a><a href="appointments.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-calendar-check text-blue-600 w-4 text-center"></i>Lịch xem phòng</a><a href="favorites.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"><i class="fa-solid fa-heart text-blue-600 w-4 text-center"></i>Yêu thích</a><hr class="border-gray-100 my-1"><button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium text-left"><i class="fa-solid fa-right-from-bracket w-4 text-center"></i>Đăng xuất</button>`;
+        }
+        function updateAuthUI() {
+            const user = getCurrentUser();
+            if (!user) return;
+            const initials = getInitials(user);
+            const html = `<div class="flex items-center gap-3"><a href="notification.html" class="relative flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 hover:bg-gray-50 text-gray-500 hover:text-blue-600 transition-all active:scale-95 shadow-sm" title="Thông báo"><i class="fa-regular fa-bell text-lg"></i><span id="header-noti-badge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-[10px] font-bold w-5 h-5 items-center justify-center border-2 border-white shadow-sm animate-pulse"></span></a><div class="relative inline-block text-left"><button id="user-avatar-btn" class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 transition-all active:scale-95 focus:outline-none shadow-md" onclick="toggleUserDropdown(event)">${initials}</button><div id="user-avatar-dropdown" class="hidden absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-gray-200/60 py-2 z-50"><div class="px-4 py-3 border-b border-gray-100"><p class="text-sm font-bold text-gray-900">${user.name || user.username}</p><p class="text-xs text-gray-500">${user.email || ''}</p></div>${buildDropdownItems(user)}</div></div></div>`;
+            const postBtn = user.role === 'seller' ? `<a href="../manage/seller-post.html" class="w-full justify-center md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-md transition duration-200 flex items-center space-x-1"><i class="fa-solid fa-circle-plus"></i><span class="whitespace-nowrap">Đăng Tin Miễn Phí</span></a>` : '';
+            if (authActions) authActions.innerHTML = html + postBtn;
+            if (mobileAuthActions) mobileAuthActions.innerHTML = `<div class="flex items-center gap-3 px-1 py-2 mb-1"><div class="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">${initials}</div><div><p class="text-sm font-bold text-gray-900">${user.name || user.username}</p><p class="text-xs text-gray-500">${user.email || ''}</p></div></div>${buildDropdownItems(user)}`;
+        }
+        window.toggleUserDropdown = function(e) { e.stopPropagation(); const dd = document.getElementById('user-avatar-dropdown'); if (dd) dd.classList.toggle('hidden'); };
+        document.addEventListener('click', function(e) { const dd = document.getElementById('user-avatar-dropdown'); const btn = document.getElementById('user-avatar-btn'); if (dd && btn && !dd.contains(e.target) && !btn.contains(e.target)) dd.classList.add('hidden'); });
+        updateAuthUI();
+    </script>
+    <script>
+        const sampleNotifications = [
+            {
+                id: 'n-1',
+                title: 'Lịch hẹn xem phòng đã được xác nhận',
+                description: 'Chủ nhà tại Quận 1 đã xác nhận lịch hẹn của bạn vào lúc 15:00 ngày mai. Vui lòng có mặt đúng giờ.',
+                type: 'appointment',
+                read: false,
+                date: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+                renterEmail: currentUser.email
+            },
+            {
+                id: 'n-2',
+                title: 'Tin nhắn mới từ Minh Nguyễn',
+                description: '"Chào bạn, phòng vẫn còn trống nhé. Bạn có muốn qua xem vào chiều nay không?"',
+                type: 'chat',
+                read: true,
+                date: new Date(Date.now() - 5 * 3600 * 1000).toISOString(),
+                renterEmail: currentUser.email
+            },
+            {
+                id: 'n-3',
+                title: 'Hóa đơn tiền điện tháng 10',
+                description: 'Hóa đơn tiền điện của bạn đã sẵn sàng. Vui lòng thanh toán trước ngày 05/11 để tránh phát sinh chi phí.',
+                type: 'payment',
+                read: false,
+                date: new Date(Date.now() - 24 * 3600 * 1000).toISOString(),
+                renterEmail: currentUser.email
+            },
+            {
+                id: 'n-4',
+                title: 'Cập nhật về phòng yêu thích của bạn',
+                description: 'Căn hộ Studio tại Bình Thạnh bạn đang theo dõi vừa giảm giá 500k cho tháng đầu tiên.',
+                type: 'listing',
+                read: true,
+                date: new Date(Date.now() - 48 * 3600 * 1000).toISOString(),
+                renterEmail: currentUser.email
+            }
+        ];
+
+        let activeTabFilter = 'all';
+
+        async function loadNotifications() {
+            if (window.db) {
+                return await window.db.getNotifications();
+            }
+            let data = localStorage.getItem('locafyNotifications');
+            if (!data) {
+                localStorage.setItem('locafyNotifications', JSON.stringify(sampleNotifications));
+                return sampleNotifications;
+            }
+            return JSON.parse(data);
+        }
+
+        async function markAsRead(id) {
+            const notifs = await loadNotifications();
+            const idx = notifs.findIndex(n => n.id === id);
+            if (idx !== -1) {
+                notifs[idx].read = true;
+                if (window.db) {
+                    await window.db.saveNotification(notifs[idx]);
+                } else {
+                    localStorage.setItem('locafyNotifications', JSON.stringify(notifs));
+                }
+                await renderNotifications();
+            }
+        }
+
+        async function renderNotifications() {
+            const notifs = await loadNotifications();
+            const myNotifs = notifs.filter(n => n.renterEmail === currentUser.email);
+            const feed = document.getElementById('notification-feed');
+            const emptyState = document.getElementById('empty-state');
+            feed.innerHTML = '';
+
+            const filtered = myNotifs.filter(n => {
+                if (activeTabFilter === 'all') return true;
+                if (activeTabFilter === 'unread') return !n.read;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                feed.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                emptyState.classList.add('flex');
+                return;
+            }
+
+            feed.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+            emptyState.classList.remove('flex');
+
+            // Sort unread first, then date desc
+            filtered.sort((a, b) => {
+                if (a.read !== b.read) {
+                    return a.read ? 1 : -1;
+                }
+                return new Date(b.date) - new Date(a.date);
+            });
+
+            filtered.forEach(n => {
+                const card = document.createElement('div');
+                card.className = `notification-card bg-white p-6 rounded-[20px] border border-stone-200/60 shadow-[0_10px_20px_rgba(0,0,0,0.01)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.03)] flex gap-4 items-start relative group cursor-pointer transition-all ${n.read ? 'opacity-80' : ''}`;
+                card.onclick = () => {
+                    if (!n.read) {
+                        markAsRead(n.id);
+                    }
+                    card.classList.add('scale-98');
+                    setTimeout(() => card.classList.remove('scale-98'), 150);
+                };
+
+                let dotHtml = '';
+                if (!n.read) {
+                    dotHtml = `<div class="absolute right-6 top-6 w-2 h-2 bg-teal-deep rounded-full transition-opacity duration-300 animate-pulse" title="Chưa đọc"></div>`;
+                }
+
+                let icon = 'notifications';
+                if (n.type === 'appointment') icon = 'calendar_today';
+                else if (n.type === 'chat') icon = 'chat';
+                else if (n.type === 'payment') icon = 'payments';
+                else if (n.type === 'listing') icon = 'home';
+
+                const diffMs = Date.now() - new Date(n.date).getTime();
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMs / 3600000);
+                let timeStr = '';
+                if (diffMins < 60) {
+                    timeStr = diffMins <= 0 ? 'Vừa xong' : `${diffMins} phút trước`;
+                } else if (diffHours < 24) {
+                    timeStr = `${diffHours} giờ trước`;
+                } else {
+                    timeStr = new Date(n.date).toLocaleDateString('vi-VN');
+                }
+
+                card.innerHTML = `
+                    ${dotHtml}
+                    <div class="w-12 h-12 rounded-xl bg-teal-deep/5 text-teal-deep flex items-center justify-center flex-shrink-0 border border-teal-deep/10 shadow-premium-sm">
+                        <span class="material-symbols-outlined text-[20px]" ${n.type === 'chat' || n.type === 'listing' ? "style=\"font-variation-settings: 'FILL' 1;\"" : ""}>${icon}</span>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-teal-deep text-sm leading-snug">${n.title}</h3>
+                            <span class="text-[10px] font-bold text-stone-400 whitespace-nowrap ml-2">${timeStr}</span>
+                        </div>
+                        <p class="text-xs text-stone-500 leading-relaxed max-w-2xl">${n.description}</p>
+                    </div>
+                `;
+                feed.appendChild(card);
+            });
+        }
+
+        function switchTab(type) {
+            activeTabFilter = type;
+            const tabAll = document.getElementById('tab-all');
+            const tabUnread = document.getElementById('tab-unread');
+            
+            if (type === 'all') {
+                tabAll.className = "font-label-md text-sm text-teal-deep font-bold border-b-2 border-teal-deep pb-4 transition-all";
+                tabUnread.className = "font-label-md text-sm text-stone-400 hover:text-teal-deep pb-4 transition-all";
+            } else {
+                tabUnread.className = "font-label-md text-sm text-teal-deep font-bold border-b-2 border-teal-deep pb-4 transition-all";
+                tabAll.className = "font-label-md text-sm text-stone-400 hover:text-teal-deep pb-4 transition-all";
+            }
+
+            renderNotifications();
+        }
+
+        function showComingSoonToast(e) {
+            if (e) e.preventDefault();
+            const dropdown = document.getElementById('user-avatar-dropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+            
+            let toast = document.getElementById('coming-soon-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'coming-soon-toast';
+                toast.className = 'fixed bottom-6 right-6 z-[9999] flex items-center gap-3 bg-gray-800 text-white px-5 py-3.5 rounded-2xl shadow-xl transition-all duration-300 transform translate-y-4 opacity-0';
+                toast.innerHTML = '<i class="fa-solid fa-wrench text-yellow-400"></i><span class="text-sm font-semibold">Tính năng đang được phát triển!</span>';
+                document.body.appendChild(toast);
+            }
+            setTimeout(() => { toast.classList.remove('translate-y-4', 'opacity-0'); }, 10);
+            clearTimeout(window._comingSoonTimer);
+            window._comingSoonTimer = setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+            }, 2500);
+        }
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../index.html';
+        };
+
+        async function init() {
+            let attempts = 0;
+            while (!window.db && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+            await renderNotifications();
+        }
+        init();
+    </script>
+</body>
+</html>
