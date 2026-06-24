@@ -1,43 +1,55 @@
 <!DOCTYPE html>
 <html class="light" lang="vi">
+
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    
+
     <!-- Environment Config & Dynamic Analytics -->
     <script src="env.js"></script>
     <script src="analytics.js" async></script>
-    
+
     <title>Đăng ký | Locafy</title>
-    
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             font-family: 'Be Vietnam Pro', sans-serif;
             background-color: #FAFAF9;
         }
+
         @media (min-width: 1024px) {
-            html, body {
+
+            html,
+            body {
                 overflow: hidden;
             }
         }
+
         .glass-effect {
             backdrop-filter: blur(12px);
             background: rgba(255, 255, 255, 0.7);
         }
+
         .input-focus:focus {
             outline: none;
             border: 2px solid #0F3D3E;
             background-color: white;
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         .otp-input:focus {
             border-color: #0F3D3E;
             box-shadow: 0 0 0 2px rgba(15, 61, 62, 0.1);
@@ -46,156 +58,213 @@
     <link rel="stylesheet" href="./design-system.css">
     <script src="./design-system.js"></script>
 </head>
+
 <body class="bg-surface text-on-surface font-body-md selection:bg-teal-vibrant/30">
-    <a href="index.html" class="absolute top-6 left-6 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 lg:bg-white/15 lg:hover:bg-white/25 lg:text-white lg:backdrop-blur-md lg:border lg:border-white/20 shadow-premium-sm hover-lift transition-all" title="Về trang chủ">
+    <a href="index.html"
+        class="absolute top-6 left-6 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 lg:bg-white/15 lg:hover:bg-white/25 lg:text-white lg:backdrop-blur-md lg:border lg:border-white/20 shadow-premium-sm hover-lift transition-all"
+        title="Về trang chủ">
         <i class="fa-solid fa-arrow-left text-[18px]"></i>
     </a>
-<main class="min-h-screen lg:h-screen w-full flex flex-col lg:flex-row bg-surface overflow-x-hidden lg:overflow-hidden">
-<!-- Left Side: Lifestyle Image Section -->
-<div class="hidden lg:flex w-1/2 h-full relative overflow-hidden bg-primary-container">
-<div class="absolute inset-0 z-0">
-<img alt="Căn hộ hiện đại" class="w-full h-full object-cover opacity-90" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80">
-</div>
-<div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60 z-10"></div>
-<div class="relative z-20 flex flex-col justify-end p-16 text-white w-full h-full">
-<div>
-<h1 class="font-headline-xl text-headline-xl mb-6 max-w-md">Khám phá không gian sống phù hợp với bạn.</h1>
-<p class="font-body-lg text-body-lg max-w-sm opacity-90">Kết nối nhanh chóng với hàng ngàn phòng trọ và căn hộ chất lượng.</p>
-</div>
-</div>
-</div>
-<!-- Right Side: Registration Form -->
-<div class="w-full lg:w-1/2 min-h-screen lg:h-full overflow-y-auto flex items-center justify-center p-6 md:p-8 bg-surface">
-<div class="w-full max-w-[480px] bg-white p-6 md:p-8 rounded-[24px] shadow-[0_20px_50px_rgba(15,61,62,0.08)] border border-stone-200/50 my-4">
-<div class="mb-5">
-<h2 class="font-headline-md text-headline-md text-teal-deep mb-1">Đăng ký tài khoản</h2>
-<p class="font-body-sm text-body-sm text-stone-500">Chào mừng bạn gia nhập cộng đồng Locafy</p>
-</div>
-<!-- Role Selection -->
-<input type="hidden" id="role-input" name="role" value="buyer">
-<div class="grid grid-cols-2 gap-3 mb-5">
-<div class="role-card cursor-pointer border-2 border-teal-deep bg-teal-deep/5 p-3 rounded-xl transition-all flex items-center gap-3" id="role-renter" onclick="selectRole('renter')">
-<i class="fa-solid fa-user text-teal-deep text-[22px] transition-colors"></i>
-<div class="text-left">
-    <h4 class="font-label-sm text-label-sm text-teal-deep font-bold">Người thuê</h4>
-    <p class="text-[10px] text-stone-500 leading-tight">Tìm phòng ở</p>
-</div>
-</div>
-<div class="role-card cursor-pointer border-2 border-transparent bg-surface-container-low p-3 rounded-xl transition-all flex items-center gap-3" id="role-owner" onclick="selectRole('owner')">
-<i class="fa-solid fa-house-user text-stone-500 text-[22px] transition-colors"></i>
-<div class="text-left">
-    <h4 class="font-label-sm text-label-sm text-on-surface font-bold">Chủ trọ</h4>
-    <p class="text-[10px] text-stone-500 leading-tight">Quản lý khu trọ</p>
-</div>
-</div>
-</div>
-<form id="register-form" class="space-y-2.5">
-<div class="space-y-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="username">Tên đăng nhập</label>
-<div class="relative">
-    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
-        <i class="fa-solid fa-id-badge text-[14px]"></i>
-    </div>
-    <input id="username" name="username" class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="nguyenvana123" required="" type="text">
-</div>
-</div>
+    <main
+        class="min-h-screen lg:h-screen w-full flex flex-col lg:flex-row bg-surface overflow-x-hidden lg:overflow-hidden">
+        <!-- Left Side: Lifestyle Image Section -->
+        <div class="hidden lg:flex w-1/2 h-full relative overflow-hidden bg-primary-container">
+            <div class="absolute inset-0 z-0">
+                <img alt="Căn hộ hiện đại" class="w-full h-full object-cover opacity-90"
+                    src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80">
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60 z-10"></div>
+            <div class="relative z-20 flex flex-col justify-end p-16 text-white w-full h-full">
+                <div>
+                    <h1 class="font-headline-xl text-headline-xl mb-6 max-w-md">Khám phá không gian sống phù hợp với
+                        bạn.</h1>
+                    <p class="font-body-lg text-body-lg max-w-sm opacity-90">Kết nối nhanh chóng với hàng ngàn phòng trọ
+                        và căn hộ chất lượng.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Right Side: Registration Form -->
+        <div
+            class="w-full lg:w-1/2 min-h-screen lg:h-full overflow-y-auto flex items-center justify-center p-6 md:p-8 bg-surface">
+            <div
+                class="w-full max-w-[480px] bg-white p-6 md:p-8 rounded-[24px] shadow-[0_20px_50px_rgba(15,61,62,0.08)] border border-stone-200/50 my-4">
+                <div class="mb-5">
+                    <h2 class="font-headline-md text-headline-md text-teal-deep mb-1">Đăng ký tài khoản</h2>
+                    <p class="font-body-sm text-body-sm text-stone-500">Chào mừng bạn gia nhập cộng đồng Locafy</p>
+                </div>
+                <!-- Role Selection -->
+                <input type="hidden" id="role-input" name="role" value="buyer">
+                <div class="grid grid-cols-2 gap-3 mb-5">
+                    <div class="role-card cursor-pointer border-2 border-teal-deep bg-teal-deep/5 p-3 rounded-xl transition-all flex items-center gap-3"
+                        id="role-renter" onclick="selectRole('renter')">
+                        <i class="fa-solid fa-user text-teal-deep text-[22px] transition-colors"></i>
+                        <div class="text-left">
+                            <h4 class="font-label-sm text-label-sm text-teal-deep font-bold">Người thuê</h4>
+                            <p class="text-[10px] text-stone-500 leading-tight">Tìm phòng ở</p>
+                        </div>
+                    </div>
+                    <div class="role-card cursor-pointer border-2 border-transparent bg-surface-container-low p-3 rounded-xl transition-all flex items-center gap-3"
+                        id="role-owner" onclick="selectRole('owner')">
+                        <i class="fa-solid fa-house-user text-stone-500 text-[22px] transition-colors"></i>
+                        <div class="text-left">
+                            <h4 class="font-label-sm text-label-sm text-on-surface font-bold">Chủ trọ</h4>
+                            <p class="text-[10px] text-stone-500 leading-tight">Quản lý khu trọ</p>
+                        </div>
+                    </div>
+                </div>
+                <form id="register-form" class="space-y-2.5">
+                    <div class="space-y-1">
+                        <label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="username">Tên
+                            đăng nhập</label>
+                        <div class="relative">
+                            <div
+                                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+                                <i class="fa-solid fa-id-badge text-[14px]"></i>
+                            </div>
+                            <input id="username" name="username"
+                                class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm"
+                                placeholder="nguyenvana123" required="" type="text">
+                        </div>
+                    </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-<div class="space-y-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="phone">Số điện thoại</label>
-<div class="relative">
-    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
-        <i class="fa-solid fa-phone text-[14px]"></i>
-    </div>
-    <input id="phone" name="phone" class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="0912345678" required="" type="tel">
-</div>
-</div>
-<div class="space-y-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="email">Email</label>
-<div class="relative">
-    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
-        <i class="fa-solid fa-envelope text-[14px]"></i>
-    </div>
-    <input id="email" name="email" class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="example@email.com" required="" type="email">
-</div>
-</div>
-</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="phone">Số
+                                điện thoại</label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+                                    <i class="fa-solid fa-phone text-[14px]"></i>
+                                </div>
+                                <input id="phone" name="phone"
+                                    class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm"
+                                    placeholder="0912345678" required="" type="tel">
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="font-label-sm text-label-sm text-on-surface-variant block ml-1"
+                                for="email">Email</label>
+                            <div class="relative">
+                                <div
+                                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+                                    <i class="fa-solid fa-envelope text-[14px]"></i>
+                                </div>
+                                <input id="email" name="email"
+                                    class="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm"
+                                    placeholder="example@email.com" required="" type="email">
+                            </div>
+                        </div>
+                    </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-<div class="space-y-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="password">Mật khẩu</label>
-<div class="relative" id="password-wrapper">
-    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
-        <i class="fa-solid fa-lock text-[14px]"></i>
-    </div>
-    <input id="password" name="password" class="w-full pl-10 pr-10 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="••••••••" required="" type="password">
-    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-teal-deep transition-colors" type="button" onclick="togglePassVisibility('password')">
-        <i class="fa-solid fa-eye text-[14px]"></i>
-    </button>
-</div>
-</div>
-<div class="space-y-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant block ml-1" for="confirm-password">Xác nhận mật khẩu</label>
-<div class="relative" id="confirm-password-wrapper">
-    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
-        <i class="fa-solid fa-key text-[14px]"></i>
-    </div>
-    <input id="confirm-password" name="confirm-password" class="w-full pl-10 pr-10 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm" placeholder="••••••••" required="" type="password">
-    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-teal-deep transition-colors" type="button" onclick="togglePassVisibility('confirm-password')">
-        <i class="fa-solid fa-eye text-[14px]"></i>
-    </button>
-</div>
-</div>
-</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="space-y-1">
+                            <label class="font-label-sm text-label-sm text-on-surface-variant block ml-1"
+                                for="password">Mật khẩu</label>
+                            <div class="relative" id="password-wrapper">
+                                <div
+                                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+                                    <i class="fa-solid fa-lock text-[14px]"></i>
+                                </div>
+                                <input id="password" name="password"
+                                    class="w-full pl-10 pr-10 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm"
+                                    placeholder="••••••••" required="" type="password">
+                                <button
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-teal-deep transition-colors"
+                                    type="button" onclick="togglePassVisibility('password')">
+                                    <i class="fa-solid fa-eye text-[14px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="font-label-sm text-label-sm text-on-surface-variant block ml-1"
+                                for="confirm-password">Xác nhận mật khẩu</label>
+                            <div class="relative" id="confirm-password-wrapper">
+                                <div
+                                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
+                                    <i class="fa-solid fa-key text-[14px]"></i>
+                                </div>
+                                <input id="confirm-password" name="confirm-password"
+                                    class="w-full pl-10 pr-10 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:ring-4 focus:ring-teal-deep/10 focus:border-teal-deep focus:bg-white transition-all outline-none text-on-surface placeholder:text-stone-400 font-body-md text-sm"
+                                    placeholder="••••••••" required="" type="password">
+                                <button
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-teal-deep transition-colors"
+                                    type="button" onclick="togglePassVisibility('confirm-password')">
+                                    <i class="fa-solid fa-eye text-[14px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-<button class="w-full h-[44px] bg-teal-deep text-white rounded-full font-headline-sm text-headline-sm hover:opacity-90 transition-all duration-300 mt-3 shadow-lg shadow-teal-deep/20 active:scale-[0.98]" type="submit">
+                    <button
+                        class="w-full h-[44px] bg-teal-deep text-white rounded-full font-headline-sm text-headline-sm hover:opacity-90 transition-all duration-300 mt-3 shadow-lg shadow-teal-deep/20 active:scale-[0.98]"
+                        type="submit">
                         Đăng ký
                     </button>
-</form>
+                </form>
 
-<div id="register-message" class="mt-4 rounded-xl px-4 py-3 text-body-sm border transition-all duration-300 hidden"></div>
+                <div id="register-message"
+                    class="mt-4 rounded-xl px-4 py-3 text-body-sm border transition-all duration-300 hidden"></div>
 
-<div class="mt-8 flex flex-col items-center">
-<p class="font-body-sm text-body-sm text-stone-500">
-                        Đã có tài khoản? <a class="text-teal-deep font-bold hover:underline" href="login.html">Đăng nhập</a>
-</p>
-</div>
-</div>
-</div>
-</main>
-<!-- OTP Verification Modal (Hidden by default) -->
-<div class="fixed inset-0 z-[100] hidden items-center justify-center p-4" id="otp-modal">
-<div class="absolute inset-0 bg-teal-deep/20 backdrop-blur-sm" onclick="closeOTP()"></div>
-<div class="relative bg-white w-full max-w-[400px] p-6 md:p-10 rounded-[24px] md:rounded-[32px] shadow-2xl animate-in fade-in zoom-in duration-300">
-<button class="absolute top-6 right-6 text-stone-400 hover:text-teal-deep" onclick="closeOTP()">
-<i class="fa-solid fa-xmark text-lg"></i>
-</button>
-<div class="text-center mb-6">
-<div class="w-14 h-14 bg-teal-deep/10 rounded-full flex items-center justify-center mx-auto mb-4">
-<i class="fa-solid fa-shield-halved text-teal-deep text-2xl"></i>
-</div>
-<h3 class="font-headline-sm text-headline-sm text-teal-deep mb-1">Xác thực mã OTP</h3>
-<p class="font-body-sm text-body-sm text-stone-500">Mã xác thực 6 chữ số đã được gửi đến số điện thoại của bạn.</p>
-</div>
-<div class="flex justify-between gap-1.5 sm:gap-2 mb-6">
-<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
-<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
-<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
-<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
-<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
-<input class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0" maxlength="1" type="text">
-</div>
-<button class="w-full h-[48px] bg-teal-deep text-white rounded-full font-headline-sm text-headline-sm hover:opacity-90 transition-all duration-300" onclick="confirmOTP()">
+                <div class="mt-8 flex flex-col items-center">
+                    <p class="font-body-sm text-body-sm text-stone-500">
+                        Đã có tài khoản? <a class="text-teal-deep font-bold hover:underline" href="login.html">Đăng
+                            nhập</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- OTP Verification Modal (Hidden by default) -->
+    <div class="fixed inset-0 z-[100] hidden items-center justify-center p-4" id="otp-modal">
+        <div class="absolute inset-0 bg-teal-deep/20 backdrop-blur-sm" onclick="closeOTP()"></div>
+        <div
+            class="relative bg-white w-full max-w-[400px] p-6 md:p-10 rounded-[24px] md:rounded-[32px] shadow-2xl animate-in fade-in zoom-in duration-300">
+            <button class="absolute top-6 right-6 text-stone-400 hover:text-teal-deep" onclick="closeOTP()">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-teal-deep/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-shield-halved text-teal-deep text-2xl"></i>
+                </div>
+                <h3 class="font-headline-sm text-headline-sm text-teal-deep mb-1">Xác thực mã OTP</h3>
+                <p class="font-body-sm text-body-sm text-stone-500">Mã xác thực 6 chữ số đã được gửi đến email của bạn.
+                </p>
+            </div>
+            <div class="flex justify-between gap-1.5 sm:gap-2 mb-6">
+                <input
+                    class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0"
+                    maxlength="1" type="text">
+                <input
+                    class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0"
+                    maxlength="1" type="text">
+                <input
+                    class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0"
+                    maxlength="1" type="text">
+                <input
+                    class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0"
+                    maxlength="1" type="text">
+                <input
+                    class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0"
+                    maxlength="1" type="text">
+                <input
+                    class="otp-input w-10 sm:w-12 h-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-xl bg-surface-container-low border-none focus:ring-0"
+                    maxlength="1" type="text">
+            </div>
+            <button
+                class="w-full h-[48px] bg-teal-deep text-white rounded-full font-headline-sm text-headline-sm hover:opacity-90 transition-all duration-300"
+                onclick="confirmOTP()">
                 Xác nhận mã OTP
             </button>
-<div class="mt-6 text-center">
-<p class="font-body-sm text-body-sm text-stone-500">
-                    Không nhận được mã? <button type="button" id="resend-otp-btn" onclick="resendOTP()" class="text-teal-deep font-bold hover:underline disabled:opacity-50 disabled:cursor-not-allowed">Gửi lại mã</button>
-</p>
-</div>
-</div>
-</div>
-<script>
+            <div class="mt-6 text-center">
+                <p class="font-body-sm text-body-sm text-stone-500">
+                    Không nhận được mã? <button type="button" id="resend-otp-btn" onclick="resendOTP()"
+                        class="text-teal-deep font-bold hover:underline disabled:opacity-50 disabled:cursor-not-allowed">Gửi
+                        lại mã</button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
         const accountsKey = 'locafyAccounts';
         const currentUserKey = 'locafyCurrentUser';
         const registerForm = document.getElementById('register-form');
@@ -251,14 +320,14 @@
             const roleInput = document.getElementById('role-input');
             const renterIcon = renterCard.querySelector('i');
             const ownerIcon = ownerCard.querySelector('i');
-            
+
             if (role === 'renter') {
                 roleInput.value = 'buyer';
                 renterCard.classList.add('border-teal-deep', 'bg-teal-deep/5');
                 renterCard.classList.remove('border-transparent', 'bg-surface-container-low');
                 renterCard.querySelector('h4').classList.add('text-teal-deep');
                 if (renterIcon) renterIcon.className = "fa-solid fa-user text-teal-deep text-[22px] transition-colors";
-                
+
                 ownerCard.classList.remove('border-teal-deep', 'bg-teal-deep/5');
                 ownerCard.classList.add('border-transparent', 'bg-surface-container-low');
                 ownerCard.querySelector('h4').classList.remove('text-teal-deep');
@@ -269,7 +338,7 @@
                 ownerCard.classList.remove('border-transparent', 'bg-surface-container-low');
                 ownerCard.querySelector('h4').classList.add('text-teal-deep');
                 if (ownerIcon) ownerIcon.className = "fa-solid fa-house-user text-teal-deep text-[22px] transition-colors";
-                
+
                 renterCard.classList.remove('border-teal-deep', 'bg-teal-deep/5');
                 renterCard.classList.add('border-transparent', 'bg-surface-container-low');
                 renterCard.querySelector('h4').classList.remove('text-teal-deep');
@@ -295,7 +364,7 @@
             document.getElementById('otp-modal').classList.remove('hidden');
             document.getElementById('otp-modal').classList.add('flex');
             document.body.style.overflow = 'hidden';
-            
+
             // Focus on first input
             setTimeout(() => {
                 const firstOtp = document.querySelector('.otp-input');
@@ -361,10 +430,12 @@
                 return;
             }
 
-            const phoneRegex = /^(03|05|07|08|09)\d{8}$/;
-            if (!phoneRegex.test(phone)) {
-                showMessage('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam gồm 10 chữ số (bắt đầu bằng 03, 05, 07, 08, hoặc 09).', 'error');
-                return;
+            if (phone) {
+                const phoneRegex = /^(03|05|07|08|09)\d{8}$/;
+                if (!phoneRegex.test(phone)) {
+                    showMessage('Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại Việt Nam gồm 10 chữ số (bắt đầu bằng 03, 05, 07, 08, hoặc 09).', 'error');
+                    return;
+                }
             }
 
             if (password.length < 6) {
@@ -519,4 +590,5 @@
         }
     </script>
 </body>
+
 </html>
