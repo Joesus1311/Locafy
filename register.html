@@ -461,6 +461,8 @@
                 showOTP();
                 if (data.emailSent) {
                     showMessage('Mã OTP đã được gửi tới email ' + email + '. Vui lòng kiểm tra hộp thư.', 'info');
+                } else if (data.mailReason) {
+                    showMessage('Lỗi gửi email: ' + data.mailReason + (data.devOtp ? ' (Mã test: ' + data.devOtp + ')' : ''), 'error');
                 } else if (data.devOtp) {
                     // Chưa cấu hình SMTP: hiển thị mã để test
                     showMessage('Chế độ thử nghiệm — mã OTP của bạn là: ' + data.devOtp, 'info');
