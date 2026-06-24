@@ -1,12 +1,15 @@
 /**
- * Gửi email OTP qua SMTP (nodemailer).
- * Cấu hình bằng biến môi trường:
- *   SMTP_HOST, SMTP_PORT (mặc định 587), SMTP_USER, SMTP_PASS, SMTP_FROM
- * Ví dụ với Gmail: tạo "App Password" và đặt SMTP_HOST=smtp.gmail.com, SMTP_PORT=465.
- * Nếu chưa cấu hình SMTP, mailer trả về { sent:false } để API rơi về chế độ dev (trả OTP trong response).
+ * Gửi email OTP qua Resend API hoặc SMTP (nodemailer).
+ * Cấu hình bằng biến môi trường (server-side only, bảo mật):
+ *   - Resend: RESEND_API_KEY, RESEND_FROM
+ *   - SMTP: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM
+ * Ưu tiên sử dụng Resend API nếu được cấu hình. Nếu không, tự động fallback sang SMTP.
+ * Nếu cả hai đều chưa được cấu hình, mailer trả về { sent:false } để chạy chế độ dev (OTP hiển thị trong response).
  */
 const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
+// 1. SMTP Transport Helper
 function getTransport() {
     const host = process.env.SMTP_HOST;
     const user = process.env.SMTP_USER;
@@ -22,15 +25,21 @@ function getTransport() {
     });
 }
 
+// 2. Resend Client Helper
+let _resendClient = null;
+function getResendClient() {
+    if (_resendClient) return _resendClient;
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey || apiKey === 're_xxxxxxxxx' || apiKey.trim() === '') return null;
+    _resendClient = new Resend(apiKey);
+    return _resendClient;
+}
+
 function isConfigured() {
-    return !!getTransport();
+    return !!getResendClient() || !!getTransport();
 }
 
 async function sendOtpEmail(to, code) {
-    const transport = getTransport();
-    if (!transport) return { sent: false, reason: 'SMTP chưa được cấu hình' };
-
-    const from = process.env.SMTP_FROM || process.env.SMTP_USER;
     const html = `<!DOCTYPE html>
 <html>
 <head>
@@ -145,14 +154,50 @@ async function sendOtpEmail(to, code) {
 </body>
 </html>`;
 
-    await transport.sendMail({
-        from: `Locafy <${from}>`,
-        to,
-        subject: `Mã xác thực Locafy: ${code}`,
-        text: `Mã OTP Locafy của bạn là ${code}. Mã có hiệu lực trong 5 phút.`,
-        html,
-    });
-    return { sent: true };
+    // 1. Thử gửi qua Resend API trước (nếu được cấu hình trong env hệ thống)
+    const resend = getResendClient();
+    if (resend) {
+        try {
+            const from = process.env.RESEND_FROM || 'onboarding@resend.dev';
+            const { data, error } = await resend.emails.send({
+                from: `Locafy <${from}>`,
+                to,
+                subject: `Mã xác thực Locafy: ${code}`,
+                html,
+            });
+
+            if (error) {
+                console.error('Lỗi Resend API:', error);
+                return { sent: false, reason: error.message };
+            }
+
+            return { sent: true, provider: 'resend' };
+        } catch (e) {
+            console.error('Ngoại lệ khi gửi qua Resend:', e);
+            // Tiếp tục chạy để thử gửi qua SMTP fallback
+        }
+    }
+
+    // 2. Tự động fallback sang SMTP (Nodemailer) nếu cấu hình tồn tại
+    const transport = getTransport();
+    if (transport) {
+        try {
+            const from = process.env.SMTP_FROM || process.env.SMTP_USER;
+            await transport.sendMail({
+                from: `Locafy <${from}>`,
+                to,
+                subject: `Mã xác thực Locafy: ${code}`,
+                text: `Mã OTP Locafy của bạn là ${code}. Mã có hiệu lực trong 5 phút.`,
+                html,
+            });
+            return { sent: true, provider: 'smtp' };
+        } catch (e) {
+            console.error('Lỗi khi gửi email qua SMTP fallback:', e.message);
+            return { sent: false, reason: e.message };
+        }
+    }
+
+    return { sent: false, reason: 'Chưa cấu hình mailer (thiếu cả Resend và SMTP)' };
 }
 
 module.exports = { sendOtpEmail, isConfigured };

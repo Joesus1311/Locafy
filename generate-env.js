@@ -4,10 +4,10 @@ const path = require('path');
 // Danh sách các biến an toàn được phép lộ ra phía Client-side (env.js)
 // LƯU Ý BẢO MẬT: Tuyệt đối KHÔNG đưa SUPABASE_SECRET_KEY vào đây!
 const keysToExpose = [
-    'SUPABASE_URL', 
-    'SUPABASE_PUBLISHABLE_KEY', 
-    'SUPABASE_JWKS_URL', 
-    'GOOGLE_ANALYTICS_ID', 
+    'SUPABASE_URL',
+    'SUPABASE_PUBLISHABLE_KEY',
+    'SUPABASE_JWKS_URL',
+    'GOOGLE_ANALYTICS_ID',
     'GOOGLE_SITE_VERIFICATION'
 ];
 
@@ -22,13 +22,13 @@ if (fs.existsSync(envPath)) {
         lines.forEach(line => {
             const trimmed = line.trim();
             if (!trimmed || trimmed.startsWith('#')) return;
-            
+
             const firstEquals = trimmed.indexOf('=');
             if (firstEquals === -1) return;
-            
+
             const key = trimmed.substring(0, firstEquals).trim();
             const value = trimmed.substring(firstEquals + 1).trim();
-            
+
             if (key) {
                 let cleanValue = value;
                 if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
