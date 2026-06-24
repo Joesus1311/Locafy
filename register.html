@@ -471,6 +471,9 @@
                 if (err.status && (err.status === 400 || err.status === 409)) {
                     // Lỗi nghiệp vụ (email/username trùng...) -> báo, không vào OTP
                     showMessage(err.data?.error || 'Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.', 'error');
+                } else if (err.status === 500) {
+                    // Hiển thị lỗi 500 từ server để dễ debug
+                    showMessage('Lỗi máy chủ (500): ' + (err.data?.error || err.message), 'error');
                 } else {
                     // Lỗi mạng -> fallback đăng ký cục bộ (vẫn yêu cầu OTP hình thức)
                     const accounts = JSON.parse(localStorage.getItem(accountsKey) || '[]');
@@ -481,7 +484,7 @@
                     } else {
                         offlineMode = true;
                         showOTP();
-                        showMessage('Không kết nối được máy chủ — chế độ ngoại tuyến. Nhập mã bất kỳ 6 số để hoàn tất.', 'info');
+                        showMessage('Lỗi: ' + (err.message || 'Không rõ') + ' — chế độ ngoại tuyến. Nhập mã bất kỳ 6 số để hoàn tất.', 'info');
                     }
                 }
             } finally {
