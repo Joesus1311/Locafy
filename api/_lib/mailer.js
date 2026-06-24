@@ -168,10 +168,10 @@ async function sendOtpEmail(to, code) {
 
             if (error) {
                 console.error('Lỗi Resend API:', error);
-                return { sent: false, reason: error.message };
+                // Không return lỗi ngay lập tức, để trôi xuống SMTP fallback ở dưới thử lại
+            } else {
+                return { sent: true, provider: 'resend' };
             }
-
-            return { sent: true, provider: 'resend' };
         } catch (e) {
             console.error('Ngoại lệ khi gửi qua Resend:', e);
             // Tiếp tục chạy để thử gửi qua SMTP fallback
