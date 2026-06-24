@@ -1,5 +1,11 @@
 {
   "cleanUrls": true,
   "buildCommand": "node generate-env.js",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/server.js"
+    }
+  ]
 }
