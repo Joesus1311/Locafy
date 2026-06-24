@@ -140,7 +140,7 @@ async function register(sb, body, res) {
     if (error) return send(res, 500, { error: 'Không tạo được mã OTP: ' + error.message });
 
     const mail = await safeSendOtp(email, code);
-    const resp = { ok: true, email, emailSent: mail.sent };
+    const resp = { ok: true, email, emailSent: mail.sent, mailReason: mail.reason };
     if (!mail.sent) resp.devOtp = code; // Chưa cấu hình SMTP -> trả OTP để test
     return send(res, 200, resp);
 }
@@ -158,7 +158,7 @@ async function sendOtp(sb, body, res) {
     await sb.from('locafy_otps').update({ code, expires_at: expiresAt, attempts: 0 }).eq('email', email);
 
     const mail = await safeSendOtp(email, code);
-    const resp = { ok: true, emailSent: mail.sent };
+    const resp = { ok: true, emailSent: mail.sent, mailReason: mail.reason };
     if (!mail.sent) resp.devOtp = code;
     return send(res, 200, resp);
 }
