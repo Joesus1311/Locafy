@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="light" lang="vi">
 <head>
     <meta charset="utf-8">
@@ -276,7 +276,7 @@
                             <img alt="Thumbnail" class="w-12 h-12 rounded-lg object-cover" src="${imageSrc}">
                             <div>
                                 <p class="font-bold text-teal-deep">${room.title}</p>
-                                <p class="text-xs text-stone-400">Diện tích: ${room.area || '25'} m² • Liên hệ: ${room.contactPhone || 'Chủ trọ'}</p>
+                                <p class="text-xs text-stone-400">Diện tích: ${(room.area || '25').toString().replace(/ m[²2]/g, '')} m² • Liên hệ: ${room.contactPhone || 'Chủ trọ'}</p>
                             </div>
                         </div>
                     </td>
