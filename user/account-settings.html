@@ -196,6 +196,47 @@
             </div>
         </div>
 
+        <!-- GÓI DỊCH VỤ SECTION -->
+        <section class="mt-10 bg-white p-6 md:p-8 rounded-[24px] border border-stone-200/60 shadow-[0_10px_25px_rgba(0,0,0,0.02)]">
+            <div class="flex items-center gap-3.5 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-teal-deep/5 text-teal-deep flex items-center justify-center border border-teal-deep/10 shadow-premium-sm">
+                    <span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+                </div>
+                <div>
+                    <h2 class="font-headline-sm text-sm font-bold text-teal-deep">Gói dịch vụ</h2>
+                    <p class="text-[11px] text-stone-400">Nâng cấp gói để nhận thêm nhiều ưu đãi.</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Basic Package -->
+                <div class="border border-stone-200/80 rounded-[20px] p-6 hover:shadow-[0_15px_30px_rgba(0,0,0,0.04)] transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-lg text-stone-850">Basic</h3>
+                            <span id="badge-Basic" class="hidden px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-deep/10 text-teal-deep border border-teal-deep/20">ĐANG DÙNG</span>
+                        </div>
+                        <p class="text-2xl font-black text-teal-deep mt-1">199.000₫ <span class="text-sm font-normal text-stone-500">/tháng</span></p>
+                        <p class="text-xs text-stone-500 mt-2">Phù hợp cho người tìm trọ cơ bản.</p>
+                    </div>
+                    <button onclick="openPaymentModal('Basic')" class="mt-6 w-full bg-[#1e6f43] text-white font-bold py-2.5 rounded-lg hover:opacity-95 active:scale-95 transition-all">Đăng ký</button>
+                </div>
+                <!-- Premium Package -->
+                <div class="border border-stone-200/80 rounded-[20px] p-6 hover:shadow-[0_15px_30px_rgba(0,0,0,0.04)] transition-all flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg">PHỔ BIẾN</div>
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-lg text-stone-850">Premium</h3>
+                            <span id="badge-Premium" class="hidden px-2.5 py-1 rounded-full text-[10px] font-bold bg-teal-deep/10 text-teal-deep border border-teal-deep/20">ĐANG DÙNG</span>
+                        </div>
+                        <p class="text-2xl font-black text-teal-deep mt-1">500.000₫ <span class="text-sm font-normal text-stone-500">/tháng</span></p>
+                        <p class="text-xs text-stone-500 mt-2">Tối ưu cho người tìm trọ chuyên nghiệp.</p>
+                    </div>
+                    <button onclick="openPaymentModal('Premium')" class="mt-6 w-full bg-[#1e6f43] text-white font-bold py-2.5 rounded-lg hover:opacity-95 active:scale-95 transition-all">Đăng ký</button>
+                </div>
+            </div>
+        </section>
+
         <!-- INVOICES SECTION -->
         <section class="mt-10 bg-white p-6 md:p-8 rounded-[24px] border border-stone-200/60 shadow-[0_10px_25px_rgba(0,0,0,0.02)]">
             <div class="flex items-center gap-3.5 mb-6">
@@ -234,6 +275,21 @@
             </button>
         </div>
     </main>
+
+    <!-- PAYMENT MODAL -->
+    <div id="payment-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity opacity-0">
+        <div class="bg-white rounded-[24px] p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-transform duration-300" id="payment-modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg text-teal-deep">Thanh toán gói <span id="modal-pkg-name"></span></h3>
+                <button onclick="closePaymentModal()" class="text-stone-400 hover:text-stone-600 transition-colors"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="text-center mb-6">
+                <img src="../images/docx/QR.jpg" alt="Mã QR Thanh toán" class="w-full h-auto rounded-xl border border-stone-200 shadow-sm mx-auto mb-4">
+                <p class="text-sm text-stone-600">Vui lòng quét mã QR trên để tiến hành thanh toán.</p>
+            </div>
+            <button onclick="confirmPackagePayment()" class="w-full bg-[#1e6f43] text-white font-bold py-3 rounded-full hover:opacity-95 active:scale-95 transition-all shadow-md shadow-[#1e6f43]/15">Tôi đã thanh toán</button>
+        </div>
+    </div>
 
     <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
@@ -522,7 +578,69 @@
                 attempts++;
             }
             await renderInvoices();
+            
+            // Check active package
+            if (currentUser && currentUser.package) {
+                const badge = document.getElementById('badge-' + currentUser.package);
+                if (badge) badge.classList.remove('hidden');
+            }
         }
+        
+        let selectedPackage = null;
+        window.openPaymentModal = function(pkgName) {
+            selectedPackage = pkgName;
+            document.getElementById('modal-pkg-name').textContent = pkgName;
+            const modal = document.getElementById('payment-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            // Allow display block to apply before changing opacity
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                document.getElementById('payment-modal-content').classList.remove('scale-95');
+            }, 10);
+        };
+        window.closePaymentModal = function() {
+            const modal = document.getElementById('payment-modal');
+            modal.classList.add('opacity-0');
+            document.getElementById('payment-modal-content').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        };
+        window.confirmPackagePayment = async function() {
+            // Update user package (mock)
+            currentUser.package = selectedPackage;
+            localStorage.setItem('locafyCurrentUser', JSON.stringify(currentUser));
+            
+            // Sync with Accounts DB if possible
+            if (window.db) {
+                const accounts = await window.db.getAccounts();
+                const acc = accounts.find(a => a.username === currentUser.username);
+                if (acc) {
+                    acc.package = selectedPackage;
+                    await window.db.saveAccount(acc);
+                }
+            } else {
+                const accounts = JSON.parse(localStorage.getItem(accountsKey)) || [];
+                const index = accounts.findIndex(acc => acc.username === currentUser.username);
+                if (index !== -1) {
+                    accounts[index].package = selectedPackage;
+                    localStorage.setItem(accountsKey, JSON.stringify(accounts));
+                }
+            }
+            
+            closePaymentModal();
+            
+            // Hide all badges first
+            document.querySelectorAll('[id^="badge-"]').forEach(el => el.classList.add('hidden'));
+            // Show new badge
+            const badge = document.getElementById('badge-' + selectedPackage);
+            if (badge) badge.classList.remove('hidden');
+            
+            alert(`Cảm ơn bạn! Gói ${selectedPackage} đã được kích hoạt thành công.`);
+        };
+        
         init();
     </script>
 </body>

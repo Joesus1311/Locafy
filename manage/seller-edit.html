@@ -47,6 +47,40 @@
                         <label for="roomCount" class="block text-sm font-semibold text-gray-700">Số phòng</label>
                         <input id="roomCount" name="roomCount" type="text" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
                     </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="area" class="block text-sm font-semibold text-gray-700">Diện tích (m²)</label>
+                            <input id="area" name="area" type="number" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label for="depositPrice" class="block text-sm font-semibold text-gray-700">Tiền cọc (VNĐ)</label>
+                            <input id="depositPrice" name="depositPrice" type="number" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="maxOccupants" class="block text-sm font-semibold text-gray-700">Số người tối đa</label>
+                            <input id="maxOccupants" name="maxOccupants" type="number" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label for="electricPrice" class="block text-sm font-semibold text-gray-700">Tiền điện</label>
+                            <input id="electricPrice" name="electricPrice" type="number" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="waterPrice" class="block text-sm font-semibold text-gray-700">Tiền nước</label>
+                            <input id="waterPrice" name="waterPrice" type="number" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        <div>
+                            <label for="internetPrice" class="block text-sm font-semibold text-gray-700">Internet</label>
+                            <input id="internetPrice" name="internetPrice" type="number" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="parkingPrice" class="block text-sm font-semibold text-gray-700">Phí gửi xe</label>
+                        <input id="parkingPrice" name="parkingPrice" type="number" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
                     <div>
                         <label for="layout" class="block text-sm font-semibold text-gray-700">Thông tin căn hộ</label>
                         <input id="layout" name="layout" type="text" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
@@ -242,6 +276,13 @@
             document.getElementById('layout').value = listing?.layout || '';
             document.getElementById('contact').value = listing?.contact || '';
             document.getElementById('description').value = listing?.description || '';
+            document.getElementById('area').value = (listing?.area || '').toString().replace(/ m[²2]/g, '').trim();
+            document.getElementById('depositPrice').value = listing?.depositPrice || '';
+            document.getElementById('maxOccupants').value = listing?.maxOccupants || '';
+            document.getElementById('electricPrice').value = listing?.electricPrice || '';
+            document.getElementById('waterPrice').value = listing?.waterPrice || '';
+            document.getElementById('internetPrice').value = listing?.internetPrice || '';
+            document.getElementById('parkingPrice').value = listing?.parkingPrice || '';
 
             amenities = (listing?.amenities || '').split(',').map((item) => item.trim()).filter(Boolean);
             renderAmenities();
@@ -363,6 +404,13 @@
                 image: imageDataUrl,
                 contact: formData.get('contact').trim(),
                 description: formData.get('description').trim(),
+                area: formData.get('area') ? formData.get('area').trim() : '0',
+                depositPrice: formData.get('depositPrice') ? parseFloat(formData.get('depositPrice')) : 0,
+                electricPrice: formData.get('electricPrice') ? parseFloat(formData.get('electricPrice')) : 0,
+                waterPrice: formData.get('waterPrice') ? parseFloat(formData.get('waterPrice')) : 0,
+                internetPrice: formData.get('internetPrice') ? parseFloat(formData.get('internetPrice')) : 0,
+                parkingPrice: formData.get('parkingPrice') ? parseFloat(formData.get('parkingPrice')) : 0,
+                maxOccupants: formData.get('maxOccupants') ? parseInt(formData.get('maxOccupants')) : 1,
             };
 
             if (window.db) {

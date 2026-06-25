@@ -22,6 +22,7 @@ CREATE TABLE locafy_accounts (
     phone VARCHAR(50),
     verified BOOLEAN DEFAULT FALSE,
     doc_url TEXT,
+    package VARCHAR(50),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -42,6 +43,13 @@ CREATE TABLE locafy_listings (
     rented BOOLEAN DEFAULT FALSE,
     status VARCHAR(50) DEFAULT 'empty',
     tenant JSONB DEFAULT NULL,
+    area VARCHAR(50),
+    deposit_price NUMERIC,
+    electric_price NUMERIC,
+    water_price NUMERIC,
+    internet_price NUMERIC,
+    parking_price NUMERIC,
+    max_occupants INTEGER,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

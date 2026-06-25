@@ -29,6 +29,13 @@ const listingToApi = (i) => ({
     rented: i.rented,
     status: i.status,
     tenant: i.tenant,
+    area: i.area,
+    depositPrice: num(i.deposit_price),
+    electricPrice: num(i.electric_price),
+    waterPrice: num(i.water_price),
+    internetPrice: num(i.internet_price),
+    parkingPrice: num(i.parking_price),
+    maxOccupants: int(i.max_occupants),
     createdAt: i.created_at,
 });
 const listingToDb = (l) => {
@@ -48,6 +55,13 @@ const listingToDb = (l) => {
         rented: l.rented === true,
         status: l.status || 'empty',
         tenant: l.tenant || null,
+        area: l.area || null,
+        deposit_price: num(l.depositPrice),
+        electric_price: num(l.electricPrice),
+        water_price: num(l.waterPrice),
+        internet_price: num(l.internetPrice),
+        parking_price: num(l.parkingPrice),
+        max_occupants: int(l.maxOccupants),
     };
     if (l.createdAt) row.created_at = l.createdAt;
     return row;
@@ -207,6 +221,7 @@ const accountToApi = (i) => ({
     phone: i.phone,
     verified: i.verified,
     doc_url: i.doc_url,
+    package: i.package,
     isBlocked: i.is_blocked || false,
     created_at: i.created_at,
 });
@@ -219,6 +234,7 @@ const accountToDb = (a) => {
         phone: a.phone,
         verified: a.verified === true,
         doc_url: a.doc_url || a.docUrl || null,
+        package: a.package || null,
     };
     if (a.password !== undefined) row.password = a.password;
     if (a.isBlocked !== undefined) row.is_blocked = a.isBlocked === true;
