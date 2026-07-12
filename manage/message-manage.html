@@ -24,6 +24,8 @@
             window.location.href = '../login.html';
         }
     </script>
+    <script src="../env.js"></script>
+    <script src="../supabase-client.js"></script>
 </head>
 <body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
     <!-- SideNavBar -->
@@ -230,7 +232,13 @@
 
         function renderMessages() {
             const buyer = buyersList.find(b => b.username === activeChatKey);
-            if (!buyer) return;
+            const container = document.getElementById('message-container');
+            if (!buyer) {
+                document.getElementById('chat-header-name').textContent = 'Chưa có người thuê nhắn tin';
+                document.getElementById('chat-header-avatar').textContent = '?';
+                container.innerHTML = '<div class="flex-1 flex items-center justify-center text-stone-400 font-medium">Chưa có cuộc trò chuyện nào</div>';
+                return;
+            }
 
             const name = buyer.name || buyer.username;
             const initials = name.substring(0, 2).toUpperCase();
@@ -238,7 +246,6 @@
             document.getElementById('chat-header-name').textContent = name;
             document.getElementById('chat-header-avatar').textContent = initials;
 
-            const container = document.getElementById('message-container');
             container.innerHTML = '';
 
             const messages = buyerChats[activeChatKey] || [];
@@ -314,42 +321,6 @@
             input.value = '';
             renderMessages();
             renderConversationsList();
-
-            // Simulate automatic tenant reply for demo
-            if (activeChatKey === 'buyer123') {
-                setTimeout(async () => {
-                    const replies = [
-                        "Dạ em cảm ơn anh ạ. Hẹn gặp anh lúc 5h chiều nay nhé!",
-                        "Dạ phòng này giá cọc có bớt được tí nào không anh?",
-                        "Ok anh, em sẽ đến đúng giờ ạ."
-                    ];
-                    const countKey = `reply_count_${activeChatKey}`;
-                    let count = parseInt(sessionStorage.getItem(countKey) || '0');
-                    if (count < replies.length) {
-                        const replyText = replies[count];
-                        sessionStorage.setItem(countKey, count + 1);
-
-                        const replyMsg = {
-                            sender: 'receiver',
-                            text: replyText,
-                            time: timeStr
-                        };
-
-                        if (window.db) {
-                            await window.db.saveChatMessage(chatId, replyMsg, activeChatKey);
-                        } else {
-                            const chats = JSON.parse(localStorage.getItem('locafyChats') || '{}');
-                            if (!chats[chatId]) chats[chatId] = [];
-                            chats[chatId].push(replyMsg);
-                            localStorage.setItem('locafyChats', JSON.stringify(chats));
-                        }
-
-                        buyerChats[activeChatKey].push(replyMsg);
-                        renderMessages();
-                        renderConversationsList();
-                    }
-                }, 1500);
-            }
         };
 
         window.sendQuickReply = function(text) {
@@ -360,10 +331,10 @@
         if (currentUser) {
             const displayName = currentUser.name || currentUser.username;
             const _el_ln = document.getElementById('landlord-name'); if(_el_ln) _el_ln.textContent = displayName;
-            document.getElementById('header-landlord-name').textContent = displayName;
+            const _el_hln = document.getElementById('header-landlord-name'); if(_el_hln) _el_hln.textContent = displayName;
             const initials = displayName.substring(0, 2).toUpperCase();
             const _el_av = document.getElementById('avatar-fallback'); if(_el_av) _el_av.textContent = initials;
-            document.getElementById('header-avatar-fallback').textContent = initials;
+            const _el_hav = document.getElementById('header-avatar-fallback'); if(_el_hav) _el_hav.textContent = initials;
         }
 
         // Send message on Enter key
