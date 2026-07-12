@@ -212,6 +212,29 @@
                 }));
             }
         },
+        async getAllAdminChats() {
+            try {
+                return await apiGet('/chats?admin=true');
+            } catch (e) {
+                console.warn('[db] getAllAdminChats fallback localStorage:', e.message);
+                const chats = JSON.parse(localStorage.getItem('locafyChats') || '{}');
+                // Format array to match DB output
+                const allMsgs = [];
+                Object.keys(chats).forEach(chatId => {
+                    const msgs = chats[chatId] || [];
+                    msgs.forEach(m => {
+                        allMsgs.push({
+                            chat_id: chatId,
+                            sender_username: m.sender_username || (m.sender === 'sender' ? 'N/A' : 'N/A'),
+                            text: m.text,
+                            time: m.time,
+                            created_at: new Date().toISOString()
+                        });
+                    });
+                });
+                return allMsgs;
+            }
+        },
         async saveChatMessage(chatId, message, currentUserUsername) {
             try {
                 return await apiSend('POST', '/chats', { chatId, message, currentUser: currentUserUsername });

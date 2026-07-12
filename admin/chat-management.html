@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Quản lý Tin nhắn - Locafy Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../design-system.css">
+    <script src="../design-system.js"></script>
+    <style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #FAFAF9; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .soft-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+    <script>
+        // Auth Guard
+        const currentUser = JSON.parse(localStorage.getItem('locafyCurrentUser'));
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Quyền truy cập bị từ chối. Chỉ dành cho Quản trị viên!');
+            window.location.href = '../login.html';
+        }
+    </script>
+    <script src="../env.js"></script>
+    <script src="../supabase-client.js"></script>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+    <!-- SideNavBar -->
+    <aside class="h-screen w-64 fixed left-0 top-0 bg-teal-deep text-white shadow-xl z-50 flex flex-col py-6">
+        <!-- Brand Logo -->
+        <div class="px-5 mb-6 flex items-center gap-3">
+            <a href="../index.html" class="flex items-center group transition-transform active:scale-95 duration-200">
+                <img src="../images/docx/logo.png" alt="Locafy Logo" class="h-10 bg-white p-1 rounded-xl object-contain">
+            </a>
+            <span class="ml-auto text-[10px] font-bold bg-white/15 text-white/80 px-2 py-0.5 rounded-full uppercase tracking-wider">Admin</span>
+        </div>
+        <nav class="flex-1 overflow-y-auto px-2 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-label-md text-label-md">Tổng quan</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="user-management.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-label-md text-label-md">Người dùng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="verify-landlord.html">
+                <span class="material-symbols-outlined">domain</span>
+                <span class="font-label-md text-label-md">Xét duyệt Chủ trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="room-censorship.html">
+                <span class="material-symbols-outlined">bed</span>
+                <span class="font-label-md text-label-md">Kiểm duyệt Phòng trọ</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="reports-violations.html">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="font-label-md text-label-md">Báo cáo & Vi phạm</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 bg-white/25 text-white rounded-xl mx-2 scale-95 transition-transform" href="chat-management.html">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">forum</span>
+                <span class="font-label-md text-label-md font-bold">Quản lý Tin nhắn</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="content-management.html">
+                <span class="material-symbols-outlined">chat</span>
+                <span class="font-label-md text-label-md">Quản lý Nội dung</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="track-bookings.html">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="font-label-md text-label-md">Theo dõi thuê phòng</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl mx-2 scale-95 transition-transform" href="system-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-md text-label-md">Cài đặt Hệ thống</span>
+            </a>
+        </nav>
+        <div class="mt-auto px-4 space-y-2 pt-6 border-t border-white/20 mx-4">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-stone-200 hover:text-white hover:bg-white/15 transition-colors rounded-xl scale-95 active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-md text-label-md">Đăng xuất</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 flex-1 flex flex-col h-screen overflow-hidden bg-surface relative">
+        <!-- Header -->
+        <header class="fixed top-0 right-0 left-64 z-50 backdrop-blur-md flex justify-between items-center h-20 px-8 bg-white/80 transition-all duration-300 border-b border-stone-200">
+            <div class="flex-grow">
+                <h1 class="text-xl font-bold text-teal-deep">Giám Sát Tin Nhắn Toàn Hệ Thống</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right">
+                    <p class="font-label-md text-label-md text-on-surface leading-tight" id="header-admin-name">Admin</p>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant">Quản trị viên</p>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-teal-deep text-white flex items-center justify-center font-bold" id="header-avatar-fallback">AD</div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="flex-grow flex pt-20 h-full w-full">
+            
+            <!-- Left Sidebar: Conversations List -->
+            <div class="w-1/3 min-w-[300px] border-r border-stone-200 bg-white flex flex-col h-full">
+                <div class="p-4 border-b border-stone-100 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-stone-400">search</span>
+                    <input type="text" id="chat-search" class="w-full bg-transparent border-none text-sm outline-none placeholder-stone-400" placeholder="Tìm kiếm tài khoản, mã chat..." oninput="renderChatList()">
+                </div>
+                <div class="flex-1 overflow-y-auto no-scrollbar" id="chat-list">
+                    <!-- Chat items render here -->
+                    <div class="p-8 text-center text-stone-400 flex flex-col items-center justify-center h-full gap-2">
+                        <span class="material-symbols-outlined text-4xl animate-spin">sync</span>
+                        <p class="text-sm">Đang tải dữ liệu...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Area: Chat History -->
+            <div class="flex-1 bg-stone-50 flex flex-col h-full relative">
+                <!-- Chat Header -->
+                <div id="active-chat-header" class="h-16 bg-white border-b border-stone-200 flex items-center px-6 shrink-0 hidden">
+                    <div class="w-10 h-10 rounded-full bg-teal-deep/10 text-teal-deep flex items-center justify-center font-bold border border-teal-deep/20 text-sm" id="chat-header-avatar">?</div>
+                    <div class="ml-3">
+                        <h3 class="font-bold text-stone-800 text-sm" id="chat-header-name">Mã hội thoại: ...</h3>
+                        <p class="text-[11px] text-stone-500" id="chat-header-participants">Đang tải...</p>
+                    </div>
+                    <div class="ml-auto flex items-center gap-2">
+                        <span class="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-100 rounded-full text-[10px] font-bold uppercase tracking-wider">Chế độ xem ẩn danh (Admin)</span>
+                    </div>
+                </div>
+
+                <!-- Chat Body -->
+                <div id="chat-body" class="flex-1 overflow-y-auto p-6 space-y-4 no-scrollbar relative">
+                    <!-- Default State -->
+                    <div id="chat-default-state" class="absolute inset-0 flex flex-col items-center justify-center text-center p-8 z-10">
+                        <div class="w-20 h-20 bg-teal-deep/5 rounded-full flex items-center justify-center mb-4 text-teal-deep/50">
+                            <span class="material-symbols-outlined text-4xl">forum</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-stone-700">Giám sát Tin nhắn</h2>
+                        <p class="text-sm text-stone-500 max-w-sm mt-2">Chọn một cuộc trò chuyện từ danh sách bên trái để đọc lịch sử tin nhắn. Mọi thao tác đều được bảo mật.</p>
+                    </div>
+                    
+                    <div id="message-container" class="space-y-4 relative z-0">
+                        <!-- Messages render here -->
+                    </div>
+                </div>
+
+                <!-- Chat Footer (Read-only) -->
+                <div class="h-16 bg-white border-t border-stone-200 flex items-center justify-center px-6 shrink-0 pointer-events-none">
+                    <p class="text-sm text-stone-400 italic flex items-center gap-2"><span class="material-symbols-outlined text-[16px]">visibility</span> Chế độ chỉ đọc. Admin không thể can thiệp vào cuộc trò chuyện.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let allChats = {};
+        let activeChatId = null;
+
+        async function init() {
+            if (currentUser) {
+                document.getElementById('header-admin-name').textContent = currentUser.name || currentUser.username;
+                const initials = (currentUser.name || currentUser.username).substring(0, 2).toUpperCase();
+                document.getElementById('header-avatar-fallback').textContent = initials;
+            }
+
+            // Poller to wait for window.db
+            let attempts = 0;
+            while (!window.db && attempts < 50) {
+                await new Promise(r => setTimeout(r, 100));
+                attempts++;
+            }
+
+            await loadData();
+        }
+
+        async function loadData() {
+            try {
+                const rawMessages = await window.db.getAllAdminChats();
+                
+                // Group by chat_id
+                const grouped = {};
+                rawMessages.forEach(msg => {
+                    const cid = msg.chat_id;
+                    if (!grouped[cid]) grouped[cid] = [];
+                    grouped[cid].push(msg);
+                });
+
+                allChats = grouped;
+                renderChatList();
+            } catch (err) {
+                console.error("Failed to load admin chats", err);
+                document.getElementById('chat-list').innerHTML = `<div class="p-8 text-center text-red-500">Lỗi tải dữ liệu.</div>`;
+            }
+        }
+
+        function renderChatList() {
+            const listEl = document.getElementById('chat-list');
+            const search = document.getElementById('chat-search').value.toLowerCase().trim();
+            listEl.innerHTML = '';
+
+            const chatIds = Object.keys(allChats);
+            if (chatIds.length === 0) {
+                listEl.innerHTML = `<div class="p-8 text-center text-stone-400">Chưa có bất kỳ cuộc trò chuyện nào trên hệ thống.</div>`;
+                return;
+            }
+
+            let renderedCount = 0;
+
+            // Sort chatIds by latest message time
+            chatIds.sort((a, b) => {
+                const msgsA = allChats[a];
+                const msgsB = allChats[b];
+                const lastA = msgsA[msgsA.length - 1];
+                const lastB = msgsB[msgsB.length - 1];
+                return new Date(lastB.created_at || new Date()) - new Date(lastA.created_at || new Date());
+            });
+
+            chatIds.forEach(chatId => {
+                const msgs = allChats[chatId];
+                const lastMsg = msgs[msgs.length - 1];
+                const parts = chatId.split('_');
+                
+                // If search query exists, filter
+                if (search && !chatId.toLowerCase().includes(search)) {
+                    return;
+                }
+
+                renderedCount++;
+
+                const div = document.createElement('div');
+                div.className = `p-4 border-b border-stone-100 cursor-pointer hover:bg-stone-50 transition-colors flex items-center gap-3 ${activeChatId === chatId ? 'bg-teal-deep/5 border-l-4 border-l-teal-deep' : 'border-l-4 border-l-transparent'}`;
+                div.onclick = () => selectChat(chatId);
+
+                div.innerHTML = `
+                    <div class="w-10 h-10 rounded-full bg-stone-200 text-stone-600 flex items-center justify-center font-bold text-xs shrink-0 uppercase">
+                        ${parts[0].substring(0,2)}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex justify-between items-baseline mb-0.5">
+                            <h4 class="font-bold text-stone-800 text-sm truncate">${parts.join(' & ')}</h4>
+                            <span class="text-[10px] text-stone-400 shrink-0 ml-2">${lastMsg.time || ''}</span>
+                        </div>
+                        <p class="text-xs text-stone-500 truncate"><span class="font-semibold text-stone-700">${lastMsg.sender_username}:</span> ${lastMsg.text}</p>
+                    </div>
+                `;
+                listEl.appendChild(div);
+            });
+
+            if (renderedCount === 0) {
+                listEl.innerHTML = `<div class="p-8 text-center text-stone-400">Không tìm thấy cuộc trò chuyện phù hợp.</div>`;
+            }
+        }
+
+        function selectChat(chatId) {
+            activeChatId = chatId;
+            renderChatList(); // re-render to update active styling
+
+            document.getElementById('chat-default-state').classList.add('hidden');
+            document.getElementById('active-chat-header').classList.remove('hidden');
+            
+            const parts = chatId.split('_');
+            document.getElementById('chat-header-name').textContent = `Mã Hội thoại: ${chatId}`;
+            document.getElementById('chat-header-participants').textContent = `Người tham gia: ${parts.join(', ')}`;
+            document.getElementById('chat-header-avatar').textContent = parts[0].substring(0,2).toUpperCase();
+
+            const container = document.getElementById('message-container');
+            container.innerHTML = '';
+
+            const msgs = allChats[chatId] || [];
+            
+            // Assume the first part is seller, second is buyer, or we just map colors by username dynamically
+            const colorMap = {};
+            const colors = ['bg-blue-600 text-white', 'bg-stone-200 text-stone-800', 'bg-teal-600 text-white', 'bg-amber-500 text-white'];
+            let colorIdx = 0;
+
+            msgs.forEach(msg => {
+                if (!colorMap[msg.sender_username]) {
+                    colorMap[msg.sender_username] = colors[colorIdx % colors.length];
+                    colorIdx++;
+                }
+
+                const alignClass = colorIdx % 2 === 1 ? 'items-end' : 'items-start'; // Fake alternate alignment
+                const theme = colorMap[msg.sender_username];
+
+                const wrap = document.createElement('div');
+                wrap.className = `flex flex-col mb-4 ${alignClass}`;
+                
+                wrap.innerHTML = `
+                    <span class="text-[10px] text-stone-400 mb-1 px-1 font-semibold uppercase">${msg.sender_username}</span>
+                    <div class="px-4 py-2.5 rounded-[18px] max-w-[80%] text-sm shadow-sm ${theme}">
+                        ${msg.text}
+                    </div>
+                    <span class="text-[10px] text-stone-400 mt-1 px-1">${msg.time}</span>
+                `;
+                container.appendChild(wrap);
+            });
+
+            // Scroll to bottom
+            const chatBody = document.getElementById('chat-body');
+            setTimeout(() => {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 50);
+        }
+
+        window.logout = function() {
+            localStorage.removeItem('locafyCurrentUser');
+            window.location.href = '../login.html';
+        };
+
+        init();
+    </script>
+</body>
+</html>
