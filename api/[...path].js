@@ -290,8 +290,19 @@ async function handleChats(req, res) {
 
     if (req.method === 'GET') {
         const url = new URL(req.url, 'http://localhost');
+        const admin = url.searchParams.get('admin');
         const chatId = url.searchParams.get('chatId');
         const currentUser = url.searchParams.get('user');
+
+        if (admin === 'true') {
+            const { data, error } = await sb
+                .from('locafy_chats')
+                .select('*')
+                .order('created_at', { ascending: true });
+            if (error) return send(res, 500, { error: error.message });
+            return send(res, 200, data || []);
+        }
+
         if (!chatId) return send(res, 400, { error: 'Thiếu chatId.' });
 
         const { data, error } = await sb
