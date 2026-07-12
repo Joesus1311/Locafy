@@ -56,12 +56,19 @@
     window.db = {
         // ---------- Accounts ----------
         async getAccounts() {
+            let res = [];
             try {
-                return await apiGet('/accounts');
+                res = await apiGet('/accounts');
             } catch (e) {
                 console.warn('[db] getAccounts fallback localStorage:', e.message);
-                return lsGet('locafyAccounts');
             }
+            const localAccs = lsGet('locafyAccounts') || [];
+            for (let la of localAccs) {
+                if (!res.some(ra => ra.username === la.username)) {
+                    res.push(la);
+                }
+            }
+            return res;
         },
         async saveAccount(account) {
             try {
@@ -197,7 +204,12 @@
             } catch (e) {
                 console.warn('[db] getChats fallback localStorage:', e.message);
                 const chats = JSON.parse(localStorage.getItem('locafyChats') || '{}');
-                return chats[chatId] || [];
+                const list = chats[chatId] || [];
+                return list.map(m => ({
+                    text: m.text,
+                    time: m.time,
+                    sender: m.sender_username === currentUserUsername ? 'sender' : 'receiver'
+                }));
             }
         },
         async saveChatMessage(chatId, message, currentUserUsername) {
@@ -207,7 +219,11 @@
                 console.warn('[db] saveChatMessage fallback localStorage:', e.message);
                 const chats = JSON.parse(localStorage.getItem('locafyChats') || '{}');
                 if (!chats[chatId]) chats[chatId] = [];
-                chats[chatId].push(message);
+                chats[chatId].push({
+                    text: message.text,
+                    time: message.time,
+                    sender_username: currentUserUsername
+                });
                 localStorage.setItem('locafyChats', JSON.stringify(chats));
             }
         },
