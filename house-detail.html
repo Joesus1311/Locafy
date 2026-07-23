@@ -361,6 +361,383 @@
 
     <script>
         const houseDatabase = {
+            'ngoc-linh-house': {
+                type: 'Phòng trọ',
+                name: 'Ngọc Linh House',
+                rating: '5.0',
+                location: 'Cây xăng 39, Thạch Hoà, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: '2.9 - 4.7 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Cây xăng 39, Thạch Hoà, Thạch Thất, Hà Nội. Giá 2.9 - 4.7 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Ngọc Linh House/image1.png',
+                    'images/normalhouse/Ngọc Linh House/image2.png',
+                    'images/normalhouse/Ngọc Linh House/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'black-rose-house': {
+                type: 'Phòng trọ',
+                name: 'Black Rose House',
+                rating: '5.0',
+                location: 'Thôn 4, Thạch Hoà, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: '2.6 - 3.0 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Thôn 4, Thạch Hoà, Thạch Thất, Hà Nội. Giá 2.6 - 3.0 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Black Rose House/image1.png',
+                    'images/normalhouse/Black Rose House/image2.png',
+                    'images/normalhouse/Black Rose House/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'tro-xinh-dhqg': {
+                type: 'Phòng trọ',
+                name: 'Trọ Xinh gần Đại học Quốc gia',
+                rating: '5.0',
+                location: 'Khu Tái Định Cư Bắc Phú Cát, Thạch Hoà, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: '2.3 - 2.5 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Khu Tái Định Cư Bắc Phú Cát, Thạch Hoà, Thạch Thất, Hà Nội. Giá 2.3 - 2.5 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Trọ Xinh gần Đại học Quốc gia/image1.png',
+                    'images/normalhouse/Trọ Xinh gần Đại học Quốc gia/image2.png',
+                    'images/normalhouse/Trọ Xinh gần Đại học Quốc gia/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'you-and-me': {
+                type: 'Phòng trọ',
+                name: 'Nhà trọ You & Me',
+                rating: '5.0',
+                location: 'Thôn 4, Thạch Hoà, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: '2.3 - 2.7 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Thôn 4, Thạch Hoà, Thạch Thất, Hà Nội. Giá 2.3 - 2.7 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Nhà trọ You & Me/image1.png',
+                    'images/normalhouse/Nhà trọ You & Me/image2.png',
+                    'images/normalhouse/Nhà trọ You & Me/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'younghouse-11': {
+                type: 'Phòng trọ',
+                name: 'YoungHouse 11',
+                rating: '5.0',
+                location: '6 Phú Hữu, Tân Xã, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: '2.4 - 2.8 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại 6 Phú Hữu, Tân Xã, Thạch Thất, Hà Nội. Giá 2.4 - 2.8 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/YoungHouse 11/image1.png',
+                    'images/normalhouse/YoungHouse 11/image2.png',
+                    'images/normalhouse/YoungHouse 11/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'mias-house': {
+                type: 'Phòng trọ',
+                name: 'Mia's House',
+                rating: '5.0',
+                location: 'Phú Hữu, Tân Xã, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: 'Từ 2.2 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Phú Hữu, Tân Xã, Thạch Thất, Hà Nội. Giá Từ 2.2 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Mia's House/image1.png',
+                    'images/normalhouse/Mia's House/image2.png',
+                    'images/normalhouse/Mia's House/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'happy-house-2': {
+                type: 'Phòng trọ',
+                name: 'Happy House',
+                rating: '5.0',
+                location: 'Bình Yên, Bình Yên, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: '2.4 - 3.2 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Bình Yên, Bình Yên, Thạch Thất, Hà Nội. Giá 2.4 - 3.2 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Happy House/image1.png',
+                    'images/normalhouse/Happy House/image2.png',
+                    'images/normalhouse/Happy House/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'doi-sim-home': {
+                type: 'Phòng trọ',
+                name: 'Đồi Sim Home',
+                rating: '5.0',
+                location: 'Giãn dân Thôn 2, Hồ Băng, Tân Xã, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: 'Từ 1.6 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Giãn dân Thôn 2, Hồ Băng, Tân Xã, Thạch Thất, Hà Nội. Giá Từ 1.6 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Đồi Sim Home/image1.png',
+                    'images/normalhouse/Đồi Sim Home/image2.png',
+                    'images/normalhouse/Đồi Sim Home/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'fhome-tan-xa': {
+                type: 'Phòng trọ',
+                name: 'FHome Tân Xã',
+                rating: '5.0',
+                location: 'Kim Bồng, Tân Xã, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: '1.5 - 2.3 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Kim Bồng, Tân Xã, Thạch Thất, Hà Nội. Giá 1.5 - 2.3 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/FHome Tân Xã/image1.png',
+                    'images/normalhouse/FHome Tân Xã/image2.png',
+                    'images/normalhouse/FHome Tân Xã/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'phuong-nam-apt': {
+                type: 'Căn hộ mini',
+                name: 'Phương Nam Apartment',
+                rating: '5.0',
+                location: 'Thôn 3, Thạch Hoà, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: 'Từ 3.5 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Thôn 3, Thạch Hoà, Thạch Thất, Hà Nội. Giá Từ 3.5 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Phương Nam Apartment/image1.png',
+                    'images/normalhouse/Phương Nam Apartment/image2.png',
+                    'images/normalhouse/Phương Nam Apartment/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+            'chung-cu-phenika': {
+                type: 'Chung cư mini',
+                name: 'Chung cư Phenika',
+                rating: '5.0',
+                location: 'Khu Tái Định Cư Bắc Phú Cát, Thạch Hoà, Thạch Thất, Hà Nội',
+                phone: '0372858098',
+                price: 'Từ 6.0 triệu',
+                description: 'Phòng trọ tiện nghi, sạch sẽ tại Khu Tái Định Cư Bắc Phú Cát, Thạch Hoà, Thạch Thất, Hà Nội. Giá Từ 6.0 triệu. Liên hệ ngay: 0372858098.',
+                images: [
+                    'images/normalhouse/Chung cư Phenika/image1.png',
+                    'images/normalhouse/Chung cư Phenika/image2.png',
+                    'images/normalhouse/Chung cư Phenika/image3.png'
+                ],
+                amenities: [
+                    { icon: 'fa-bed', name: 'Giường nệm' },
+                    { icon: 'fa-snowflake', name: 'Điều hòa' },
+                    { icon: 'fa-wifi', name: 'Wifi tốc độ cao' },
+                    { icon: 'fa-bolt', name: 'Điện 3.5k/số' },
+                    { icon: 'fa-droplet', name: 'Nước 25k/khối' }
+                ]
+            },
+
+            'ohio-house-384': {
+                type: 'Ưu tiên',
+                name: 'Ohio House 384',
+                rating: '5.0',
+                location: 'Chợ Hoà Lạc, Thạch Hoà, Thạch Thất, Hà Nội',
+                description: 'Ohio House 384, Chợ Hoà Lạc, Thạch Hoà, Thạch Thất, Hà Nội. Giá: 2.400.000 đ',
+                roomCount: 'Phòng trọ',
+                price: '2.400.000 đ',
+                layout: 'Phòng riêng, có nội thất cơ bản',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'An ninh'],
+                contact: '0372858098',
+                electricPrice: 3500,
+                waterPrice: 15000,
+                internetPrice: 100000,
+                parkingPrice: 0,
+                maxOccupants: 2,
+                images: ['images/docx/Ohio House 384/image1.png', 'images/docx/Ohio House 384/image2.png', 'images/docx/Ohio House 384/image3.png', 'images/docx/Ohio House 384/image4.png']
+            },
+            'th-house': {
+                type: 'Ưu tiên',
+                name: 'TH HOUSE',
+                rating: '4.9',
+                location: 'Ngay gần sân bóng Phú Hữu, Tân Xã, Thạch Thất, Hà Nội',
+                description: 'TH HOUSE, Ngay gần sân bóng Phú Hữu, Tân Xã. Giá: Từ 2.200.000 đ - 3.000.000 đ',
+                roomCount: 'Phòng trọ',
+                price: '2.200.000 đ - 3.000.000 đ',
+                layout: 'Phòng riêng, có nội thất cơ bản',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'An ninh'],
+                contact: '0372858098',
+                electricPrice: 3500,
+                waterPrice: 15000,
+                internetPrice: 100000,
+                parkingPrice: 0,
+                maxOccupants: 2,
+                images: ['images/docx/TH HOUSE/image1.png', 'images/docx/TH HOUSE/image2.png', 'images/docx/TH HOUSE/image3.png', 'images/docx/TH HOUSE/image4.png']
+            },
+            'hoang-anh-home': {
+                type: 'Ưu tiên',
+                name: 'Hoàng Anh Home',
+                rating: '4.8',
+                location: 'Phu Huu, Tân Xã, Thach That, Hà Nội',
+                description: 'Hoàng Anh Home, Phu Huu, Tân Xã. Giá: Từ 1.600.000 đ - 1.800.000 đ',
+                roomCount: 'Phòng trọ',
+                price: '1.600.000 đ - 1.800.000 đ',
+                layout: 'Phòng riêng, có nội thất cơ bản',
+                amenities: ['Wi-Fi', 'Chỗ để xe', 'An ninh'],
+                contact: '0372858098',
+                electricPrice: 3500,
+                waterPrice: 15000,
+                internetPrice: 100000,
+                parkingPrice: 0,
+                maxOccupants: 2,
+                images: ['images/docx/Hoang Anh Home/image1.png', 'images/docx/Hoang Anh Home/image2.png', 'images/docx/Hoang Anh Home/image3.png', 'images/docx/Hoang Anh Home/image4.png']
+            },
+            'sunhome': {
+                type: 'Ưu tiên',
+                name: 'SunHome',
+                rating: '5.0',
+                location: 'Cổng phụ Đại học QGHN cơ sở Hoà Lạc, Thạch Hoà, Thạch Thất, Hà Nội',
+                description: 'SunHome, Cổng phụ Đại học QGHN cơ sở Hoà Lạc. Giá: Từ 3.300.000 đ - 4.500.000 đ',
+                roomCount: 'Phòng trọ',
+                price: '3.300.000 đ - 4.500.000 đ',
+                layout: 'Phòng riêng, có nội thất cơ bản',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'An ninh'],
+                contact: '0372858098',
+                electricPrice: 3500,
+                waterPrice: 15000,
+                internetPrice: 100000,
+                parkingPrice: 0,
+                maxOccupants: 2,
+                images: ['images/docx/SunHome/image1.png', 'images/docx/SunHome/image2.png', 'images/docx/SunHome/image3.png', 'images/docx/SunHome/image4.png']
+            },
+            'happy-home': {
+                type: 'Ưu tiên',
+                name: 'Happy Home',
+                rating: '4.8',
+                location: 'Nhà thờ PHÚ HỮU, Tân Xã, Thạch Thất, Hà Nội',
+                description: 'Happy Home, Nhà thờ PHÚ HỮU, Tân Xã. Giá: Từ 3.400.000 đ',
+                roomCount: 'Phòng trọ',
+                price: '3.400.000 đ',
+                layout: 'Phòng riêng, có nội thất cơ bản',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'An ninh'],
+                contact: '0372858098',
+                electricPrice: 3500,
+                waterPrice: 15000,
+                internetPrice: 100000,
+                parkingPrice: 0,
+                maxOccupants: 2,
+                images: ['images/docx/Happy Home/image1.png', 'images/docx/Happy Home/image2.png', 'images/docx/Happy Home/image3.png', 'images/docx/Happy Home/image4.png']
+            },
+            'younghouse-2': {
+                type: 'Ưu tiên',
+                name: 'YoungHouse 2',
+                rating: '4.7',
+                location: '64 Phú Hữu, Tân Xã, Thạch Thất, Hà Nội',
+                description: 'YoungHouse 2, 64 Phú Hữu, Tân Xã. Giá: Từ 2.400.000 đ',
+                roomCount: 'Phòng trọ',
+                price: '2.400.000 đ',
+                layout: 'Phòng riêng, có nội thất cơ bản',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'An ninh'],
+                contact: '0372858098',
+                electricPrice: 3500,
+                waterPrice: 15000,
+                internetPrice: 100000,
+                parkingPrice: 0,
+                maxOccupants: 2,
+                images: ['images/docx/YoungHouse 2/image1.png', 'images/docx/YoungHouse 2/image2.png']
+            },
+            'minh-anh-house': {
+                type: 'Ưu tiên',
+                name: 'Minh Anh House',
+                rating: '4.9',
+                location: 'Cổng Đại học QGHN cơ sở Hoà Lạc, Thạch Hoà, Thạch Thất, Hà Nội',
+                description: 'Minh Anh House, Cổng Đại học QGHN cơ sở Hoà Lạc. Giá: Từ 2.000.000 đ - 2.400.000 đ',
+                roomCount: 'Phòng trọ',
+                price: '2.000.000 đ - 2.400.000 đ',
+                layout: 'Phòng riêng, có nội thất cơ bản',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'An ninh'],
+                contact: '0372858098',
+                electricPrice: 3500,
+                waterPrice: 15000,
+                internetPrice: 100000,
+                parkingPrice: 0,
+                maxOccupants: 2,
+                images: ['images/docx/Minh Anh House/image1.png', 'images/docx/Minh Anh House/image2.png', 'images/docx/Minh Anh House/image3.png', 'images/docx/Minh Anh House/image4.png']
+            },
+            'legend-house': {
+                type: 'Ưu tiên',
+                name: 'Nhà trọ Legend',
+                rating: '4.8',
+                location: 'Phú Hữu, Tân Xã, Thạch Thất, Hà Nội',
+                description: 'Nhà trọ Legend, Phú Hữu, Tân Xã. Giá: Từ 1.700.000 đ',
+                roomCount: 'Phòng trọ',
+                price: '1.700.000 đ',
+                layout: 'Phòng riêng, có nội thất cơ bản',
+                amenities: ['Wi-Fi', 'Máy lạnh', 'Chỗ để xe', 'An ninh'],
+                contact: '0372858098',
+                electricPrice: 3500,
+                waterPrice: 15000,
+                internetPrice: 100000,
+                parkingPrice: 0,
+                maxOccupants: 2,
+                images: ['images/docx/Nha tro Legend/image1.png', 'images/docx/Nha tro Legend/image2.png']
+            },
+
             'gia-hung-apartment': {
                 type: 'Nhà trọ',
                 name: 'Gia Hưng Apartment',

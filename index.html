@@ -40,6 +40,12 @@
         .house-card>.p-5>div:nth-last-child(2) {
             margin-top: auto;
         }
+        
+        /* Minimalist overrides */
+        .house-card .phone-number-container,
+        .house-card .grid.grid-cols-2.gap-2 {
+            display: none !important;
+        }
     </style>
 </head>
 
@@ -146,30 +152,21 @@
         </div>
     </section>
 
-    <section class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 mb-16">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
-            <div>
-                <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Khu vực nổi bật</p>
-                <h2 class="text-2xl font-bold text-gray-900 mt-2">Hòa Lạc, Thạch Thất, Hà Nội</h2>
-                <p id="result-summary" class="text-sm text-gray-500 mt-1">Hiển thị 8 kết quả • Danh sách nhà trọ, căn hộ
-                    và chung cư mini gần khu vực</p>
-            </div>
-            <a href="#"
-                class="inline-flex items-center justify-center rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition">
-                <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                Quay lại
-            </a>
+        <section class="py-10 bg-gray-50/50 relative overflow-hidden" id="priority-carousel-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+            <h2 class="text-2xl font-bold text-gray-900 flex items-center gap-2">
+                <i class="fa-solid fa-fire text-[#FF2C2C]"></i> Nổi bật & Ưu tiên
+            </h2>
+            <p class="text-gray-500 mt-1 text-sm">Các phòng trọ, căn hộ được đánh giá cao nhất</p>
         </div>
+        
+        <div class="relative w-full flex items-center justify-center h-[420px] max-w-7xl mx-auto">
+            <button id="carousel-prev" class="absolute left-2 md:left-8 z-20 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 hover:bg-blue-50 transition border border-gray-100 focus:outline-none">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
 
-        <div id="search-empty"
-            class="hidden rounded-2xl border border-dashed border-gray-300 bg-white px-4 py-8 sm:px-6 sm:py-10 text-center text-gray-600">
-            <i class="fa-solid fa-magnifying-glass text-2xl text-blue-500 mb-3"></i>
-            <p class="text-lg font-semibold text-gray-900">Không tìm thấy kết quả phù hợp</p>
-            <p class="mt-1 text-sm text-gray-500">Hãy thử từ khóa khác hoặc đổi khoảng giá để tìm phòng phù hợp hơn.</p>
-        </div>
-
-        <div id="house-list" class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
-            <article
+            <div id="carousel-track" class="relative w-full h-full flex items-center justify-center perspective-1000">
+<article
                 class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200"
                 data-house-id="gia-hung-apartment" data-house-name="Gia Hưng Apartment" data-house-type="Nhà trọ"
                 data-house-location="Gia Hưng Apartment, Tổ 1, cụm 1, Hòa Lạc, Hà Nội" data-house-price="3.3"
@@ -180,7 +177,7 @@
                     <div
                         class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
                         5.0 ★</div>
-                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
                         <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
                     </div>
                 </a>
@@ -227,7 +224,7 @@
                     <div
                         class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
                         4.9 ★</div>
-                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
                         <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
                     </div>
                 </a>
@@ -273,7 +270,7 @@
                     <div
                         class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
                         4.8 ★</div>
-                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
                         <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
                     </div>
                 </a>
@@ -318,7 +315,7 @@
                     <div
                         class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
                         5.0 ★</div>
-                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
                         <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
                     </div>
                 </a>
@@ -365,7 +362,7 @@
                     <div
                         class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
                         4.7 ★</div>
-                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
                         <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
                     </div>
                 </a>
@@ -399,7 +396,410 @@
                 </div>
             </article>
 
-            <article
+            
+
+                
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="ohio-house-384" data-house-name="Ohio House 384" data-house-type="Ưu tiên">
+                <a href="house-detail.html?house=ohio-house-384" class="relative h-48 block">
+                    <img src="images/docx/Ohio House 384/image1.png" alt="Ohio House 384" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                        <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
+                    </div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=ohio-house-384" class="hover:text-blue-600 transition">Ohio House 384</a></h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Chợ Hoà Lạc, Thạch Hoà, Thạch Thất</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.4 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=ohio-house-384" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="th-house" data-house-name="TH HOUSE" data-house-type="Ưu tiên">
+                <a href="house-detail.html?house=th-house" class="relative h-48 block">
+                    <img src="images/docx/TH HOUSE/image1.png" alt="TH HOUSE" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                        <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
+                    </div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=th-house" class="hover:text-blue-600 transition">TH HOUSE</a></h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Sân bóng Phú Hữu, Tân Xã, Thạch Thất</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.2 - 3.0 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=th-house" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="hoang-anh-home" data-house-name="Hoàng Anh Home" data-house-type="Ưu tiên">
+                <a href="house-detail.html?house=hoang-anh-home" class="relative h-48 block">
+                    <img src="images/docx/Hoang Anh Home/image1.png" alt="Hoàng Anh Home" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                        <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
+                    </div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=hoang-anh-home" class="hover:text-blue-600 transition">Hoàng Anh Home</a></h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Phú Hữu, Tân Xã, Thạch Thất</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">1.6 - 1.8 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=hoang-anh-home" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="sunhome" data-house-name="SunHome" data-house-type="Ưu tiên">
+                <a href="house-detail.html?house=sunhome" class="relative h-48 block">
+                    <img src="images/docx/SunHome/image1.png" alt="SunHome" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                        <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
+                    </div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=sunhome" class="hover:text-blue-600 transition">SunHome</a></h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Cổng phụ ĐHQGHN, Thạch Hoà, Thạch Thất</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">3.3 - 4.5 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=sunhome" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="happy-home" data-house-name="Happy Home" data-house-type="Ưu tiên">
+                <a href="house-detail.html?house=happy-home" class="relative h-48 block">
+                    <img src="images/docx/Happy Home/image1.png" alt="Happy Home" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                        <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
+                    </div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=happy-home" class="hover:text-blue-600 transition">Happy Home</a></h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Nhà thờ PHÚ HỮU, Tân Xã, Thạch Thất</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">Từ 3.4 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=happy-home" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="younghouse-2" data-house-name="YoungHouse 2" data-house-type="Ưu tiên">
+                <a href="house-detail.html?house=younghouse-2" class="relative h-48 block">
+                    <img src="images/docx/YoungHouse 2/image1.png" alt="YoungHouse 2" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                        <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
+                    </div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=younghouse-2" class="hover:text-blue-600 transition">YoungHouse 2</a></h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>64 Phú Hữu, Tân Xã, Thạch Thất</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">Từ 2.4 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=younghouse-2" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="minh-anh-house" data-house-name="Minh Anh House" data-house-type="Ưu tiên">
+                <a href="house-detail.html?house=minh-anh-house" class="relative h-48 block">
+                    <img src="images/docx/Minh Anh House/image1.png" alt="Minh Anh House" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                        <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
+                    </div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=minh-anh-house" class="hover:text-blue-600 transition">Minh Anh House</a></h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Cổng ĐHQGHN cơ sở Hoà Lạc, Thạch Thất</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.0 - 2.4 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=minh-anh-house" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="legend-house" data-house-name="Nhà trọ Legend" data-house-type="Ưu tiên">
+                <a href="house-detail.html?house=legend-house" class="relative h-48 block">
+                    <img src="images/docx/Nha tro Legend/image1.png" alt="Nhà trọ Legend" class="w-full h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-[#FF2C2C] text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                        <i class="fa-solid fa-fire text-[10px]"></i> Ưu tiên
+                    </div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=legend-house" class="hover:text-blue-600 transition">Nhà trọ Legend</a></h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Phú Hữu, Tân Xã, Thạch Thất</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">Từ 1.7 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=legend-house" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            
+            </div>
+
+            <button id="carousel-next" class="absolute right-2 md:right-8 z-20 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 hover:bg-blue-50 transition border border-gray-100 focus:outline-none">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 mb-16">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Khu vực nổi bật</p>
+                <h2 class="text-2xl font-bold text-gray-900 mt-2">Hòa Lạc, Thạch Thất, Hà Nội</h2>
+                <p id="result-summary" class="text-sm text-gray-500 mt-1">Hiển thị 8 kết quả • Danh sách nhà trọ, căn hộ
+                    và chung cư mini gần khu vực</p>
+            </div>
+            <a href="#"
+                class="inline-flex items-center justify-center rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 transition">
+                <i class="fa-solid fa-arrow-left-long mr-2"></i>
+                Quay lại
+            </a>
+        </div>
+
+        <div id="search-empty"
+            class="hidden rounded-2xl border border-dashed border-gray-300 bg-white px-4 py-8 sm:px-6 sm:py-10 text-center text-gray-600">
+            <i class="fa-solid fa-magnifying-glass text-2xl text-blue-500 mb-3"></i>
+            <p class="text-lg font-semibold text-gray-900">Không tìm thấy kết quả phù hợp</p>
+            <p class="mt-1 text-sm text-gray-500">Hãy thử từ khóa khác hoặc đổi khoảng giá để tìm phòng phù hợp hơn.</p>
+        </div>
+
+        <div id="house-list" class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="ngoc-linh-house" data-house-name="Ngọc Linh House" data-house-type="Phòng trọ" data-house-location="Cây xăng 39, Thạch Hoà, Thạch Thất, Hà Nội" data-house-price="2.9" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=ngoc-linh-house" class="relative h-48 block">
+                    <img src="images/normalhouse/Ngọc Linh House/image1.png" alt="Ngọc Linh House" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=ngoc-linh-house" class="hover:text-blue-600 transition">Ngọc Linh House</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Cây xăng 39, Thạch Hoà, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.9 - 4.7 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=ngoc-linh-house" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="black-rose-house" data-house-name="Black Rose House" data-house-type="Phòng trọ" data-house-location="Thôn 4, Thạch Hoà, Thạch Thất, Hà Nội" data-house-price="2.6" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=black-rose-house" class="relative h-48 block">
+                    <img src="images/normalhouse/Black Rose House/image1.png" alt="Black Rose House" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=black-rose-house" class="hover:text-blue-600 transition">Black Rose House</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Thôn 4, Thạch Hoà, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.6 - 3.0 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=black-rose-house" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="tro-xinh-dhqg" data-house-name="Trọ Xinh gần Đại học Quốc gia" data-house-type="Phòng trọ" data-house-location="Khu Tái Định Cư Bắc Phú Cát, Thạch Hoà, Thạch Thất, Hà Nội" data-house-price="2.3" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=tro-xinh-dhqg" class="relative h-48 block">
+                    <img src="images/normalhouse/Trọ Xinh gần Đại học Quốc gia/image1.png" alt="Trọ Xinh gần Đại học Quốc gia" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=tro-xinh-dhqg" class="hover:text-blue-600 transition">Trọ Xinh gần Đại học Quốc gia</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Khu Tái Định Cư Bắc Phú Cát, Thạch Hoà, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.3 - 2.5 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=tro-xinh-dhqg" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="you-and-me" data-house-name="Nhà trọ You & Me" data-house-type="Phòng trọ" data-house-location="Thôn 4, Thạch Hoà, Thạch Thất, Hà Nội" data-house-price="2.3" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=you-and-me" class="relative h-48 block">
+                    <img src="images/normalhouse/Nhà trọ You & Me/image1.png" alt="Nhà trọ You & Me" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=you-and-me" class="hover:text-blue-600 transition">Nhà trọ You & Me</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Thôn 4, Thạch Hoà, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.3 - 2.7 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=you-and-me" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="younghouse-11" data-house-name="YoungHouse 11" data-house-type="Phòng trọ" data-house-location="6 Phú Hữu, Tân Xã, Thạch Thất, Hà Nội" data-house-price="2.4" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=younghouse-11" class="relative h-48 block">
+                    <img src="images/normalhouse/YoungHouse 11/image1.png" alt="YoungHouse 11" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=younghouse-11" class="hover:text-blue-600 transition">YoungHouse 11</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>6 Phú Hữu, Tân Xã, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.4 - 2.8 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=younghouse-11" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="mias-house" data-house-name="Mia's House" data-house-type="Phòng trọ" data-house-location="Phú Hữu, Tân Xã, Thạch Thất, Hà Nội" data-house-price="2.2" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=mias-house" class="relative h-48 block">
+                    <img src="images/normalhouse/Mia's House/image1.png" alt="Mia's House" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=mias-house" class="hover:text-blue-600 transition">Mia's House</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Phú Hữu, Tân Xã, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">Từ 2.2 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=mias-house" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="happy-house-2" data-house-name="Happy House" data-house-type="Phòng trọ" data-house-location="Bình Yên, Bình Yên, Thạch Thất, Hà Nội" data-house-price="2.4" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=happy-house-2" class="relative h-48 block">
+                    <img src="images/normalhouse/Happy House/image1.png" alt="Happy House" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=happy-house-2" class="hover:text-blue-600 transition">Happy House</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Bình Yên, Bình Yên, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">2.4 - 3.2 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=happy-house-2" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="doi-sim-home" data-house-name="Đồi Sim Home" data-house-type="Phòng trọ" data-house-location="Giãn dân Thôn 2, Hồ Băng, Tân Xã, Thạch Thất, Hà Nội" data-house-price="1.6" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=doi-sim-home" class="relative h-48 block">
+                    <img src="images/normalhouse/Đồi Sim Home/image1.png" alt="Đồi Sim Home" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=doi-sim-home" class="hover:text-blue-600 transition">Đồi Sim Home</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Giãn dân Thôn 2, Hồ Băng, Tân Xã, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">Từ 1.6 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=doi-sim-home" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="fhome-tan-xa" data-house-name="FHome Tân Xã" data-house-type="Phòng trọ" data-house-location="Kim Bồng, Tân Xã, Thạch Thất, Hà Nội" data-house-price="1.5" data-house-room-count="Phòng trọ">
+                <a href="house-detail.html?house=fhome-tan-xa" class="relative h-48 block">
+                    <img src="images/normalhouse/FHome Tân Xã/image1.png" alt="FHome Tân Xã" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=fhome-tan-xa" class="hover:text-blue-600 transition">FHome Tân Xã</a></h3>
+                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">Phòng trọ</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Kim Bồng, Tân Xã, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">1.5 - 2.3 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=fhome-tan-xa" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="phuong-nam-apt" data-house-name="Phương Nam Apartment" data-house-type="Căn hộ mini" data-house-location="Thôn 3, Thạch Hoà, Thạch Thất, Hà Nội" data-house-price="3.5" data-house-room-count="Căn hộ mini">
+                <a href="house-detail.html?house=phuong-nam-apt" class="relative h-48 block">
+                    <img src="images/normalhouse/Phương Nam Apartment/image1.png" alt="Phương Nam Apartment" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=phuong-nam-apt" class="hover:text-blue-600 transition">Phương Nam Apartment</a></h3>
+                        <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-1 rounded">Căn hộ mini</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Thôn 3, Thạch Hoà, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">Từ 3.5 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=phuong-nam-apt" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+            <article class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200" data-house-id="chung-cu-phenika" data-house-name="Chung cư Phenika" data-house-type="Chung cư mini" data-house-location="Khu Tái Định Cư Bắc Phú Cát, Thạch Hoà, Thạch Thất, Hà Nội" data-house-price="6.0" data-house-room-count="Chung cư mini">
+                <a href="house-detail.html?house=chung-cu-phenika" class="relative h-48 block">
+                    <img src="images/normalhouse/Chung cư Phenika/image1.png" alt="Chung cư Phenika" class="w-full h-full object-cover">
+                    <div class="absolute top-3 left-3 bg-white/85 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-700">
+                        5.0 ⭐</div>
+                </a>
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-bold text-gray-900"><a href="house-detail.html?house=chung-cu-phenika" class="hover:text-blue-600 transition">Chung cư Phenika</a></h3>
+                        <span class="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-1 rounded">Chung cư mini</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2 flex items-center"><i class="fa-solid fa-location-dot mr-2 text-gray-400"></i>Khu Tái Định Cư Bắc Phú Cát, Thạch Hoà, Thạch Thất, Hà Nội</p>
+                    <p class="phone-number-container text-sm text-gray-500 mt-2 flex items-center" data-phone="0372858098"><i class="fa-solid fa-phone mr-2 text-gray-400"></i><span class="phone-text">0372858098</span></p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-sm text-gray-600">
+                        <span class="font-semibold text-red-500">Từ 6.0 triệu</span>
+                    </div>
+                    <a href="house-detail.html?house=chung-cu-phenika" class="mt-4 block text-center rounded-xl bg-blue-600 px-3 py-2.5 text-sm font-bold text-white hover:bg-blue-700 transition">Xem thông tin</a>
+                </div>
+            </article>
+<article
                 class="house-card bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-lg transition duration-200"
                 data-house-id="minh-chau" data-house-name="Nhà trọ Minh Châu" data-house-type="Nhà trọ"
                 data-house-location="Ngõ 157, Thôn 4, Thạch Hòa, Hòa Lạc, Hà Nội" data-house-price="1.5"
@@ -1053,6 +1453,76 @@
             setupPhoneMasking();
         }
         init();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.getElementById('carousel-track');
+            if (!track) return;
+            const cards = Array.from(track.querySelectorAll('article.house-card'));
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                cards.forEach((card, index) => {
+                    // Update classes for carousel cards
+                    card.className = "house-card absolute w-[85%] max-w-[360px] h-full transition-all duration-500 ease-out rounded-2xl bg-white border border-gray-100 shadow-md flex flex-col overflow-hidden";
+                    
+                    const offset = index - currentIndex;
+                    
+                    if (offset === 0) {
+                        // Active center
+                        card.style.transform = "translateX(0) scale(1)";
+                        card.style.opacity = '1';
+                        card.style.zIndex = '10';
+                        card.style.filter = 'blur(0px)';
+                        card.style.pointerEvents = 'auto';
+                    } else if (offset === 1 || (currentIndex === cards.length - 1 && index === 0)) {
+                        // Right adjacent
+                        card.style.transform = "translateX(105%) scale(0.85)";
+                        card.style.opacity = '0.6';
+                        card.style.zIndex = '5';
+                        card.style.filter = 'blur(2px)';
+                        card.style.pointerEvents = 'none';
+                    } else if (offset === -1 || (currentIndex === 0 && index === cards.length - 1)) {
+                        // Left adjacent
+                        card.style.transform = "translateX(-105%) scale(0.85)";
+                        card.style.opacity = '0.6';
+                        card.style.zIndex = '5';
+                        card.style.filter = 'blur(2px)';
+                        card.style.pointerEvents = 'none';
+                    } else {
+                        // Hidden
+                        card.style.transform = "translateX(" + (offset > 0 ? '200%' : '-200%') + ") scale(0.7)";
+                        card.style.opacity = '0';
+                        card.style.zIndex = '1';
+                        card.style.filter = 'blur(4px)';
+                        card.style.pointerEvents = 'none';
+                    }
+                });
+            }
+
+            document.getElementById('carousel-next').addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % cards.length;
+                updateCarousel();
+            });
+
+            document.getElementById('carousel-prev').addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+                updateCarousel();
+            });
+            
+            // Allow clicking on adjacent cards to switch
+            cards.forEach((card, index) => {
+                card.addEventListener('click', (e) => {
+                    if (index !== currentIndex) {
+                        e.preventDefault();
+                        currentIndex = index;
+                        updateCarousel();
+                    }
+                });
+            });
+
+            updateCarousel();
+        });
     </script>
 </body>
 
